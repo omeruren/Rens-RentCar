@@ -5,7 +5,7 @@ using TS.MediatR;
 
 namespace Rens_RentCar.Server.Application;
 
-public static class RegistrarService
+public static class ServiceRegistrar
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
@@ -13,7 +13,7 @@ public static class RegistrarService
         // MediatR 
         services.AddMediatR(cfr =>
         {
-            cfr.RegisterServicesFromAssembly(typeof(RegistrarService).Assembly);
+            cfr.RegisterServicesFromAssembly(typeof(ServiceRegistrar).Assembly);
 
             // Dynamic Validation Behavior
             cfr.AddOpenBehavior(typeof(ValidationBehavior<,>));
@@ -23,7 +23,7 @@ public static class RegistrarService
         });
 
         //Fluent Validation
-        services.AddValidatorsFromAssembly(typeof(RegistrarService).Assembly);
+        services.AddValidatorsFromAssembly(typeof(ServiceRegistrar).Assembly);
 
         return services;
     }

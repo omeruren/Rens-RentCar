@@ -2,5 +2,6 @@
   <Folder Name="/src/">
     <Project Path="src/Rens-RentCar.Domain/Rens-RentCar.Domain.csproj" />
     <Project Path="src/Rens-RentCar.Server.Application/Rens-RentCar.Server.Application.csproj" />
+    <Project Path="src/Rens-RentCar.Server.Infrastructure/Rens-RentCar.Server.Infrastructure.csproj" />
   </Folder>
 </Solution>
