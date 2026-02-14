@@ -10,6 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Service Registrations
 builder.Services.AddInfrastructure(builder.Configuration).AddApplication();
 
+// Response Compression
+builder.Services.AddResponseCompression(opt =>
+{
+    opt.EnableForHttps = true;
+});
+
 // Rate Limiting
 builder.Services.AddRateLimiter(cfr =>
 {
@@ -67,6 +73,7 @@ app.UseCors(x => x
     .SetPreflightMaxAge(TimeSpan.FromMinutes(10))
 );
 
+app.UseResponseCompression();
 
 app.UseAuthentication();
 app.UseAuthorization();
