@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
 using Rens_RentCar.Server.Application;
 using Rens_RentCar.Server.Infrastructure;
+using Rens_RentCar.Server.WebAPI;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -63,5 +64,6 @@ app.MapControllers().RequireRateLimiting("fixed");
 app.MapGet("/", () => "Hello World!");
 
 //await app.AddSeedUser();
+app.MapEndPoints();
 
 app.Run();

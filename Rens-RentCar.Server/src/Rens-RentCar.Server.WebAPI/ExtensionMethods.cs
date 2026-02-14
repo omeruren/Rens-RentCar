@@ -1,6 +1,7 @@
 ﻿using GenericRepository;
 using Rens_RentCar.Domain.Users;
 using Rens_RentCar.Domain.Users.ValueObjects;
+using Rens_RentCar.Server.WebAPI.Modules;
 
 namespace Rens_RentCar.Server.WebAPI;
 
@@ -26,5 +27,10 @@ public static class ExtensionMethods
             repository.Add(user);
             await unitOfWork.SaveChangesAsync();
         }
+    }
+
+    public static void MapEndPoints(this WebApplication app)
+    {
+        app.MapAutEndpoint();
     }
 }
