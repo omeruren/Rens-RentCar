@@ -1,11 +1,23 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
+import { BreadcrumbService } from '../../services/breadcrumb';
 
 @Component({
   imports: [],
   templateUrl: './dashboard.html',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class Dashboard {
+export default class Dashboard implements OnInit {
+  //  <-- services -->
+  readonly #breadcrumb = inject(BreadcrumbService);
 
+  ngOnInit(): void {
+    this.#breadcrumb.setDashboard();
+  }
 }
