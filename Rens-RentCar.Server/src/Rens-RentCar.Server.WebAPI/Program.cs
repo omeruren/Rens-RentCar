@@ -22,6 +22,17 @@ builder.Services.AddRateLimiter(cfr =>
     });
 });
 
+builder.Services.AddRateLimiter(cfr =>
+{
+    cfr.AddFixedWindowLimiter("login-fixed", opt =>
+    {
+        opt.PermitLimit = 5;
+        opt.QueueLimit = 1;
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+    });
+});
+
 // Odata Configuration
 builder.Services.AddControllers()
     .AddOData(opt =>
@@ -56,10 +67,12 @@ app.UseCors(x => x
     .SetPreflightMaxAge(TimeSpan.FromMinutes(10))
 );
 
-app.UseExceptionHandler();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter();
+app.UseExceptionHandler();
 
 app.MapControllers()
     .RequireAuthorization()
