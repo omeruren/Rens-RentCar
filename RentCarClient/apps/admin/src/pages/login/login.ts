@@ -1,11 +1,33 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  ViewEncapsulation,
+} from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Result } from '../../models/result.model';
+import { Router } from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login.html',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Login {
+  //  <-- Services -->
+  readonly #http = inject(HttpClient);
+  readonly #router = inject(Router);
 
+  signIn(form: NgForm) {
+    if (!form.valid) return;
+
+    this.#http
+      .post<Result<string>>('rent/auth/login', form.value)
+      .subscribe((res) => {
+        localStorage.setItem('response', res.data!);
+        this.#router.navigateByUrl('/');
+      });
+  }
 }
