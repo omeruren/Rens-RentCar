@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GenericRepository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rens_RentCar.Domain.Abstraction;
+using Rens_RentCar.Domain.Users;
 using System.Security.Claims;
 
 namespace Rens_RentCar.Server.Infrastructure.Context;
 
-internal sealed class ApplicationDbContext : DbContext
+internal sealed class ApplicationDbContext : DbContext, IUnitOfWork
 {
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
     }
 
+    #region Models
+    public DbSet<User> Users { get; set; }
+    #endregion
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var entries = ChangeTracker.Entries<BaseEntity>();

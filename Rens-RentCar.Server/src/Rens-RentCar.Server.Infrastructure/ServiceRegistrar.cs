@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GenericRepository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rens_RentCar.Server.Infrastructure.Context;
@@ -15,6 +16,10 @@ public static class ServiceRegistrar
             string connectionString = configuration.GetConnectionString("SqlConnection")!;
             opt.UseSqlServer(connectionString);
         });
+
+        //UnitOfWork
+        services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
+
 
         // Dynamic Service Registration
         services.Scan(action => action
