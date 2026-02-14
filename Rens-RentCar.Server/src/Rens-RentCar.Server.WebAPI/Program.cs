@@ -7,9 +7,6 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Context Accessor
-builder.Services.AddHttpContextAccessor();
-
 // Service Registrations
 builder.Services.AddInfrastructure(builder.Configuration).AddApplication();
 
@@ -64,9 +61,11 @@ app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers().RequireRateLimiting("fixed");
+app.MapControllers()
+    .RequireAuthorization()
+    .RequireRateLimiting("fixed");
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Hello World!").RequireAuthorization();
 
 //await app.AddSeedUser();
 app.MapEndPoints();

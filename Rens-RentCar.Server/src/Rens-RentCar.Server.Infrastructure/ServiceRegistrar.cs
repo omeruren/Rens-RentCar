@@ -15,6 +15,18 @@ public static class ServiceRegistrar
         // Jwt Options 
         services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 
+        // Jwt Authentication Setup configuration
+        services.ConfigureOptions<JwtSetupOptions>();
+
+        // Authentication
+        services.AddAuthentication().AddJwtBearer();
+
+        // Authorization
+        services.AddAuthorization();
+
+        // Context Accessor
+        services.AddHttpContextAccessor();
+
         services.AddDbContext<ApplicationDbContext>(opt =>
         {
             string connectionString = configuration.GetConnectionString("SqlConnection")!;
@@ -24,7 +36,6 @@ public static class ServiceRegistrar
         //UnitOfWork
         services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
 
-
         // Dynamic Service Registration
         services.Scan(action => action
         .FromAssemblies(typeof(ServiceRegistrar).Assembly)
@@ -33,6 +44,7 @@ public static class ServiceRegistrar
         .AsImplementedInterfaces()
         .WithScopedLifetime()
         );
+
         return services;
     }
 }
