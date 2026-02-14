@@ -7,20 +7,28 @@ import {
   OnDestroy,
   OnInit,
   Renderer2,
+  signal,
   ViewEncapsulation,
 } from '@angular/core';
+import { NavigationModel, navigations } from '../../navigation';
+import { NgClass } from '@angular/common';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [NgClass,RouterLink,RouterOutlet],
   templateUrl: './layouts.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Layouts implements OnInit, OnDestroy {
-  private resizeTimer: any;
-
+  //  <-- Services -->
   readonly #elementRef = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
+
+  readonly navigations = signal<NavigationModel[]>(navigations);
+
+
+  private resizeTimer: any;
 
   ngOnInit(): void {
     this.initializeSidebar();
