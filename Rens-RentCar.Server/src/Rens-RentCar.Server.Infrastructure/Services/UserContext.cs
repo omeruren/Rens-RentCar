@@ -10,12 +10,11 @@ internal sealed class UserContext(IHttpContextAccessor _httpContextAccessor) : I
     {
         var http = _httpContextAccessor.HttpContext;
 
+        if (http is null)
+            throw new ArgumentNullException(nameof(http));
+
         var claims = http.User.Claims;
-        string? userId = claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-
-        if (userId is null)
-            throw new ArgumentException("User info not found");
-
+        string? userId = (claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value) ?? throw new ArgumentException("User info not found");
         try
         {
             Guid id = Guid.Parse(userId);

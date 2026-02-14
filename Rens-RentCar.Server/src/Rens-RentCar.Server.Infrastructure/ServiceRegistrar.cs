@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rens_RentCar.Server.Infrastructure.Context;
+using Rens_RentCar.Server.Infrastructure.Options;
 using Scrutor;
 
 namespace Rens_RentCar.Server.Infrastructure;
@@ -11,6 +12,9 @@ public static class ServiceRegistrar
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        // Jwt Options 
+        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+
         services.AddDbContext<ApplicationDbContext>(opt =>
         {
             string connectionString = configuration.GetConnectionString("SqlConnection")!;
