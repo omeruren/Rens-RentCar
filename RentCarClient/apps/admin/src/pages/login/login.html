@@ -16,6 +16,7 @@
 
         <form
           #form="ngForm"
+          formValidate
           autocomplete="off"
           class="login-form"
           (ngSubmit)="signIn(form)"
@@ -39,6 +40,7 @@
                 required
               />
             </div>
+            <div class="invalid-feedback">Email or username required</div>
           </div>
 
           <!-- Password Input -->
