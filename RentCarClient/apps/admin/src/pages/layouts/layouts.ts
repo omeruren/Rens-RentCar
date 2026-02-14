@@ -12,11 +12,11 @@ import {
 } from '@angular/core';
 import { NavigationModel, navigations } from '../../navigation';
 import { NgClass } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import Breadcrumb from './breadcrumb/breadcrumb';
 
 @Component({
-  imports: [NgClass,RouterLink,RouterOutlet,Breadcrumb],
+  imports: [NgClass, RouterLink, RouterOutlet, Breadcrumb],
   templateUrl: './layouts.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,11 +25,15 @@ export default class Layouts implements OnInit, OnDestroy {
   //  <-- Services -->
   readonly #elementRef = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
-
+  readonly #router = inject(Router);
   readonly navigations = signal<NavigationModel[]>(navigations);
 
-
   private resizeTimer: any;
+
+  signOut() {
+    localStorage.removeItem('response');
+    this.#router.navigateByUrl('/login');
+  }
 
   ngOnInit(): void {
     this.initializeSidebar();
