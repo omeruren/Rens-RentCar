@@ -20,8 +20,8 @@ public sealed class User : BaseEntity
     {
         FirstName = firstName;
         LastName = lastName;
-        FullName = new($"{FirstName.Value} {LastName.Value} ( {Email.Value} )");
         Email = email;
+        FullName = new($"{FirstName.Value} {LastName.Value} ( {Email.Value} )");
         UserName = userName;
         Password = password;
     }

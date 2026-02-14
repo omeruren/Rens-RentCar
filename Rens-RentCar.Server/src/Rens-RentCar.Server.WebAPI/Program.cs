@@ -62,4 +62,6 @@ app.MapControllers().RequireRateLimiting("fixed");
 
 app.MapGet("/", () => "Hello World!");
 
+//await app.AddSeedUser();
+
 app.Run();
