@@ -39,6 +39,16 @@ builder.Services.AddRateLimiter(cfr =>
     });
 });
 
+builder.Services.AddRateLimiter(cfr =>
+{
+    cfr.AddFixedWindowLimiter("forgot-password-fixed", opt =>
+    {
+        opt.PermitLimit = 2;
+        opt.Window = TimeSpan.FromMinutes(2);
+        opt.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+    });
+});
+
 // Odata Configuration
 builder.Services.AddControllers()
     .AddOData(opt =>
