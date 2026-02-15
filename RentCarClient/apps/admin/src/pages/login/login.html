@@ -226,6 +226,7 @@
             Şifre Sıfırlama
           </h5>
           <button
+            #modalCloseButton
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
@@ -240,29 +241,30 @@
                 Şifre sıfırlama bağlantısını e-posta adresinize göndereceğiz
               </p>
             </div>
-            <form>
-              <div class="form-group">
-                <label class="form-label">Admin E-posta Adresi</label>
-                <div class="input-group">
-                  <span class="input-group-text">
-                    <i class="bi bi-envelope"></i>
-                  </span>
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="admin@rentcar.com"
-                    required
-                  />
-                </div>
+
+            <div class="form-group">
+              <label class="form-label">Admin E-posta Adresi</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-envelope"></i>
+                </span>
+                <input
+                  [(ngModel)]="email"
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="admin@rentcar.com"
+                  required
+                />
               </div>
-              <div class="security-note">
-                <i class="bi bi-info-circle text-info"></i>
-                <small
-                  >Güvenlik nedeniyle sadece kayıtlı admin e-posta adreslerine
-                  sıfırlama bağlantısı gönderilir.</small
-                >
-              </div>
-            </form>
+            </div>
+            <div class="security-note">
+              <i class="bi bi-info-circle text-info"></i>
+              <small
+                >Güvenlik nedeniyle sadece kayıtlı admin e-posta adreslerine
+                sıfırlama bağlantısı gönderilir.</small
+              >
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -273,7 +275,11 @@
           >
             İptal
           </button>
-          <button type="button" class="btn btn-primary">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="forgotPassword()"
+          >
             <i class="bi bi-send me-1"></i>Sıfırlama Bağlantısı Gönder
           </button>
         </div>
