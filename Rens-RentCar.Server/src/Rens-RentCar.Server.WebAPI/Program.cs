@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
 using Rens_RentCar.Server.Application;
+using Rens_RentCar.Server.Application.Services;
 using Rens_RentCar.Server.Infrastructure;
 using Rens_RentCar.Server.WebAPI;
 using Scalar.AspNetCore;
@@ -95,7 +96,11 @@ app.MapControllers()
     .RequireAuthorization()
     .RequireRateLimiting("fixed");
 
-app.MapGet("/", () => "Hello World!").RequireAuthorization();
+app.MapGet("/", async (IMailService _mailService) =>
+{
+    await _mailService.SendAsync("testhesabim48@gmail.com", "Test", "<h1><b>Bu bir test mailidir.</b> </h1>", default);
+    return Results.Ok();
+});
 
 //await app.AddSeedUser();
 app.MapEndPoints();
