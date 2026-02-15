@@ -16,5 +16,9 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.OwnsOne(u => u.Email);
         builder.OwnsOne(u => u.UserName);
         builder.OwnsOne(u => u.Password);
+
+        builder.OwnsOne(u => u.ForgotPasswordId);
+        builder.OwnsOne(u => u.ForgotPasswordDate);
+        builder.OwnsOne(u => u.IsForgotPasswordCompleted);
     }
 }

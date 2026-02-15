@@ -5,7 +5,7 @@ namespace Rens_RentCar.Server.Infrastructure.Services;
 
 internal sealed class MailService(IFluentEmail _fluentEmail) : IMailService
 {
-    public async Task SendAsync(string to, string subject, string body, CancellationToken cancellationToken)
+    public async Task SendAsync(string to, string subject, string body, CancellationToken cancellationToken = default)
     {
         var sendResponse = await _fluentEmail.To(to).Subject(subject).Body(body, isHtml: true).SendAsync(cancellationToken);
 
