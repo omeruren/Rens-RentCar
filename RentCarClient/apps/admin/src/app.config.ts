@@ -12,6 +12,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     provideRouter(appRoutes),
-    provideHttpClient(withInterceptors([httpInterceptor,errorInterceptor])),
+    provideHttpClient(withInterceptors([httpInterceptor])),
   ],
 };

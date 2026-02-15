@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class Error {
+export class ErrorService {
   //  <-- Services -->
   readonly #toast = inject(FlexiToastService);
 

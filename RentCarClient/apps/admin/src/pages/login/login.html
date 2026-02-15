@@ -40,7 +40,6 @@
                 required
               />
             </div>
-            <div class="invalid-feedback">Email or username required</div>
           </div>
 
           <!-- Password Input -->
@@ -82,9 +81,22 @@
           </div>
 
           <!-- Login Button -->
-          <button type="submit" class="btn btn-admin-primary w-100">
+          <button
+            type="submit"
+            [disabled]="loading()"
+            class="btn btn-admin-primary w-100"
+          >
+            @if(loading()){
+
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            }@else {
+
             <i class="bi bi-shield-lock me-2"></i>
-            Admin Girişi
+            Giriş }
           </button>
 
           <!-- Two Factor -->
