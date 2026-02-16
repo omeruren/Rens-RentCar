@@ -34,7 +34,7 @@ internal sealed class LoginCommandHandler(IUserRepository _userRepository, IJwtP
         if (!isPasswordsMatched)
             return Result<string>.Failure("Incorrect user credentials.");
 
-        var token = _jwtProvider.CreateJwtToken(user);
+        var token = _jwtProvider.CreateJwtTokenAsync(user);
 
         return token;
     }

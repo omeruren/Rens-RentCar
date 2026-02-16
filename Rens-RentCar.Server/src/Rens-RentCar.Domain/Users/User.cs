@@ -18,13 +18,13 @@ public sealed class User : BaseEntity
         UserName userName,
         Password password)
     {
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        FullName = new($"{FirstName.Value} {LastName.Value} ( {Email.Value} )");
-        UserName = userName;
-        Password = password;
-        IsForgotPasswordCompleted = new(true);
+        SetFIrstName(firstName);
+        SetLastName(lastName);
+        SetEmail(email);
+        SetFullName();
+        SetUserName(userName);
+        SetPassword(password);
+        SetIsForgotPasswordCompleted(new(true));
     }
 
     public FirstName FirstName { get; private set; } = default!;
@@ -37,6 +37,7 @@ public sealed class User : BaseEntity
     public ForgotPasswordDate? ForgotPasswordDate { get; private set; }
     public IsForgotPasswordCompleted IsForgotPasswordCompleted { get; private set; } = default!;
 
+    #region Behaviors
     public bool VerifyPasswordHash(string password)
     {
         using var hmac = new System.Security.Cryptography.HMACSHA512(Password.PasswordSalt);
@@ -51,5 +52,13 @@ public sealed class User : BaseEntity
         IsForgotPasswordCompleted = new(false);
     }
 
+    public void SetFIrstName(FirstName firstName) => FirstName = firstName;
+    public void SetLastName(LastName lastName) => LastName = lastName;
+    public void SetEmail(Email email) => Email = email;
+    public void SetFullName() => FullName = new($"{FirstName.Value} {LastName.Value} ( {Email.Value} )");
+    public void SetUserName(UserName userName) => UserName = userName;
     public void SetPassword(Password password) => Password = password;
+    public void SetIsForgotPasswordCompleted(IsForgotPasswordCompleted isForgotPasswordCompleted) => IsForgotPasswordCompleted = isForgotPasswordCompleted;
+    #endregion
 }
+

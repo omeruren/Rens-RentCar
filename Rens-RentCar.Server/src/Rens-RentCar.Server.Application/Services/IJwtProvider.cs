@@ -4,5 +4,5 @@ namespace Rens_RentCar.Server.Application.Services;
 
 public interface IJwtProvider
 {
-    string CreateJwtToken(User user);
+    Task<string> CreateJwtTokenAsync(User user, CancellationToken cancellationToken = default);
 }

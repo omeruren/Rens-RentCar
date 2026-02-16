@@ -1,5 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using GenericRepository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Rens_RentCar.Domain.LoginTokens;
+using Rens_RentCar.Domain.LoginTokens.ValueObjects;
 using Rens_RentCar.Domain.Users;
 using Rens_RentCar.Server.Application.Services;
 using Rens_RentCar.Server.Infrastructure.Options;
@@ -9,9 +13,9 @@ using System.Text;
 
 namespace Rens_RentCar.Server.Infrastructure.Services;
 
-internal sealed class JwtProvider(IOptions<JwtOptions> _jwtOptions) : IJwtProvider
+internal sealed class JwtProvider(IOptions<JwtOptions> _jwtOptions, ILoginTokenRepository _loginTokenRepository, IUnitOfWork _unitOfWork) : IJwtProvider
 {
-    public string CreateJwtToken(User user)
+    public async Task<string> CreateJwtTokenAsync(User user, CancellationToken cancellationToken = default)
     {
 
         List<Claim> claims = new()
@@ -24,18 +28,32 @@ internal sealed class JwtProvider(IOptions<JwtOptions> _jwtOptions) : IJwtProvid
         SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_jwtOptions.Value.SecretKey));
         SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha512);
 
+        var expires = DateTime.Now.AddDays(1);
 
         JwtSecurityToken securityToken = new(
             issuer: _jwtOptions.Value.Issuer,
             audience: _jwtOptions.Value.Audience,
             claims: claims,
             notBefore: DateTime.Now,
-            expires: DateTime.Now.AddDays(1),
+            expires: expires,
             signingCredentials: signingCredentials);
 
         var handler = new JwtSecurityTokenHandler();
 
         var token = handler.WriteToken(securityToken);
+
+
+        Token newToken = new(token);
+        ExpiresDate expiresDate = new(expires);
+        LoginToken loginToken = new(newToken, user.Id, expiresDate);
+
+        _loginTokenRepository.Add(loginToken);
+
+        await _loginTokenRepository.Where(p => p.UserId == user.Id && p.IsActive.Value == true).ExecuteUpdateAsync(setters => setters.SetProperty(u => u.IsActive.Value, false), cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+
 
         return token;
     }
