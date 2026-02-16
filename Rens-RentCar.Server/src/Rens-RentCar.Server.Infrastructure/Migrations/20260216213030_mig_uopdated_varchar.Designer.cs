@@ -12,8 +12,8 @@ using Rens_RentCar.Server.Infrastructure.Context;
 namespace Rens_RentCar.Server.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260216195930_mig_added_LoginToken_model")]
-    partial class mig_added_LoginToken_model
+    [Migration("20260216213030_mig_uopdated_varchar")]
+    partial class mig_uopdated_varchar
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,9 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
             modelBuilder.Entity("Rens_RentCar.Domain.LoginTokens.LoginToken", b =>
                 {
                     b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -71,22 +74,6 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
             modelBuilder.Entity("Rens_RentCar.Domain.LoginTokens.LoginToken", b =>
                 {
-                    b.OwnsOne("Rens_RentCar.Domain.Abstraction.IdentityId", "UserId", b1 =>
-                        {
-                            b1.Property<Guid>("LoginTokenId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("LoginTokenId");
-
-                            b1.ToTable("LoginTokens");
-
-                            b1.WithOwner()
-                                .HasForeignKey("LoginTokenId");
-                        });
-
                     b.OwnsOne("Rens_RentCar.Domain.LoginTokens.ValueObjects.ExpiresDate", "ExpiresDate", b1 =>
                         {
                             b1.Property<Guid>("LoginTokenId")
@@ -126,7 +113,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(300)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("LoginTokenId");
 
@@ -144,9 +131,6 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                     b.Navigation("Token")
                         .IsRequired();
-
-                    b.Navigation("UserId")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Rens_RentCar.Domain.Users.User", b =>
@@ -158,7 +142,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(300)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -175,7 +159,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(300)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -224,7 +208,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(300)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -257,7 +241,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(300)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -295,7 +279,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(300)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 

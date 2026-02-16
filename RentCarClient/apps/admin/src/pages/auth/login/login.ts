@@ -30,6 +30,13 @@ export default class Login {
   readonly email = signal<string>('');
   readonly closeModalBtn =
     viewChild<ElementRef<HTMLButtonElement>>('modalCloseButton');
+  readonly passwordEl = viewChild<ElementRef<HTMLInputElement>>('passwordEl');
+
+  togglePasswordVisibility() {
+    this.passwordEl()?.nativeElement.type === 'password'
+      ? this.passwordEl()?.nativeElement.setAttribute('type', 'text')
+      : this.passwordEl()?.nativeElement.setAttribute('type', 'password');
+  }
 
   //  SIGNIN
 

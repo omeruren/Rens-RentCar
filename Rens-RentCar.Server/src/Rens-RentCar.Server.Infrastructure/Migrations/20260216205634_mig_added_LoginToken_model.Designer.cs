@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rens_RentCar.Server.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using Rens_RentCar.Server.Infrastructure.Context;
 namespace Rens_RentCar.Server.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260216205634_mig_added_LoginToken_model")]
+    partial class mig_added_LoginToken_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,7 +113,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(MAX)");
+                                .HasColumnType("varchar(300)");
 
                             b1.HasKey("LoginTokenId");
 
@@ -139,7 +142,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(MAX)");
+                                .HasColumnType("varchar(300)");
 
                             b1.HasKey("UserId");
 
@@ -156,7 +159,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(MAX)");
+                                .HasColumnType("varchar(300)");
 
                             b1.HasKey("UserId");
 
@@ -205,7 +208,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(MAX)");
+                                .HasColumnType("varchar(300)");
 
                             b1.HasKey("UserId");
 
@@ -238,7 +241,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(MAX)");
+                                .HasColumnType("varchar(300)");
 
                             b1.HasKey("UserId");
 
@@ -276,7 +279,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("varchar(MAX)");
+                                .HasColumnType("varchar(300)");
 
                             b1.HasKey("UserId");
 

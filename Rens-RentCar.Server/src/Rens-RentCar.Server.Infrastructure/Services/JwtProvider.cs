@@ -49,8 +49,12 @@ internal sealed class JwtProvider(IOptions<JwtOptions> _jwtOptions, ILoginTokenR
 
         _loginTokenRepository.Add(loginToken);
 
-        await _loginTokenRepository.Where(p => p.UserId == user.Id && p.IsActive.Value == true).ExecuteUpdateAsync(setters => setters.SetProperty(u => u.IsActive.Value, false), cancellationToken);
+        var loginTokens = await _loginTokenRepository.Where(p => p.UserId == user.Id && p.IsActive.Value == true).ToListAsync(cancellationToken);
 
+        foreach (var item in loginTokens)
+            item.SetIsActive(new(false));
+
+        _loginTokenRepository.UpdateRange(loginTokens);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
 

@@ -56,14 +56,21 @@
                 class="form-control"
                 id="adminPassword"
                 placeholder="***********"
+                #passwordEl
                 required
               />
               <button
                 type="button"
                 class="input-group-text password-toggle"
-                data-target="adminPassword"
+                (click)="togglePasswordVisibility()"
               >
+                @if(passwordEl.type==="password"){
+
                 <i class="bi bi-eye"></i>
+                }@else {
+                <i class="bi bi-eye-slash"></i>
+
+                }
               </button>
             </div>
           </div>
