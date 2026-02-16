@@ -1,4 +1,5 @@
 import { NgClass } from '@angular/common';
+import { httpResource } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,12 +11,13 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import Loading from 'apps/admin/src/components/loading/loading';
 import { HttpService } from 'apps/admin/src/services/http';
 import { FlexiToastService } from 'flexi-toast';
 
 @Component({
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, RouterLink,Loading],
   templateUrl: './reset-password.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,9 +38,15 @@ export default class ResetPassword {
   }
   readonly loading = signal<boolean>(false);
   readonly id = signal<string>('');
+
+  readonly result = httpResource(
+    () => `rent/auth/check-forgot-password-code/${this.id()}`
+  );
+
+  readonly resultLoading = computed(()=>this.result.isLoading());
+  readonly error = computed(() => this.result.error());
   readonly password = signal<string>('');
   readonly confirmPassword = signal<string>('');
-
   readonly newPasswordEl =
     viewChild<ElementRef<HTMLInputElement>>('newPasswordEl');
   readonly confirmPasswordEl =
