@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rens_RentCar.Server.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using Rens_RentCar.Server.Infrastructure.Context;
 namespace Rens_RentCar.Server.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260216065818_mig_IsForgotPasswordCompleted_changed__to_nonNullable")]
+    partial class mig_IsForgotPasswordCompleted_changed__to_nonNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,13 +95,13 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("Rens_RentCar.Domain.Users.ValueObjects.ForgotPasswordCode", "ForgotPasswordCode", b1 =>
+                    b.OwnsOne("Rens_RentCar.Domain.Users.ValueObjects.ForgotPasswordDate", "ForgotPasswordDate", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<DateTimeOffset>("Value")
+                                .HasColumnType("datetimeoffset");
 
                             b1.HasKey("UserId");
 
@@ -108,13 +111,13 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("Rens_RentCar.Domain.Users.ValueObjects.ForgotPasswordDate", "ForgotPasswordDate", b1 =>
+                    b.OwnsOne("Rens_RentCar.Domain.Users.ValueObjects.ForgotPasswordId", "ForgotPasswordId", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<DateTimeOffset>("Value")
-                                .HasColumnType("datetimeoffset");
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.HasKey("UserId");
 
@@ -218,9 +221,9 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
                     b.Navigation("FirstName")
                         .IsRequired();
 
-                    b.Navigation("ForgotPasswordCode");
-
                     b.Navigation("ForgotPasswordDate");
+
+                    b.Navigation("ForgotPasswordId");
 
                     b.Navigation("FullName")
                         .IsRequired();

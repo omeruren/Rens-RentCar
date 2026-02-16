@@ -294,7 +294,7 @@ internal sealed class ForgotPasswordCommandHandler(IUserRepository _userReposito
 </html>";
 
         body = body.Replace("{UserName}", $"{user.FirstName.Value} {user.LastName.Value}");
-        body = body.Replace("{ResetPasswordUrl}", $"http://localhost:4200/reset-password/{user.ForgotPasswordId!.Value}");
+        body = body.Replace("{ResetPasswordUrl}", $"http://localhost:4200/reset-password/{user.ForgotPasswordCode!.Value}");
 
         await _mailService.SendAsync(to, subject, body, cancellationToken);
         return "A password reset email has been sent. Please check your email account.";

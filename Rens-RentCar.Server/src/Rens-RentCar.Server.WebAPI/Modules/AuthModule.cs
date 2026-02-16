@@ -38,5 +38,36 @@ public static class AuthModule
         })
             .RequireRateLimiting("forgot-password-fixed")
             .Produces<Result<string>>();
+
+        // CHECK FORGOT PASSWORD CODE
+
+        app.MapGet("/check-forgot-password-code/{forgotPasswordCode}", async (
+            Guid forgotPasswordCode,
+
+            ISender _sender,
+            CancellationToken cancellationToken) =>
+        {
+            var result = await _sender.Send(new CheckForgotPasswordCodeCommand(forgotPasswordCode), cancellationToken);
+
+            return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
+
+        })
+            .RequireRateLimiting("check-forgot-password-code-fixed")
+            .Produces<Result<string>>();
+
+        // RESET PASSWORD
+
+        app.MapPost("/reset-password", async (
+            ResetPasswordCommand request,
+            ISender _sender,
+            CancellationToken cancellationToken) =>
+        {
+            var result = await _sender.Send(request, cancellationToken);
+
+            return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
+
+        })
+            .RequireRateLimiting("reset-password-fixed")
+            .Produces<Result<string>>();
     }
 }

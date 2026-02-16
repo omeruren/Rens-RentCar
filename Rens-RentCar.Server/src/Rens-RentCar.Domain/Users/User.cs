@@ -24,6 +24,7 @@ public sealed class User : BaseEntity
         FullName = new($"{FirstName.Value} {LastName.Value} ( {Email.Value} )");
         UserName = userName;
         Password = password;
+        IsForgotPasswordCompleted = new(true);
     }
 
     public FirstName FirstName { get; private set; } = default!;
@@ -32,9 +33,9 @@ public sealed class User : BaseEntity
     public Email Email { get; private set; } = default!;
     public UserName UserName { get; private set; } = default!;
     public Password Password { get; private set; } = default!;
-    public ForgotPasswordId? ForgotPasswordId { get; private set; }
+    public ForgotPasswordCode? ForgotPasswordCode { get; private set; }
     public ForgotPasswordDate? ForgotPasswordDate { get; private set; }
-    public IsForgotPasswordCompleted? IsForgotPasswordCompleted { get; private set; }
+    public IsForgotPasswordCompleted IsForgotPasswordCompleted { get; private set; } = default!;
 
     public bool VerifyPasswordHash(string password)
     {
@@ -45,8 +46,10 @@ public sealed class User : BaseEntity
 
     public void CreateForgotPasswordId()
     {
-        ForgotPasswordId = new(Guid.CreateVersion7());
+        ForgotPasswordCode = new(Guid.CreateVersion7());
         ForgotPasswordDate = new(DateTimeOffset.Now);
         IsForgotPasswordCompleted = new(false);
     }
+
+    public void SetPassword(Password password) => Password = password;
 }

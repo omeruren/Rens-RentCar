@@ -50,6 +50,26 @@ builder.Services.AddRateLimiter(cfr =>
     });
 });
 
+builder.Services.AddRateLimiter(cfr =>
+{
+    cfr.AddFixedWindowLimiter("reset-password-fixed", opt =>
+    {
+        opt.PermitLimit = 3;
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+    });
+});
+
+builder.Services.AddRateLimiter(cfr =>
+{
+    cfr.AddFixedWindowLimiter("check-forgot-password-code-fixed", opt =>
+    {
+        opt.PermitLimit = 2;
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+    });
+});
+
 // Odata Configuration
 builder.Services.AddControllers()
     .AddOData(opt =>
