@@ -32,5 +32,6 @@ public static class ExtensionMethods
     public static void MapEndPoints(this WebApplication app)
     {
         app.MapAutEndpoint();
+        app.MapBranchEndpoint();
     }
 }
