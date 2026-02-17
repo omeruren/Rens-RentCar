@@ -36,6 +36,10 @@ export default class ResetPassword {
       this.id.set(res['id']);
     });
   }
+
+
+  readonly logoutAllDevices = signal<Boolean>(true);
+
   readonly loading = signal<boolean>(false);
   readonly id = signal<string>('');
 
@@ -112,8 +116,9 @@ export default class ResetPassword {
   onSubmit(): void {
     if (this.isFormValid()) {
       const data = {
-        forgotPasswordId: this.id(),
+        forgotPasswordCode: this.id(),
         newPassword: this.password(),
+        logoutAllDevices:this.logoutAllDevices()
       };
       this.loading.set(true);
       this.#http.post<string>(
