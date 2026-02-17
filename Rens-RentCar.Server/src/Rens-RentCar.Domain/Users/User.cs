@@ -18,13 +18,14 @@ public sealed class User : BaseEntity
         UserName userName,
         Password password)
     {
-        SetFIrstName(firstName);
+        SetFirstName(firstName);
         SetLastName(lastName);
         SetEmail(email);
         SetFullName();
         SetUserName(userName);
         SetPassword(password);
         SetIsForgotPasswordCompleted(new(true));
+        SetTFAStatus(new(false));
     }
 
     public FirstName FirstName { get; private set; } = default!;
@@ -32,10 +33,18 @@ public sealed class User : BaseEntity
     public FullName FullName { get; private set; } = default!;
     public Email Email { get; private set; } = default!;
     public UserName UserName { get; private set; } = default!;
+
     public Password Password { get; private set; } = default!;
     public ForgotPasswordCode? ForgotPasswordCode { get; private set; }
     public ForgotPasswordDate? ForgotPasswordDate { get; private set; }
     public IsForgotPasswordCompleted IsForgotPasswordCompleted { get; private set; } = default!;
+
+    public TFAStatus? TFAStatus { get; private set; } = default!;
+    public TFACode? TFACode { get; private set; } = default!;
+    public TFAConfirmCode? TFAConfirmCode { get; private set; } = default!;
+    public TFAExpiresDate? TFAExpiresDate { get; private set; } = default!;
+    public TFAIscompleted? TFAIscompleted { get; private set; } = default!;
+
 
     #region Behaviors
     public bool VerifyPasswordHash(string password)
@@ -52,7 +61,7 @@ public sealed class User : BaseEntity
         IsForgotPasswordCompleted = new(false);
     }
 
-    public void SetFIrstName(FirstName firstName) => FirstName = firstName;
+    public void SetFirstName(FirstName firstName) => FirstName = firstName;
     public void SetLastName(LastName lastName) => LastName = lastName;
     public void SetEmail(Email email) => Email = email;
     public void SetFullName() => FullName = new($"{FirstName.Value} {LastName.Value} ( {Email.Value} )");
@@ -60,5 +69,17 @@ public sealed class User : BaseEntity
     public void SetPassword(Password password) => Password = password;
     public void SetIsForgotPasswordCompleted(IsForgotPasswordCompleted isForgotPasswordCompleted) => IsForgotPasswordCompleted = isForgotPasswordCompleted;
     #endregion
+
+    public void SetTFAStatus(TFAStatus tfaStatus) => TFAStatus = tfaStatus;
+
+    public void CreateTFACode()
+    {
+        var code = Guid.CreateVersion7().ToString();
+        var confirmCode = Guid.CreateVersion7().ToString();
+        var expiresDate = DateTimeOffset.Now.AddMinutes(5);
+        TFACode = new(code);
+        TFAExpiresDate = new(expiresDate);
+        TFAIscompleted = new(false);
+    }
 }
 
