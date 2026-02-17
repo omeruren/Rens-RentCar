@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rens_RentCar.Domain.Abstraction;
+using Rens_RentCar.Domain.Branches;
 using Rens_RentCar.Domain.LoginTokens;
 using Rens_RentCar.Domain.Users;
 using System.Security.Claims;
@@ -18,7 +19,9 @@ internal sealed class ApplicationDbContext : DbContext, IUnitOfWork
     #region Models
     public DbSet<User> Users { get; set; }
     public DbSet<LoginToken> LoginTokens { get; set; }
+    public DbSet<Branch> Branches { get; set; }
     #endregion
+
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var entries = ChangeTracker.Entries<BaseEntity>();
