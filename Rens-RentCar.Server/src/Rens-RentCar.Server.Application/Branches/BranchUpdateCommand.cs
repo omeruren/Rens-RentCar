@@ -48,6 +48,6 @@ internal sealed class BranchUpdateCommandHandler(IBranchRepository _branchReposi
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return "Branch updated successfully."
+        return "Branch updated successfully.";
     }
 }
