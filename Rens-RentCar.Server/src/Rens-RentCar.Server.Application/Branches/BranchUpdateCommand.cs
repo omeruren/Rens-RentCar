@@ -7,15 +7,16 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Branches;
 
-public sealed record BranchCreateCommand(
+public sealed record BranchUpdateCommand(
+    Guid Id,
     string Name,
     Address Address,
     bool IsActive) : IRequest<Result<string>>;
 
 
-public sealed class BranchCreateCommandValidator : AbstractValidator<BranchCreateCommand>
+public sealed class BranchUpdateCommandValidator : AbstractValidator<BranchUpdateCommand>
 {
-    public BranchCreateCommandValidator()
+    public BranchUpdateCommandValidator()
     {
         RuleFor(r => r.Name)
             .NotEmpty().WithMessage("Branch name required")
@@ -29,23 +30,24 @@ public sealed class BranchCreateCommandValidator : AbstractValidator<BranchCreat
     }
 }
 
-internal sealed class BrachCreateCommandHandler(IBranchRepository _branchRepository, IUnitOfWork _unitOfWork) : IRequestHandler<BranchCreateCommand, Result<string>>
+internal sealed class BranchUpdateCommandHandler(IBranchRepository _branchRepository, IUnitOfWork _unitOfWork) : IRequestHandler<BranchUpdateCommand, Result<string>>
 {
-    public async Task<Result<string>> Handle(BranchCreateCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(BranchUpdateCommand request, CancellationToken cancellationToken)
     {
-        var isBranchAlreadyTaken = await _branchRepository.AnyAsync(x => x.Name.Value == request.Name, cancellationToken);
+        var branch = await _branchRepository.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-        if (isBranchAlreadyTaken)
-            return Result<string>.Failure("This branch name is already taken by someone else.");
+        if (branch is null)
+            return Result<string>.Failure("Branch not found");
 
         Name name = new(request.Name);
         Address address = request.Address;
 
-        Branch branch = new(name, address, request.IsActive);
+        branch.SetName(name: name);
+        branch.SetAddress(address: address);
+        branch.SetStatus(isActive: request.IsActive);
 
-        _branchRepository.Add(branch);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return "Branch Created successfully.";
+        return "Branch updated successfully."
     }
 }

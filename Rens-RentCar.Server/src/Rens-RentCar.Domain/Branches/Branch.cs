@@ -6,10 +6,11 @@ namespace Rens_RentCar.Domain.Branches;
 public sealed class Branch : BaseEntity
 {
     private Branch() { }
-    public Branch(Name name, Address address)
+    public Branch(Name name, Address address, bool isActive)
     {
         SetName(name);
         SetAddress(address);
+        SetStatus(isActive);
     }
 
     public Name Name { get; private set; } = default!;
