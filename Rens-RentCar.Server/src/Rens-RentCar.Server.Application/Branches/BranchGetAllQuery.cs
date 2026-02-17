@@ -6,18 +6,18 @@ using TS.MediatR;
 
 namespace Rens_RentCar.Server.Application.Branches;
 
-public sealed record BranchGetAllQuery : IRequest<IQueryable<BranchGetAllQueryResponse>>;
+public sealed record BranchGetAllQuery : IRequest<IQueryable<BranchDto>>;
 
 
-public sealed class BranchGetAllQueryResponse : BaseEntityDto
+public sealed class BranchDto : BaseEntityDto
 {
     public string Name { get; set; } = default!;
     public Address Address { get; set; } = default!;
 }
 
-internal sealed class BranchGetAllQueryHandle(IBranchRepository _branchRepository, IUserRepository _userRepository) : IRequestHandler<BranchGetAllQuery, IQueryable<BranchGetAllQueryResponse>>
+internal sealed class BranchGetAllQueryHandle(IBranchRepository _branchRepository, IUserRepository _userRepository) : IRequestHandler<BranchGetAllQuery, IQueryable<BranchDto>>
 {
-    public Task<IQueryable<BranchGetAllQueryResponse>> Handle(BranchGetAllQuery request, CancellationToken cancellationToken)
+    public Task<IQueryable<BranchDto>> Handle(BranchGetAllQuery request, CancellationToken cancellationToken)
     {
         var response = _branchRepository
             .GetAll()
@@ -30,7 +30,7 @@ internal sealed class BranchGetAllQueryHandle(IBranchRepository _branchRepositor
                 updatedUser = user
             })
 
-            .Select(s => new BranchGetAllQueryResponse
+            .Select(s => new BranchDto
             {
                 Id = s.entity.b.Id,
                 Name = s.entity.b.Name.Value,
@@ -41,7 +41,7 @@ internal sealed class BranchGetAllQueryHandle(IBranchRepository _branchRepositor
                 IsActive = s.entity.b.IsActive,
 
                 UpdatedAt = s.entity.b.UpdatedAt,
-                UpdatedBy = s.entity.b.UpdatedBy,
+                UpdatedBy = s.entity.b.UpdatedBy == null ? null : s.entity.b.UpdatedBy.Value,
 
                 CreatedFullName = s.entity.user.FullName.Value,
                 UpdatedFullName = s.updatedUser == null ? null : s.updatedUser.FullName.Value

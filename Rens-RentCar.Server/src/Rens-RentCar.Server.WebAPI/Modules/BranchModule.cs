@@ -1,5 +1,4 @@
-﻿using Rens_RentCar.Domain.Branches;
-using Rens_RentCar.Server.Application.Branches;
+﻿using Rens_RentCar.Server.Application.Branches;
 using TS.MediatR;
 using TS.Result;
 
@@ -24,7 +23,7 @@ public static class BranchModule
             return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
 
         })
-            .Produces<Result<Branch>>();
+            .Produces<Result<BranchDto>>();
 
         // POST
         app.MapPost(string.Empty, async (
