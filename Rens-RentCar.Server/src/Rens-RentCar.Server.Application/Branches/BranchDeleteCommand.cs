@@ -18,6 +18,8 @@ internal sealed class BranchDeleteCommandHandler(IBranchRepository _branchReposi
             return Result<string>.Failure("Branch not found.");
 
         branch.Delete();
+        _branchRepository.Update(branch);
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return "Branch deleted successfully.";
