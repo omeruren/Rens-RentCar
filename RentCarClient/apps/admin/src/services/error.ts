@@ -28,6 +28,12 @@ export class ErrorService {
       );
       localStorage.removeItem('response');
       this.#router.navigateByUrl('/login');
+    } else if (status !== 200) {
+      this.#toast.showToast(
+        'Error!',
+        'Something went wrong. Please contact to Administrators',
+        'error'
+      );
     }
   }
 }

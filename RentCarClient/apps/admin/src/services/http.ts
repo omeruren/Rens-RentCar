@@ -1,8 +1,13 @@
 import { Result } from './../models/result.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpContext,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ErrorService } from './error';
 import { catchError, of, pipe } from 'rxjs';
+import { SKIP_ERROR_HANDLER } from '../app.config';
 
 @Injectable({
   providedIn: 'root',
@@ -19,25 +24,26 @@ export class HttpService {
     callback: (res: T) => void,
     errorCallback?: (err: HttpErrorResponse) => void
   ) {
-    this.#http.get<Result<T>>(endpoint).subscribe({
-      next: (res) => {
-        callback(res.data!);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.#errorService.handle(err);
-        if (errorCallback) errorCallback(err);
-      },
-    });
+    this.#http
+      .get<Result<T>>(endpoint, {
+        context: new HttpContext().set(SKIP_ERROR_HANDLER, true),
+      })
+      .subscribe({
+        next: (res) => {
+          callback(res.data!);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.#errorService.handle(err);
+          if (errorCallback) errorCallback(err);
+        },
+      });
   }
   // GET
 
   getResource<T>(endpoint: string) {
-    return this.#http.get<Result<T>>(endpoint).pipe(
-      catchError((err: HttpErrorResponse) => {
-        this.#errorService.handle(err);
-        return of();
-      })
-    );
+    return this.#http.get<Result<T>>(endpoint, {
+      context: new HttpContext().set(SKIP_ERROR_HANDLER, true),
+    });
   }
 
   // POST
@@ -48,15 +54,19 @@ export class HttpService {
     callback: (res: T) => void,
     errorCallback?: (err: HttpErrorResponse) => void
   ) {
-    this.#http.post<Result<T>>(endpoint, body).subscribe({
-      next: (res) => {
-        callback(res.data!);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.#errorService.handle(err);
-        if (errorCallback) errorCallback(err);
-      },
-    });
+    this.#http
+      .post<Result<T>>(endpoint, body, {
+        context: new HttpContext().set(SKIP_ERROR_HANDLER, true),
+      })
+      .subscribe({
+        next: (res) => {
+          callback(res.data!);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.#errorService.handle(err);
+          if (errorCallback) errorCallback(err);
+        },
+      });
   }
 
   // PUT
@@ -67,15 +77,19 @@ export class HttpService {
     callback: (res: T) => void,
     errorCallback?: (err: HttpErrorResponse) => void
   ) {
-    this.#http.put<Result<T>>(endpoint, body).subscribe({
-      next: (res) => {
-        callback(res.data!);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.#errorService.handle(err);
-        if (errorCallback) errorCallback(err);
-      },
-    });
+    this.#http
+      .put<Result<T>>(endpoint, body, {
+        context: new HttpContext().set(SKIP_ERROR_HANDLER, true),
+      })
+      .subscribe({
+        next: (res) => {
+          callback(res.data!);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.#errorService.handle(err);
+          if (errorCallback) errorCallback(err);
+        },
+      });
   }
 
   // DELETE
@@ -86,14 +100,18 @@ export class HttpService {
     callback: (res: T) => void,
     errorCallback?: (err: HttpErrorResponse) => void
   ) {
-    this.#http.delete<Result<T>>(endpoint).subscribe({
-      next: (res) => {
-        callback(res.data!);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.#errorService.handle(err);
-        if (errorCallback) errorCallback(err);
-      },
-    });
+    this.#http
+      .delete<Result<T>>(endpoint, {
+        context: new HttpContext().set(SKIP_ERROR_HANDLER, true),
+      })
+      .subscribe({
+        next: (res) => {
+          callback(res.data!);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.#errorService.handle(err);
+          if (errorCallback) errorCallback(err);
+        },
+      });
   }
 }
