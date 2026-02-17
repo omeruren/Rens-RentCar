@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
 using Rens_RentCar.Server.Application;
-using Rens_RentCar.Server.Application.Services;
 using Rens_RentCar.Server.Infrastructure;
 using Rens_RentCar.Server.WebAPI;
+using Rens_RentCar.Server.WebAPI.Middlewares;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -85,6 +85,10 @@ builder.Services.AddControllers()
 // CORS policy
 builder.Services.AddCors();
 
+// Check Token Middleware
+builder.Services.AddTransient<CheckTokenMiddleware>();
+
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
@@ -109,18 +113,17 @@ app.UseResponseCompression();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseRateLimiter();
 app.UseExceptionHandler();
+
+app.UseMiddleware<CheckTokenMiddleware>();
+
+app.UseRateLimiter();
 
 app.MapControllers()
     .RequireAuthorization()
     .RequireRateLimiting("fixed");
 
-app.MapGet("/", async (IMailService _mailService) =>
-{
-    await _mailService.SendAsync("testhesabim48@gmail.com", "Test", "<h1><b>Bu bir test mailidir.</b> </h1>", default);
-    return Results.Ok();
-});
+app.MapGet("/", () => "Hello World").RequireAuthorization();
 
 //await app.AddSeedUser();
 app.MapEndPoints();

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
+using Rens_RentCar.Server.WebAPI.Middlewares;
 using TS.Result;
 
 namespace Rens_RentCar.Server.WebAPI;
@@ -20,6 +21,7 @@ public sealed class ExceptionHandler : IExceptionHandler
         var exceptionType = actualException.GetType();
         var validationExceptionType = typeof(ValidationException);
         var authorizationExceptionType = typeof(AuthorizationException);
+        var tokenException = typeof(AppTokenEx);
 
         if (exceptionType == validationExceptionType)
         {
@@ -36,6 +38,14 @@ public sealed class ExceptionHandler : IExceptionHandler
         {
             httpContext.Response.StatusCode = 403;
             errorResult = Result<string>.Failure(403, "You do not have permission to perform this action.");
+            await httpContext.Response.WriteAsJsonAsync(errorResult);
+            return true;
+        }
+
+        if (exceptionType == tokenException)
+        {
+            httpContext.Response.StatusCode = 401;
+            errorResult = Result<string>.Failure(401, "Invalid Token.");
             await httpContext.Response.WriteAsJsonAsync(errorResult);
             return true;
         }

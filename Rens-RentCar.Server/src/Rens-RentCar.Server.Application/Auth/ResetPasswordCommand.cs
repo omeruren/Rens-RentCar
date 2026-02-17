@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using Microsoft.EntityFrameworkCore;
+using Rens_RentCar.Domain.LoginTokens;
 using Rens_RentCar.Domain.Users;
 using Rens_RentCar.Domain.Users.ValueObjects;
 using TS.MediatR;
@@ -7,7 +9,10 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Auth;
 
-public sealed record ResetPasswordCommand(Guid ForgotPasswordCode, string NewPassword) : IRequest<Result<string>>;
+public sealed record ResetPasswordCommand(
+    Guid ForgotPasswordCode,
+    string NewPassword,
+    bool LogoutAllDevices) : IRequest<Result<string>>;
 
 public sealed class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
 {
@@ -17,7 +22,7 @@ public sealed class ResetPasswordCommandValidator : AbstractValidator<ResetPassw
     }
 }
 
-internal sealed class ResetPasswordCommandHandler(IUserRepository _userRepository, IUnitOfWork _unitOfWork) : IRequestHandler<ResetPasswordCommand, Result<string>>
+internal sealed class ResetPasswordCommandHandler(IUserRepository _userRepository, IUnitOfWork _unitOfWork, ILoginTokenRepository _LoginTokenRepository) : IRequestHandler<ResetPasswordCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
@@ -36,6 +41,16 @@ internal sealed class ResetPasswordCommandHandler(IUserRepository _userRepositor
         user.SetPassword(password);
 
         _userRepository.Update(user);
+        if (request.LogoutAllDevices)
+        {
+
+            var loginTokens = await _LoginTokenRepository.Where(p => p.UserId == user.Id && p.IsActive.Value == true).ToListAsync(cancellationToken);
+
+            foreach (var item in loginTokens)
+                item.SetIsActive(new(false));
+
+            _LoginTokenRepository.UpdateRange(loginTokens);
+        }
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
