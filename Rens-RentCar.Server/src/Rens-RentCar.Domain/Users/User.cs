@@ -39,7 +39,7 @@ public sealed class User : BaseEntity
     public ForgotPasswordDate? ForgotPasswordDate { get; private set; }
     public IsForgotPasswordCompleted IsForgotPasswordCompleted { get; private set; } = default!;
 
-    public TFAStatus? TFAStatus { get; private set; } = default!;
+    public TFAStatus TFAStatus { get; private set; } = default!;
     public TFACode? TFACode { get; private set; } = default!;
     public TFAConfirmCode? TFAConfirmCode { get; private set; } = default!;
     public TFAExpiresDate? TFAExpiresDate { get; private set; } = default!;
@@ -80,6 +80,9 @@ public sealed class User : BaseEntity
         TFACode = new(code);
         TFAExpiresDate = new(expiresDate);
         TFAIscompleted = new(false);
+        TFAConfirmCode = new(confirmCode);
     }
+
+    public void SetTFACompleted() => TFAIscompleted = new(true);
 }
 

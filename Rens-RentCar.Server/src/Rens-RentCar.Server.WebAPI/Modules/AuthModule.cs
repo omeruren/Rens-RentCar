@@ -22,7 +22,21 @@ public static class AuthModule
             return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
         })
             .RequireRateLimiting("login-fixed")
-            .Produces<Result<string>>();
+            .Produces<Result<LoginCommandResponse>>();
+
+        // LOGIN
+
+        app.MapPost("/login-with-tfa", async (
+            LoginWithTFACommand request,
+            ISender _sender,
+            CancellationToken cancellationToken) =>
+        {
+            var result = await _sender.Send(request, cancellationToken);
+
+            return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
+        })
+            .RequireRateLimiting("login-fixed")
+            .Produces<Result<LoginCommandResponse>>();
 
         // FORGOT PASSWORD
 
