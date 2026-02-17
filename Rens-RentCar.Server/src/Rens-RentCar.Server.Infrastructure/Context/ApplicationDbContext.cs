@@ -26,7 +26,7 @@ internal sealed class ApplicationDbContext : DbContext, IUnitOfWork
         HttpContextAccessor httpContextAccessor = new();
         string? userIdString =
         httpContextAccessor
-        .HttpContext!
+        .HttpContext?
         .User
         .Claims
         .FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?

@@ -88,6 +88,9 @@ builder.Services.AddCors();
 // Check Token Middleware
 builder.Services.AddTransient<CheckTokenMiddleware>();
 
+// background service
+builder.Services.AddHostedService<CheckLoginBackgroundService>();
+
 
 builder.Services.AddOpenApi();
 

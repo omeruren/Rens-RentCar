@@ -41,6 +41,7 @@ internal sealed class ResetPasswordCommandHandler(IUserRepository _userRepositor
         user.SetPassword(password);
 
         _userRepository.Update(user);
+
         if (request.LogoutAllDevices)
         {
 
