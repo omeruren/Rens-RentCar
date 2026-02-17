@@ -28,6 +28,13 @@ export default class Login {
 
   readonly loading = signal<boolean>(false);
   readonly email = signal<string>('');
+  readonly emailOrUserName = signal<string>('');
+
+  readonly tfaCode = signal<string>('');
+  readonly tfaConfirmCode = signal<string>('');
+  readonly showTfaForm = signal<boolean>(false);
+
+  readonly time = signal<{ min: number; sec: number }>({ min: 5, sec: 0 });
   readonly closeModalBtn =
     viewChild<ElementRef<HTMLButtonElement>>('modalCloseButton');
   readonly passwordEl = viewChild<ElementRef<HTMLInputElement>>('passwordEl');
@@ -43,15 +50,64 @@ export default class Login {
   signIn(form: NgForm) {
     if (!form.valid) return;
     this.loading.set(true);
-    this.#http.post<string>(
+    this.#http.post<{ token: string | null; tfaCode: string | null }>(
       'rent/auth/login',
       form.value,
       (res) => {
-        localStorage.setItem('response', res);
-        this.#router.navigateByUrl('/');
+        if (res.token !== null) {
+          localStorage.setItem('response', res.token);
+          this.#router.navigateByUrl('/');
+        } else if (res.tfaCode !== null) {
+          this.tfaCode.set(res.tfaCode);
+          this.showTfaForm.set(true);
+          this.time.set({ min: 5, sec: 0 });
+
+          var interval: any = setInterval(() => {
+            let min = this.time().min;
+            let sec = this.time().sec;
+
+            sec--;
+            if (sec < 0) {
+              sec = 59;
+              min--;
+              if (min < 0) {
+                min = 0;
+                interval.clear();
+                this.showTfaForm.set(false);
+              }
+            }
+            this.time.set({ min: min, sec: sec });
+          }, 1000);
+        }
         this.loading.set(false);
       },
       () => this.loading.set(false)
+    );
+  }
+
+  //  SIGNIN TFA
+
+  signInWithTfa(form: NgForm) {
+    if (!form.valid) return;
+
+    const data = {
+      emailOrUserName: this.emailOrUserName(),
+      tfaCode: this.tfaCode(),
+      tfaConfirmCode: this.tfaConfirmCode(),
+    };
+
+    this.loading.set(true);
+    this.#http.post<{ token: string | null; tfaCode: string | null }>(
+      'rent/auth/login-with-tfa',
+      data,
+      (res) => {
+        localStorage.setItem('response', res.token!);
+        this.#router.navigateByUrl('/');
+        this.loading.set(false);
+      },
+      () => {
+        this.loading.set(false);
+      }
     );
   }
 
