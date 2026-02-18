@@ -16,8 +16,9 @@ import { ODataModel } from '../../models/odata.model';
 import { BranchModel } from '../../models/branch.model';
 import { FlexiGridModule, FlexiGridService, StateModel } from 'flexi-grid';
 import { NgxMaskPipe } from 'ngx-mask';
+import { RouterLink } from '@angular/router';
 @Component({
-  imports: [Blank, FlexiGridModule,NgxMaskPipe],
+  imports: [Blank,RouterLink, FlexiGridModule,NgxMaskPipe],
   templateUrl: './branches.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-md-6 col-12">
+    <app-blank [pageTitle]="pageTitle()" [pageIcon]="pageIcon()">
+      @if(loading()){<app-loading />}
+      <form #form="ngForm" formValidate class="admin-form">
+        <!-- Basic Information -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6>
+              <i class="bi bi-info-circle text-primary me-2"></i>Basic
+              Informations
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <div class="form-label">
+                Branch Name (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                ngModel
+                name="name"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Information -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6>
+              <i class="bi bi-info-circle text-primary me-2"></i>Address
+              Informations
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <div class="form-label">
+                City (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                ngModel
+                name="city"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <div class="form-label">
+                District (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                ngModel
+                name="district"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <div class="form-label">
+                Full Address (<span class="text-danger">*</span>)
+              </div>
+              <textarea
+                class="form-control"
+                type="text"
+                rows="4"
+                ngModel
+                name="fullAddress"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <div class="form-label">
+                Primary phone number (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                ngModel
+                name="phoneNumber1"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <div class="form-label">Second phone number</div>
+              <input
+                class="form-control"
+                type="text"
+                ngModel
+                name="phoneNumber2"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <div class="form-label">Contact Mail address</div>
+              <input
+                class="form-control"
+                type="email"
+                ngModel
+                name="email"
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-group d-flex justify-content-end">
+          <button type="submit" class="btn btn-outline-primary">Save</button>
+        </div>
+      </form>
+    </app-blank>
+  </div>
+</div>

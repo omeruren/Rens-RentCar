@@ -12,6 +12,7 @@
   >
     <ng-template flexiGridCaptionCommandTemplate>
       <flexi-button
+        [routerLink]="['/','branches','add']"
         btnColor="primary"
         btnIcon="add"
         title="Add Branch"
@@ -56,6 +57,7 @@
     />
     <ng-template flexiGridColumnCommandTemplate let-item>
       <flexi-button
+        [routerLink]="['/','branches','edit',item.id]"
         btnIcon="edit"
         btnColor="info"
         btnSize="x-small"
