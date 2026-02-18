@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Rens_RentCar.Server.Application.Branches;
@@ -7,12 +8,12 @@ using TS.MediatR;
 
 namespace Rens_RentCar.Server.WebAPI.Controllers;
 
-[Route("api/[controller]")]
+[Route("odata")]
 [ApiController]
 [EnableQuery]
-public class ODataController : ControllerBase
+public class BaseODataController : ODataController
 {
-    public static IEdmModel GetModel()
+    public static IEdmModel GetEdmModel()
     {
         ODataConventionModelBuilder builder = new();
         builder.EnableLowerCamelCase();

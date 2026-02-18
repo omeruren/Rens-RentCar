@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Rens_RentCar.Server.Application;
 using Rens_RentCar.Server.Infrastructure;
 using Rens_RentCar.Server.WebAPI;
+using Rens_RentCar.Server.WebAPI.Controllers;
 using Rens_RentCar.Server.WebAPI.Middlewares;
 using Scalar.AspNetCore;
 
@@ -78,7 +79,7 @@ builder.Services.AddControllers()
         .Expand()
         .OrderBy()
         .SetMaxTop(null)
-
+        .AddRouteComponents("odata", BaseODataController.GetEdmModel())
     );
 
 // CORS policy
