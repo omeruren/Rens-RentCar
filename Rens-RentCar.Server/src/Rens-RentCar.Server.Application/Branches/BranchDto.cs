@@ -15,30 +15,22 @@ public static class BranchExtensions
 {
     public static IQueryable<BranchDto> MapTo(this IQueryable<Branch> branches, IQueryable<User> users)
     {
-        var result = branches.Join(users, m => m.CreatedBy, m => m.Id, (b, user) => new { b = b, user = user })
-            .GroupJoin(users, m => m.b.UpdatedBy, m => m.Id, (entity, user) => new { entity = entity, user = user })
-            .SelectMany(s => s.user.DefaultIfEmpty(),
-            (x, user) => new
-            {
-                entity = x.entity,
-                updatedUser = user
-            })
-
+        var result = branches.ApplyAuditDto(users)
             .Select(s => new BranchDto
             {
-                Id = s.entity.b.Id,
-                Name = s.entity.b.Name.Value,
-                Address = s.entity.b.Address,
-                CreatedAt = s.entity.b.CreatedAt,
-                CreatedBy = s.entity.b.CreatedBy,
+                Id = s.Entity.Id,
+                Name = s.Entity.Name.Value,
+                Address = s.Entity.Address,
+                CreatedAt = s.Entity.CreatedAt,
+                CreatedBy = s.Entity.CreatedBy,
 
-                IsActive = s.entity.b.IsActive,
+                IsActive = s.Entity.IsActive,
 
-                UpdatedAt = s.entity.b.UpdatedAt,
-                UpdatedBy = s.entity.b.UpdatedBy == null ? null : s.entity.b.UpdatedBy.Value,
+                UpdatedAt = s.Entity.UpdatedAt,
+                UpdatedBy = s.Entity.UpdatedBy == null ? null : s.Entity.UpdatedBy.Value,
 
-                CreatedFullName = s.entity.user.FullName.Value,
-                UpdatedFullName = s.updatedUser == null ? null : s.updatedUser.FullName.Value
+                CreatedFullName = s.CreatedUser.FullName.Value,
+                UpdatedFullName = s.UpdatedUser == null ? null : s.UpdatedUser.FullName.Value
 
             }).AsQueryable();
 
