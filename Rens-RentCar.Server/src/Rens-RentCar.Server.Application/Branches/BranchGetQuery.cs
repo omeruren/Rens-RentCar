@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rens_RentCar.Domain.Branches;
-using Rens_RentCar.Domain.Users;
 using TS.MediatR;
 using TS.Result;
 
@@ -8,13 +7,13 @@ namespace Rens_RentCar.Server.Application.Branches;
 
 public sealed record BranchGetQuery(Guid Id) : IRequest<Result<BranchDto>>;
 
-internal sealed class BranchGetQueryHandler(IBranchRepository _branchRepository, IUserRepository _userRepository) : IRequestHandler<BranchGetQuery, Result<BranchDto>>
+internal sealed class BranchGetQueryHandler(IBranchRepository _branchRepository) : IRequestHandler<BranchGetQuery, Result<BranchDto>>
 {
     public async Task<Result<BranchDto>> Handle(BranchGetQuery request, CancellationToken cancellationToken)
     {
-        var branch = await _branchRepository.
-            Where(x => x.Id == request.Id)
-            .MapTo(_userRepository.GetAll())
+        var branch = await _branchRepository.GetAllWithAuditInfos()
+            .MapTo()
+            .Where(x => x.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (branch is null)

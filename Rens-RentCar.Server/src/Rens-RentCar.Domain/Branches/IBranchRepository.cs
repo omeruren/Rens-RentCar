@@ -1,7 +1,7 @@
-﻿using GenericRepository;
+﻿using Rens_RentCar.Domain.Abstraction;
 
 namespace Rens_RentCar.Domain.Branches;
 
-public interface IBranchRepository : IRepository<Branch>
+public interface IBranchRepository : IAuditableRepository<Branch>
 {
 }

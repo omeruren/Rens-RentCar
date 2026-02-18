@@ -26,9 +26,3 @@ internal static class ExtensionMethods
     }
 }
 
-public sealed class EntityWithAuditDto<TEntity> where TEntity : BaseEntity
-{
-    public TEntity Entity { get; set; } = default!;
-    public User CreatedUser { get; set; } = default!;
-    public User? UpdatedUser { get; set; }
-}
