@@ -12,6 +12,7 @@ import {
 import { httpInterceptor } from './interceptors/http-interceptor';
 import { authInterceptor } from './interceptors/auth-interceptor';
 import { errorInterceptor } from './interceptors/error-interceptor';
+import { provideNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([httpInterceptor, authInterceptor, errorInterceptor])
     ),
+    provideNgxMask(),
   ],
 };
 

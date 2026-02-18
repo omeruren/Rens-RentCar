@@ -12,4 +12,9 @@ export const navigations: NavigationModel[] = [
     url: '/',
     icon: 'bi-speedometer2',
   },
+  {
+    title: 'Branches',
+    url: '/branches',
+    icon: 'bi-buildings',
+  },
 ];

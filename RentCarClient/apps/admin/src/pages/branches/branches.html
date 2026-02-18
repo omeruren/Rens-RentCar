@@ -1,0 +1,75 @@
+<app-blank pageTitle="Branches" pageIcon="bi-buildings">
+  <flexi-grid
+    [showCaption]="true"
+    captionTitle="Branch List"
+    [data]="data()"
+    [total]="totalCount()"
+    [loading]="loading()"
+    [dataBinding]="true"
+    (dataStateChange)="dataStateChange($event)"
+    [showExportExcelBtn]="true"
+    exportExcelFileName="Branches"
+  >
+    <ng-template flexiGridCaptionCommandTemplate>
+      <flexi-button
+        btnColor="primary"
+        btnIcon="add"
+        title="Add Branch"
+        flexiTooltip
+      />
+    </ng-template>
+    <flexi-grid-column field="name" title="Branch Name" />
+    <flexi-grid-column field="address.city" title="City" />
+    <flexi-grid-column field="address.district" title="District" />
+    <flexi-grid-column field="address.fullAddress" title="Full Address" />
+    <flexi-grid-column field="address.phoneNumber1" title="Primary Phone umber">
+      <ng-template flexiGridCellTemplate let-item>
+        <span>+90 {{item.address.phoneNumber1 |mask:'(999) 999 99 99'}} </span>
+      </ng-template>
+    </flexi-grid-column>
+    <flexi-grid-column field="address.phoneNumber2" title="Second Phone number">
+      <ng-template flexiGridCellTemplate let-item>
+        <span>+90 {{item.address.phoneNumber2 |mask:'(999) 999 99 99'}} </span>
+      </ng-template>
+    </flexi-grid-column>
+    <flexi-grid-column field="address.email" title="Branch contact email" />
+    <flexi-grid-column
+      textAlign="center"
+      field="isActive"
+      title="Active"
+      filterType="boolean"
+      [booleanData]="['Active','Inactive'] "
+    />
+    <flexi-grid-column field="createdFullName" title="Created By" />
+    <flexi-grid-column
+      field="createdAt"
+      title="Created At"
+      filterType="date"
+      format="dd MMM yyyy HH:mm:ss"
+    />
+    <flexi-grid-column field="updatedFullName" title="Updated By" />
+    <flexi-grid-column
+      field="updatedAt"
+      title="Updated At"
+      filterType="date"
+      format="dd MMM yyyy HH:mm:ss"
+    />
+    <ng-template flexiGridColumnCommandTemplate let-item>
+      <flexi-button
+        btnIcon="edit"
+        btnColor="info"
+        btnSize="x-small"
+        title="Edit Branch"
+        flexiTooltip
+      />
+
+      <flexi-button
+        btnIcon="delete"
+        btnColor="danger"
+        btnSize="x-small"
+        title="Remove Branch"
+        flexiTooltip
+      />
+    </ng-template>
+  </flexi-grid>
+</app-blank>
