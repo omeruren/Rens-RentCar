@@ -4,14 +4,16 @@ import {
   Component,
   inject,
   input,
+  output,
   ViewEncapsulation,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BaseEntityModel } from '../../models/base.entity';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector:'app-blank',
-  imports: [NgClass, RouterLink, DatePipe],
+  selector: 'app-blank',
+  imports: [NgClass, RouterLink, DatePipe, FormsModule],
   templateUrl: './blank.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +31,14 @@ export default class Blank {
   readonly editButtonUrl = input<string>('');
   readonly showAudit = input<boolean>(false);
   readonly audit = input<BaseEntityModel>();
+  readonly showStatusCheckbox = input<boolean>(false);
+  readonly changeStatusEvent = output<boolean>();
   return() {
     this.#location.back();
+  }
+
+  changeStatus(event: any) {
+    const checked = event.target.checked;
+    this.changeStatusEvent.emit(checked);
   }
 }

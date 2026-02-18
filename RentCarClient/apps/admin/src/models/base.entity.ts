@@ -3,6 +3,7 @@ export interface BaseEntityModel {
   createdAt: string;
   createdBy: string;
   createdFullName: string;
+  isActive: boolean;
 
   updatedAt?: string;
   updatedBy?: string;

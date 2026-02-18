@@ -75,6 +75,7 @@ builder.Services.AddControllers()
     .AddOData(opt =>
     opt
         .Select()
+        .Filter()
         .Count()
         .Expand()
         .OrderBy()

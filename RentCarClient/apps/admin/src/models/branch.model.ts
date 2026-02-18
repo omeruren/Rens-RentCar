@@ -13,3 +13,20 @@ export interface AddressValueObject {
   phoneNumber2?: string;
   email?: string;
 }
+
+export const INITIAL_BRANCH_MODEL: BranchModel = {
+  id: '',
+  name: '',
+  address: {
+    city: '',
+    district: '',
+    fullAddress: '',
+    phoneNumber1: '',
+    phoneNumber2: '',
+    email: '',
+  },
+  isActive: true,
+  createdAt: '',
+  createdBy: '',
+  createdFullName: '',
+};

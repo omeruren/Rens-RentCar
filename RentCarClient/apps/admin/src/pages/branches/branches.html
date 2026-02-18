@@ -30,7 +30,14 @@
     </flexi-grid-column>
     <flexi-grid-column field="address.phoneNumber2" title="Second Phone number">
       <ng-template flexiGridCellTemplate let-item>
+        @if (item.address.phoneNumber2!==null) {
+
         <span>+90 {{item.address.phoneNumber2 |mask:'(999) 999 99 99'}} </span>
+        }@else {
+        <span style="font-style: italic; font-weight: bold"
+          >No Second Phone</span
+        >
+        }
       </ng-template>
     </flexi-grid-column>
     <flexi-grid-column field="address.email" title="Branch contact email" />
@@ -48,13 +55,25 @@
       filterType="date"
       format="dd MMM yyyy HH:mm:ss"
     />
-    <flexi-grid-column field="updatedFullName" title="Updated By" />
+    <flexi-grid-column field="updatedFullName" title="Updated By">
+      <ng-template flexiGridCellTemplate let-item>
+        @if(item.updatedFullName!==null){ {{item.updatedFullName}} }@else {
+        <span style="font-style: italic; font-weight: bold">No Update yet</span>
+        }
+      </ng-template>
+    </flexi-grid-column>
     <flexi-grid-column
       field="updatedAt"
       title="Updated At"
       filterType="date"
       format="dd MMM yyyy HH:mm:ss"
-    />
+    >
+      <ng-template flexiGridCellTemplate let-item>
+        @if(item.updatedAt!==null){ {{item.updatedAt}} }@else {
+        <span style="font-style: italic; font-weight: bold">No Update yet</span>
+        }
+      </ng-template>
+    </flexi-grid-column>
     <ng-template flexiGridColumnCommandTemplate let-item>
       <flexi-button
         [routerLink]="['/','branches','edit',item.id]"
@@ -66,6 +85,7 @@
       />
 
       <flexi-button
+        (click)="delete(item.id)"
         btnIcon="delete"
         btnColor="danger"
         btnSize="x-small"

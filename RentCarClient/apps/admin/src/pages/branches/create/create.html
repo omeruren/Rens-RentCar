@@ -1,8 +1,20 @@
 <div class="row">
   <div class="col-md-6 col-12">
-    <app-blank [pageTitle]="pageTitle()" [pageIcon]="pageIcon()">
+    <app-blank
+      [pageTitle]="pageTitle()"
+      [pageIcon]="pageIcon()"
+      (changeStatusEvent)="changeStatus($event) "
+      [status]="data().isActive"
+      [showStatusCheckbox]="true"
+    >
       @if(loading()){<app-loading />}
-      <form #form="ngForm" formValidate class="admin-form">
+      <form
+        autocomplete="off"
+        #form="ngForm"
+        formValidate
+        class="admin-form"
+        (ngSubmit)="save(form)"
+      >
         <!-- Basic Information -->
         <div class="admin-card">
           <div class="card-header">
@@ -19,10 +31,15 @@
               <input
                 class="form-control"
                 type="text"
-                ngModel
+                [(ngModel)]="data().name"
                 name="name"
                 required
+                minlength="3"
+                maxlength="50"
               />
+              <div class="invalid-feedback">
+                Please Enter a valid Branch Name.
+              </div>
             </div>
           </div>
         </div>
@@ -43,10 +60,13 @@
               <input
                 class="form-control"
                 type="text"
-                ngModel
+                [(ngModel)]="data().address.city"
                 name="city"
                 required
               />
+              <div class="invalid-feedback">
+                Please Enter a valid City value.
+              </div>
             </div>
             <div class="form-group">
               <div class="form-label">
@@ -55,10 +75,13 @@
               <input
                 class="form-control"
                 type="text"
-                ngModel
+                [(ngModel)]="data().address.district"
                 name="district"
                 required
               />
+              <div class="invalid-feedback">
+                Please Enter a valid District value.
+              </div>
             </div>
             <div class="form-group">
               <div class="form-label">
@@ -68,10 +91,14 @@
                 class="form-control"
                 type="text"
                 rows="4"
-                ngModel
+                [(ngModel)]="data().address.fullAddress"
                 name="fullAddress"
                 required
+                minlength="10"
               ></textarea>
+              <div class="invalid-feedback">
+                Please Enter a valid Full address value.
+              </div>
             </div>
             <div class="form-group">
               <div class="form-label">
@@ -80,19 +107,25 @@
               <input
                 class="form-control"
                 type="text"
-                ngModel
+                [(ngModel)]="data().address.phoneNumber1"
                 name="phoneNumber1"
+                prefix="+90"
+                mask="(999) 999 9999"
                 required
               />
+              <div class="invalid-feedback">
+                Please Enter a valid primary phone number value.
+              </div>
             </div>
             <div class="form-group">
               <div class="form-label">Second phone number</div>
               <input
                 class="form-control"
                 type="text"
-                ngModel
                 name="phoneNumber2"
-                required
+                prefix="+90"
+                mask="(999) 999 9999"
+                [(ngModel)]="data().address.phoneNumber2"
               />
             </div>
             <div class="form-group">
@@ -100,9 +133,8 @@
               <input
                 class="form-control"
                 type="email"
-                ngModel
+                [(ngModel)]="data().address.email"
                 name="email"
-                required
               />
             </div>
           </div>
