@@ -32,7 +32,6 @@ import { lastValueFrom } from 'rxjs';
     Blank,
     FormsModule,
     FormValidateDirective,
-    Loading,
     NgxMaskDirective,
   ],
   templateUrl: './create.html',

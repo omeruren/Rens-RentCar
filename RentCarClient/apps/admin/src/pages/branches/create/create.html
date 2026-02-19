@@ -1,13 +1,14 @@
-<div class="row">
-  <div class="col-md-6 col-12">
-    <app-blank
+
+ <app-blank
       [pageTitle]="pageTitle()"
       [pageIcon]="pageIcon()"
       (changeStatusEvent)="changeStatus($event) "
       [status]="data().isActive"
       [showStatusCheckbox]="true"
+      [loading]="loading()"
+      size="col-md-6"
     >
-      @if(loading()){<app-loading />}
+
       <form
         autocomplete="off"
         #form="ngForm"
@@ -144,5 +145,3 @@
         </div>
       </form>
     </app-blank>
-  </div>
-</div>
