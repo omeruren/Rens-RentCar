@@ -1,0 +1,71 @@
+<app-blank
+  [pageTitle]="pageTitle()"
+  pageIcon="bi-zoom-in"
+  [showStatusCheckbox]="false"
+  [showStatus]="true"
+  [status]="data().isActive"
+  [showAudit]="true"
+  [audit]="data()"
+  size="col-md-6">
+    <div class="admin-card">
+        <div class="card-header">
+            <h6><i class="bi bi-info-circle text-primary me-2"></i>Basic Informations</h6>
+        </div>
+        <div class="card-body">
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label class="detail-label">Branch Name</label>
+                    <span class="detail-value">
+                        {{data().name}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <div class="card-header">
+            <h6><i class="bi bi-info-circle text-primary me-2"></i>Address Informations</h6>
+        </div>
+        <div class="card-body">
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label class="detail-label">City</label>
+                    <span class="detail-value">
+                        {{data().address.city}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">District</label>
+                    <span class="detail-value">
+                        {{data().address.district}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Address</label>
+                    <span class="detail-value">
+                        {{data().address.fullAddress}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Primary Phone number</label>
+                    <span class="detail-value">
+                        {{data().address.phoneNumber1}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Second Phone number</label>
+                    <span class="detail-value">
+                        {{data().address.phoneNumber1}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Contact Mail</label>
+                    <span class="detail-value">
+                        {{data().address.email}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-blank>

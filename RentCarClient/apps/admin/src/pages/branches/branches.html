@@ -83,6 +83,14 @@
         title="Edit Branch"
         flexiTooltip
       />
+      <flexi-button
+        [routerLink]="['/','branches','details',item.id]"
+        btnIcon="zoom_in"
+        btnColor="secondary"
+        btnSize="x-small"
+        title="Branch Details"
+        flexiTooltip
+      />
 
       <flexi-button
         (click)="delete(item.id)"

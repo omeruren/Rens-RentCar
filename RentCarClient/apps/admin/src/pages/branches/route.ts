@@ -13,6 +13,10 @@ const routes: Routes = [
     path: 'edit/:id',
     loadComponent: () => import('./create/create'),
   },
+  {
+    path: 'details/:id',
+    loadComponent: () => import('./detail/detail'),
+  },
 ];
 
 export default routes;
