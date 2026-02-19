@@ -1,23 +1,12 @@
 <app-blank pageTitle="Branches" pageIcon="bi-buildings">
-  <flexi-grid
-    [showCaption]="true"
-    captionTitle="Branch List"
-    [data]="data()"
-    [total]="totalCount()"
-    [loading]="loading()"
-    [dataBinding]="true"
-    (dataStateChange)="dataStateChange($event)"
-    [showExportExcelBtn]="true"
-    exportExcelFileName="Branches"
+  <app-grid
+  endpointEntityName="branches"
+    pageTitle="Branches"
+    [breadcrumbs]="breadcrumbs()"
+    commandColumnWidth="150px"
+    [showIndex]="true"
   >
     <ng-template flexiGridCaptionCommandTemplate>
-      <flexi-button
-        [routerLink]="['/','branches','add']"
-        btnColor="primary"
-        btnIcon="add"
-        title="Add Branch"
-        flexiTooltip
-      />
     </ng-template>
     <flexi-grid-column field="name" title="Branch Name" />
     <flexi-grid-column field="address.city" title="City" />
@@ -40,66 +29,5 @@
         }
       </ng-template>
     </flexi-grid-column>
-    <flexi-grid-column field="address.email" title="Branch contact email" />
-    <flexi-grid-column
-      textAlign="center"
-      field="isActive"
-      title="Active"
-      filterType="boolean"
-      [booleanData]="['Active','Inactive'] "
-    />
-    <flexi-grid-column field="createdFullName" title="Created By" />
-    <flexi-grid-column
-      field="createdAt"
-      title="Created At"
-      filterType="date"
-      format="dd MMM yyyy HH:mm:ss"
-    />
-    <flexi-grid-column field="updatedFullName" title="Updated By">
-      <ng-template flexiGridCellTemplate let-item>
-        @if(item.updatedFullName!==null){ {{item.updatedFullName}} }@else {
-        <span style="font-style: italic; font-weight: bold">No Update yet</span>
-        }
-      </ng-template>
-    </flexi-grid-column>
-    <flexi-grid-column
-      field="updatedAt"
-      title="Updated At"
-      filterType="date"
-      format="dd MMM yyyy HH:mm:ss"
-    >
-      <ng-template flexiGridCellTemplate let-item>
-        @if(item.updatedAt!==null){ {{item.updatedAt}} }@else {
-        <span style="font-style: italic; font-weight: bold">No Update yet</span>
-        }
-      </ng-template>
-    </flexi-grid-column>
-    <ng-template flexiGridColumnCommandTemplate let-item>
-      <flexi-button
-        [routerLink]="['/','branches','edit',item.id]"
-        btnIcon="edit"
-        btnColor="info"
-        btnSize="x-small"
-        title="Edit Branch"
-        flexiTooltip
-      />
-      <flexi-button
-        [routerLink]="['/','branches','details',item.id]"
-        btnIcon="zoom_in"
-        btnColor="secondary"
-        btnSize="x-small"
-        title="Branch Details"
-        flexiTooltip
-      />
-
-      <flexi-button
-        (click)="delete(item.id)"
-        btnIcon="delete"
-        btnColor="danger"
-        btnSize="x-small"
-        title="Remove Branch"
-        flexiTooltip
-      />
-    </ng-template>
-  </flexi-grid>
+  </app-grid>
 </app-blank>

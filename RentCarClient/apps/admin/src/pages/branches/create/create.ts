@@ -28,12 +28,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
-  imports: [
-    Blank,
-    FormsModule,
-    FormValidateDirective,
-    NgxMaskDirective,
-  ],
+  imports: [Blank, FormsModule, FormValidateDirective, NgxMaskDirective],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
