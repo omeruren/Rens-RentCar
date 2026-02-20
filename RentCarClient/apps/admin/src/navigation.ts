@@ -17,4 +17,9 @@ export const navigations: NavigationModel[] = [
     url: '/branches',
     icon: 'bi-buildings',
   },
+  {
+    title: 'Roles',
+    url: '/roles',
+    icon: 'bi-person-lock',
+  },
 ];

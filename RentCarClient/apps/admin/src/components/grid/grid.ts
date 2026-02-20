@@ -68,7 +68,6 @@ export default class Grid implements AfterViewInit {
   readonly result = httpResource<ODataModel<any>>(() => {
        let endpoint =`rent/odata/${this.endpointEntityName()}?$count=true`;
     const part = this.#grid.getODataEndpoint(this.state());
-    debugger;
     endpoint += `&${part}`;
     return endpoint;
   });
