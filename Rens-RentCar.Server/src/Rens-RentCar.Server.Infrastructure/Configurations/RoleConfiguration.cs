@@ -12,5 +12,7 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.HasKey(r => r.Id);
 
         builder.OwnsOne(r => r.Name);
+
+        builder.OwnsMany(r => r.Permissions);
     }
 }

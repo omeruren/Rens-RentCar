@@ -53,6 +53,19 @@ public static class RoleModule
         })
             .Produces<Result<string>>();
 
+        // UPDATE ROLE - SET PERMISSION
+
+        app.MapPut("update-permissions", async (
+            RoleUpdatePermissionCommand request,
+            ISender _sender,
+            CancellationToken cancellationToken) =>
+        {
+            var res = await _sender.Send(request, cancellationToken);
+
+            return res.IsSuccessful ? Results.Ok(res) : Results.InternalServerError(res);
+        })
+            .Produces<Result<string>>();
+
         // DELETE ROLE
 
         app.MapDelete("{id}", async (

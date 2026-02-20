@@ -3,8 +3,9 @@ using Rens_RentCar.Domain.Shared;
 
 namespace Rens_RentCar.Domain.Roles;
 
-public sealed class Role : BaseEntity
+public sealed class Role : BaseEntity, IAggregate
 {
+    private readonly List<Permission> _permissions = new();
     private Role()
     {
 
@@ -18,6 +19,14 @@ public sealed class Role : BaseEntity
 
 
     public Name Name { get; private set; } = default!;
-
+    public IReadOnlyCollection<Permission> Permissions => _permissions;
     public void SetName(Name name) => Name = name;
+
+    public void SetPermissions(IEnumerable<Permission> permissions)
+    {
+        _permissions.Clear();
+        _permissions.AddRange(permissions);
+    }
 }
+
+public sealed record Permission(string Value);
