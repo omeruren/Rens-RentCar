@@ -62,6 +62,11 @@
   </flexi-grid-column>
   }
   <ng-template flexiGridColumnCommandTemplate let-item>
+    @if(columnCommandTemplateRef() !==undefined){
+    <ng-container
+      *ngTemplateOutlet="columnCommandTemplateRef()!; context:{$implicit:item}"
+    ></ng-container>
+    }
     <flexi-button
       [routerLink]="['/',endpointEntityName(),'details',item.id]"
       btnIcon="zoom_in"
@@ -86,10 +91,5 @@
       title="Remove"
       flexiTooltip
     />
-    @if(columnCommandTemplateRef() !==undefined){
-    <ng-container
-      *ngTemplateOutlet="columnCommandTemplateRef()!; context:{$implicit:item}"
-    ></ng-container>
-    }
   </ng-template>
 </flexi-grid>

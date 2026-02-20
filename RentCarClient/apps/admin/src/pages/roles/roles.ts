@@ -8,9 +8,10 @@ import {
 import { BreadCrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';
+import { RouterLink} from "@angular/router";
 
 @Component({
-  imports: [Grid,FlexiGridModule],
+  imports: [Grid, FlexiGridModule, RouterLink],
   templateUrl: './roles.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

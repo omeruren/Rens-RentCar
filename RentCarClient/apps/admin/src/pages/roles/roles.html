@@ -4,4 +4,13 @@
   [breadcrumbs]="breadcrumbs()"
 >
   <flexi-grid-column field="name" title="Role name" />
+  <ng-template #columnCommandTemplate let-item>
+    <flexi-button
+    btnSize="x-small"
+      btnColor="black"
+      btnIcon="key"
+      title="Permissions"
+      [routerLink]="['/roles/permissions',item.id]"
+    />
+  </ng-template>
 </app-grid>

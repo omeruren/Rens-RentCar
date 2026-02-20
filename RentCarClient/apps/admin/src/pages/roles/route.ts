@@ -17,6 +17,10 @@ export const routes: Routes = [
     path: 'details/:id',
     loadComponent: () => import('./detail/detail'),
   },
+  {
+    path: 'permissions/:id',
+    loadComponent: () => import('./permissions/permissions'),
+  },
 ];
 
 export default routes;

@@ -1,0 +1,11 @@
+<title>RentCar | Permissions</title>
+<flexi-treeview
+  [data]="data()"
+  [loading]="loading()"
+  treeviewTitle="Permissions"
+  (onRefresh)="result.reload()"
+  [showDeleteButton]="false"
+  [showEditButton]="false"
+  [showCheckbox]="true"
+  (onSelected)="onSelected($event)"
+></flexi-treeview>
