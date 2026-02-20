@@ -9,13 +9,12 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import Blank from '../../components/blank/blank';
 import { NgxMaskPipe } from 'ngx-mask';
 
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';
 @Component({
-  imports: [Blank, Grid,FlexiGridModule, NgxMaskPipe],
+  imports: [Grid, FlexiGridModule, NgxMaskPipe],
   templateUrl: './branches.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
