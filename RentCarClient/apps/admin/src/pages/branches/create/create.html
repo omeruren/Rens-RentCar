@@ -61,7 +61,7 @@
               <input
                 class="form-control"
                 type="text"
-                [(ngModel)]="data().address.city"
+                [(ngModel)]="data().city"
                 name="city"
                 required
               />
@@ -76,7 +76,7 @@
               <input
                 class="form-control"
                 type="text"
-                [(ngModel)]="data().address.district"
+                [(ngModel)]="data().district"
                 name="district"
                 required
               />
@@ -92,7 +92,7 @@
                 class="form-control"
                 type="text"
                 rows="4"
-                [(ngModel)]="data().address.fullAddress"
+                [(ngModel)]="data().fullAddress"
                 name="fullAddress"
                 required
                 minlength="10"
@@ -108,7 +108,7 @@
               <input
                 class="form-control"
                 type="text"
-                [(ngModel)]="data().address.phoneNumber1"
+                [(ngModel)]="data().phoneNumber1"
                 name="phoneNumber1"
                 prefix="+90"
                 mask="(999) 999 9999"
@@ -126,7 +126,7 @@
                 name="phoneNumber2"
                 prefix="+90"
                 mask="(999) 999 9999"
-                [(ngModel)]="data().address.phoneNumber2"
+                [(ngModel)]="data().phoneNumber2"
               />
             </div>
             <div class="form-group">
@@ -134,7 +134,7 @@
               <input
                 class="form-control"
                 type="email"
-                [(ngModel)]="data().address.email"
+                [(ngModel)]="data().email"
                 name="email"
               />
             </div>

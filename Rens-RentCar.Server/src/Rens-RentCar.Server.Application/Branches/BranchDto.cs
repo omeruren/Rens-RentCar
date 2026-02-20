@@ -1,13 +1,17 @@
 ﻿using Rens_RentCar.Domain.Abstraction;
 using Rens_RentCar.Domain.Branches;
-using Rens_RentCar.Domain.Branches.ValueObjects;
 
 namespace Rens_RentCar.Server.Application.Branches;
 
 public sealed class BranchDto : BaseEntityDto
 {
     public string Name { get; set; } = default!;
-    public Address Address { get; set; } = default!;
+    public string City { get; set; } = default!;
+    public string District { get; set; } = default!;
+    public string FullAddress { get; set; } = default!;
+    public string PhoneNumber1 { get; set; } = default!;
+    public string? PhoneNumber2 { get; set; }
+    public string? Email { get; set; }
 }
 
 public static class BranchExtensions
@@ -19,7 +23,12 @@ public static class BranchExtensions
             {
                 Id = s.Entity.Id,
                 Name = s.Entity.Name.Value,
-                Address = s.Entity.Address,
+                City = s.Entity.Address.City,
+                District = s.Entity.Address.District,
+                FullAddress = s.Entity.Address.FullAddress,
+                PhoneNumber1 = s.Entity.Address.PhoneNumber1,
+                PhoneNumber2 = s.Entity.Address.PhoneNumber2,
+                Email = s.Entity.Address.Email,
                 CreatedAt = s.Entity.CreatedAt,
                 CreatedBy = s.Entity.CreatedBy,
 

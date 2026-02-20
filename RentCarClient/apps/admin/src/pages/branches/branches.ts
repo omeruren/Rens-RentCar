@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import Blank from '../../components/blank/blank';
 import { NgxMaskPipe } from 'ngx-mask';
-import { RouterLink } from '@angular/router';
 
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';

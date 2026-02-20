@@ -9,19 +9,19 @@
     <ng-template flexiGridCaptionCommandTemplate>
     </ng-template>
     <flexi-grid-column field="name" title="Branch Name" />
-    <flexi-grid-column field="address.city" title="City" />
-    <flexi-grid-column field="address.district" title="District" />
-    <flexi-grid-column field="address.fullAddress" title="Full Address" />
-    <flexi-grid-column field="address.phoneNumber1" title="Primary Phone umber">
+    <flexi-grid-column field="city" title="City" />
+    <flexi-grid-column field="district" title="District" />
+    <flexi-grid-column field="fullAddress" title="Full Address" />
+    <flexi-grid-column field="phoneNumber1" title="Primary Phone umber">
       <ng-template flexiGridCellTemplate let-item>
-        <span>+90 {{item.address.phoneNumber1 |mask:'(999) 999 99 99'}} </span>
+        <span>+90 {{item.phoneNumber1 |mask:'(999) 999 99 99'}} </span>
       </ng-template>
     </flexi-grid-column>
-    <flexi-grid-column field="address.phoneNumber2" title="Second Phone number">
+    <flexi-grid-column field="phoneNumber2" title="Second Phone number">
       <ng-template flexiGridCellTemplate let-item>
-        @if (item.address.phoneNumber2!==null) {
+        @if (item.phoneNumber2!==null) {
 
-        <span>+90 {{item.address.phoneNumber2 |mask:'(999) 999 99 99'}} </span>
+        <span>+90 {{item.phoneNumber2 |mask:'(999) 999 99 99'}} </span>
         }@else {
         <span style="font-style: italic; font-weight: bold"
           >No Second Phone</span
