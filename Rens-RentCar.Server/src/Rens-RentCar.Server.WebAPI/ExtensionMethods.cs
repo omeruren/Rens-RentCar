@@ -34,5 +34,6 @@ public static class ExtensionMethods
         app.MapAutEndpoint();
         app.MapBranchEndpoint();
         app.MapRoleEndPoint();
+        app.MapPermissionEndpoint();
     }
 }

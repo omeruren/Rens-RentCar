@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Rens_RentCar.Server.Application.Behaviors;
+using Rens_RentCar.Server.Application.Services;
 using TS.MediatR;
 
 namespace Rens_RentCar.Server.Application;
@@ -9,7 +10,7 @@ public static class ServiceRegistrar
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-
+        services.AddScoped<PermissionService>();
         // MediatR 
         services.AddMediatR(cfr =>
         {

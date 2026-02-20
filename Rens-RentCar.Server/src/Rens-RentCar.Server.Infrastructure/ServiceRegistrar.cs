@@ -40,6 +40,7 @@ public static class ServiceRegistrar
         // Context Accessor
         services.AddHttpContextAccessor();
 
+
         services.AddDbContext<ApplicationDbContext>(opt =>
         {
             string connectionString = configuration.GetConnectionString("SqlConnection")!;
