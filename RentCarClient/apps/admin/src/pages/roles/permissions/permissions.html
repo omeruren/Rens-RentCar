@@ -2,10 +2,11 @@
 <flexi-treeview
   [data]="data()"
   [loading]="loading()"
-  treeviewTitle="Permissions"
+  [treeviewTitle]="treeViewTitle()"
   (onRefresh)="result.reload()"
   [showDeleteButton]="false"
   [showEditButton]="false"
   [showCheckbox]="true"
   (onSelected)="onSelected($event)"
 ></flexi-treeview>
+<button class="btn btn-outline-primary my-1" (click)="update()">Update</button>
