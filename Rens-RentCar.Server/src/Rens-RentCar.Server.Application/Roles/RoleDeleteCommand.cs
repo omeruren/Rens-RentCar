@@ -5,6 +5,8 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Roles;
 
+[Permission("role:delete")]
+
 public sealed record RoleDeleteCommand(Guid Id) : IRequest<Result<string>>;
 
 internal sealed class RoleDeleteCommandHandler(IRoleRepository _roleRepository, IUnitOfWork _unitOfWork) : IRequestHandler<RoleDeleteCommand, Result<string>>

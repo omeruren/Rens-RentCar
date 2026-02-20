@@ -7,6 +7,8 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Roles;
 
+[Permission("role:create")]
+
 public sealed record RoleCreateCommand(string Name, bool IsActive) : IRequest<Result<string>>;
 
 public sealed class RoleCreateCommandValidator : AbstractValidator<RoleCreateCommand>

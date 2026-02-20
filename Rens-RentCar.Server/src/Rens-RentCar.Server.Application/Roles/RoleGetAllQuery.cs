@@ -3,6 +3,8 @@ using TS.MediatR;
 
 namespace Rens_RentCar.Server.Application.Roles;
 
+[Permission("role:view")]
+
 public sealed record RoleGetAllQuery : IRequest<IQueryable<RoleDto>>;
 
 internal sealed class RoleGetAllQueryHandler(IRoleRepository _roleRepository) : IRequestHandler<RoleGetAllQuery, IQueryable<RoleDto>>

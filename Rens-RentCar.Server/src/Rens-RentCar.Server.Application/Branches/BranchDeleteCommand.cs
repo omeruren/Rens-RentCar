@@ -5,6 +5,8 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Branches;
 
+[Permission("branch:delete")]
+
 public sealed record BranchDeleteCommand(Guid Id) : IRequest<Result<string>>;
 
 

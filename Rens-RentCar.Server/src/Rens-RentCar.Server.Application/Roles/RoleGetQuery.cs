@@ -5,6 +5,8 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Roles;
 
+[Permission("role:view")]
+
 public sealed record RoleGetQuery(Guid Id) : IRequest<Result<RoleDto>>;
 
 internal sealed class RoleGetQueryHandler(IRoleRepository _roleRepository) : IRequestHandler<RoleGetQuery, Result<RoleDto>>

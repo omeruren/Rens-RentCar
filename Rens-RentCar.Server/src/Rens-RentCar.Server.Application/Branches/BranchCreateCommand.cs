@@ -7,6 +7,7 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Branches;
 
+[Permission("branch:create")]
 public sealed record BranchCreateCommand(
     string Name,
     Address Address,

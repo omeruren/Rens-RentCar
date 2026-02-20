@@ -5,6 +5,7 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Branches;
 
+[Permission("branch:view")]
 public sealed record BranchGetQuery(Guid Id) : IRequest<Result<BranchDto>>;
 
 internal sealed class BranchGetQueryHandler(IBranchRepository _branchRepository) : IRequestHandler<BranchGetQuery, Result<BranchDto>>

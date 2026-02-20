@@ -7,6 +7,8 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Branches;
 
+[Permission("branch:edit")]
+
 public sealed record BranchUpdateCommand(
     Guid Id,
     string Name,
