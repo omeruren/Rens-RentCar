@@ -27,7 +27,7 @@ internal sealed class RoleCreateCommandHandler(IRoleRepository _roleRepository, 
             return Result<string>.Failure("Role name is already taken before by someone else.");
 
         Name name = new(request.Name);
-        Role role = new(name);
+        Role role = new(name, request.IsActive);
         _roleRepository.Add(role);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

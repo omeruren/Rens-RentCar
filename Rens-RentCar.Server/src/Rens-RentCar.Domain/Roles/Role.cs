@@ -10,7 +10,11 @@ public sealed class Role : BaseEntity
 
     }
 
-    public Role(Name name) => SetName(name);
+    public Role(Name name, bool IsActive)
+    {
+        SetName(name);
+        SetStatus(IsActive);
+    }
 
 
     public Name Name { get; private set; } = default!;
