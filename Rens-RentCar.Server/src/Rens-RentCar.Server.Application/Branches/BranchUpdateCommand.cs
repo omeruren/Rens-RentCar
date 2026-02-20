@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using GenericRepository;
 using Rens_RentCar.Domain.Branches;
-using Rens_RentCar.Domain.Branches.ValueObjects;
+using Rens_RentCar.Domain.Shared;
 using TS.MediatR;
 using TS.Result;
 

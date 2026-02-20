@@ -1,5 +1,5 @@
 ﻿using Rens_RentCar.Domain.Abstraction;
-using Rens_RentCar.Domain.Branches.ValueObjects;
+using Rens_RentCar.Domain.Shared;
 
 namespace Rens_RentCar.Domain.Branches;
 
