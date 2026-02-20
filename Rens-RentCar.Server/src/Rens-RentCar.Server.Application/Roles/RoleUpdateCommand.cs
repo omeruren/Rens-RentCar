@@ -28,9 +28,6 @@ internal sealed class RoleUpdateCommandHandler(IRoleRepository _roleRepository, 
 
         var isRoleNameExists = await _roleRepository.AnyAsync(r => r.Name.Value == request.Name, cancellationToken);
 
-        if (isRoleNameExists)
-            return Result<string>.Failure("Role name is already taken before by someone else.");
-
         Name name = new(request.Name);
 
         role.SetName(name);

@@ -11,12 +11,10 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import Loading from 'apps/admin/src/components/loading/loading';
 import {
-  BranchModel,
-  INITIAL_BRANCH_MODEL,
-} from 'apps/admin/src/models/branch.model';
-import { Result } from 'apps/admin/src/models/result.model';
+  RoleModel,
+  INITIAL_ROLE_MODEL,
+} from 'apps/admin/src/models/role.model';
 import {
   BreadCrumbModel,
   BreadcrumbService,
@@ -28,7 +26,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
-  imports: [Blank, FormsModule, FormValidateDirective, NgxMaskDirective],
+  imports: [Blank, FormsModule, FormValidateDirective],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,7 +48,7 @@ export default class Create {
           {
             title: 'Add',
             icon: 'bi-plus',
-            url: '/branches/add',
+            url: '/roles/add',
             isActive: true,
           },
         ]);
@@ -63,14 +61,14 @@ export default class Create {
     params: () => this.id(),
     loader: async () => {
       var res = await lastValueFrom(
-        this.#http.getResource<BranchModel>(`rent/branches/${this.id()}`)
+        this.#http.getResource<RoleModel>(`rent/roles/${this.id()}`)
       );
       this.breadcrumbs.update((prev) => [
         ...prev,
         {
           title: res.data!.name,
           icon: 'bi-pen',
-          url: `/branches/edit/${this.id()}`,
+          url: `/roles/edit/${this.id()}`,
           isActive: true,
         },
       ]);
@@ -80,21 +78,19 @@ export default class Create {
     },
   });
   readonly loading = linkedSignal(() => this.result.isLoading());
-  readonly data = linkedSignal(
-    () => this.result.value() ?? {...INITIAL_BRANCH_MODEL}
-  );
+  readonly data = linkedSignal(() => this.result.value() ?? {...INITIAL_ROLE_MODEL});
 
   readonly pageTitle = computed(() =>
-    this.id() ? 'Edit Branch' : 'Add Branch'
+    this.id() ? 'Edit Role' : 'Add Role'
   );
   readonly pageIcon = computed(() => (this.id() ? ' bi-pen' : ' bi-plus '));
   readonly id = signal<string | undefined>(undefined);
 
   readonly breadcrumbs = signal<BreadCrumbModel[]>([
     {
-      title: 'Branches',
-      icon: 'bi-buildings',
-      url: '/branches',
+      title: 'Roles',
+      icon: 'bi-person-lock',
+      url: '/roles',
     },
   ]);
 
@@ -104,23 +100,23 @@ export default class Create {
 
     if (!this.id()) {
       this.#http.post<string>(
-        'rent/branches',
+        'rent/roles',
         this.data(),
         (res) => {
           this.loading.set(false);
           this.#toast.showToast('Success', res, 'success');
-          this.#router.navigateByUrl('/branches');
+          this.#router.navigateByUrl('/roles');
         },
         () => this.loading.set(false)
       );
     } else {
       this.#http.put<string>(
-        'rent/branches',
+        'rent/roles',
         this.data(),
         (res) => {
           this.loading.set(false);
           this.#toast.showToast('Success', res, 'info');
-          this.#router.navigateByUrl('/branches');
+          this.#router.navigateByUrl('/roles');
         },
         () => this.loading.set(false)
       );
