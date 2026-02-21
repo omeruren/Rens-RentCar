@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rens_RentCar.Server.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using Rens_RentCar.Server.Infrastructure.Context;
 namespace Rens_RentCar.Server.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260221114033_mig_added_Contact_property_to_branch_model")]
+    partial class mig_added_Contact_property_to_branch_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,7 +149,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("BranchId");
 
@@ -163,15 +166,15 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.Property<string>("District")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.Property<string>("FullAddress")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("BranchId");
 
@@ -187,14 +190,16 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Email")
-                                .HasColumnType("nvarchar(MAX)");
+                                .IsRequired()
+                                .HasColumnType("varchar(MAX)");
 
                             b1.Property<string>("PhoneNumber1")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.Property<string>("PhoneNumber2")
-                                .HasColumnType("nvarchar(MAX)");
+                                .IsRequired()
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("BranchId");
 
@@ -255,7 +260,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("LoginTokenId");
 
@@ -290,7 +295,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("RoleId", "Id");
 
@@ -307,7 +312,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("RoleId");
 
@@ -332,7 +337,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -349,7 +354,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -398,7 +403,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -431,7 +436,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -469,7 +474,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -486,7 +491,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 
@@ -551,7 +556,7 @@ namespace Rens_RentCar.Server.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
+                                .HasColumnType("varchar(MAX)");
 
                             b1.HasKey("UserId");
 

@@ -10,8 +10,14 @@ namespace Rens_RentCar.Server.Application.Branches;
 [Permission("branch:create")]
 public sealed record BranchCreateCommand(
     string Name,
-    Address Address,
+    string City,
+    string District,
+    string FullAddress,
+    string PhoneNumber1,
+    string? PhoneNumber2,
+    string? Email,
     bool IsActive) : IRequest<Result<string>>;
+
 
 
 public sealed class BranchCreateCommandValidator : AbstractValidator<BranchCreateCommand>
@@ -23,10 +29,10 @@ public sealed class BranchCreateCommandValidator : AbstractValidator<BranchCreat
             .MinimumLength(3).WithMessage("Branch name can not be less than 3 characters.")
             .MaximumLength(50).WithMessage("Branch name can not be greater than 50 characters.");
 
-        RuleFor(r => r.Address.City).NotEmpty().WithMessage("City is required.");
-        RuleFor(r => r.Address.District).NotEmpty().WithMessage("District is required.");
-        RuleFor(r => r.Address.FullAddress).NotEmpty().WithMessage("Full address is required.");
-        RuleFor(r => r.Address.PhoneNumber1).NotEmpty().WithMessage("Primary phone number is required.");
+        RuleFor(r => r.City).NotEmpty().WithMessage("City is required.");
+        RuleFor(r => r.District).NotEmpty().WithMessage("District is required.");
+        RuleFor(r => r.FullAddress).NotEmpty().WithMessage("Full address is required.");
+        RuleFor(r => r.PhoneNumber1).NotEmpty().WithMessage("Primary phone number is required.");
     }
 }
 
@@ -40,9 +46,11 @@ internal sealed class BrachCreateCommandHandler(IBranchRepository _branchReposit
             return Result<string>.Failure("This branch name is already taken by someone else.");
 
         Name name = new(request.Name);
-        Address address = request.Address;
 
-        Branch branch = new(name, address, request.IsActive);
+
+        Address address = new(request.City, request.District, request.FullAddress);
+        Contact contact = new(request.PhoneNumber1, request.PhoneNumber2, request.Email);
+        Branch branch = new(name, address, contact, request.IsActive);
 
         _branchRepository.Add(branch);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

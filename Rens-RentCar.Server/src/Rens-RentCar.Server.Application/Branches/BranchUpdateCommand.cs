@@ -12,7 +12,12 @@ namespace Rens_RentCar.Server.Application.Branches;
 public sealed record BranchUpdateCommand(
     Guid Id,
     string Name,
-    Address Address,
+    string City,
+    string District,
+    string FullAddress,
+    string PhoneNumber1,
+    string? PhoneNumber2,
+    string? Email,
     bool IsActive) : IRequest<Result<string>>;
 
 
@@ -25,10 +30,10 @@ public sealed class BranchUpdateCommandValidator : AbstractValidator<BranchUpdat
             .MinimumLength(3).WithMessage("Branch name can not be less than 3 characters.")
             .MaximumLength(50).WithMessage("Branch name can not be greater than 50 characters.");
 
-        RuleFor(r => r.Address.City).NotEmpty().WithMessage("City is required.");
-        RuleFor(r => r.Address.District).NotEmpty().WithMessage("District is required.");
-        RuleFor(r => r.Address.FullAddress).NotEmpty().WithMessage("Full address is required.");
-        RuleFor(r => r.Address.PhoneNumber1).NotEmpty().WithMessage("Primary phone number is required.");
+        RuleFor(r => r.City).NotEmpty().WithMessage("City is required.");
+        RuleFor(r => r.District).NotEmpty().WithMessage("District is required.");
+        RuleFor(r => r.FullAddress).NotEmpty().WithMessage("Full address is required.");
+        RuleFor(r => r.PhoneNumber1).NotEmpty().WithMessage("Primary phone number is required.");
     }
 }
 
@@ -42,11 +47,14 @@ internal sealed class BranchUpdateCommandHandler(IBranchRepository _branchReposi
             return Result<string>.Failure("Branch not found");
 
         Name name = new(request.Name);
-        Address address = request.Address;
+
+        Address address = new(request.City, request.District, request.FullAddress);
+        Contact contact = new(request.PhoneNumber1, request.PhoneNumber2, request.Email);
 
         branch.SetName(name: name);
         branch.SetAddress(address: address);
         branch.SetStatus(isActive: request.IsActive);
+        branch.SetContact(contact);
         _branchRepository.Update(branch);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

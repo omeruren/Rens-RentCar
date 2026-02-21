@@ -1,147 +1,154 @@
-
- <app-blank
-      [pageTitle]="pageTitle()"
-      [pageIcon]="pageIcon()"
-      (changeStatusEvent)="changeStatus($event) "
-      [status]="data().isActive"
-      [showStatusCheckbox]="true"
-      [loading]="loading()"
-      size="col-md-6"
-    >
-
-      <form
-        autocomplete="off"
-        #form="ngForm"
-        formValidate
-        class="admin-form"
-        (ngSubmit)="save(form)"
-      >
-        <!-- Basic Information -->
-        <div class="admin-card">
-          <div class="card-header">
-            <h6>
-              <i class="bi bi-info-circle text-primary me-2"></i>Basic
-              Informations
-            </h6>
+<app-blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event) "
+  [status]="data().isActive"
+  [showStatusCheckbox]="true"
+  [loading]="loading()"
+  size="col-md-6"
+>
+  <form
+    autocomplete="off"
+    #form="ngForm"
+    formValidate
+    class="admin-form"
+    (ngSubmit)="save(form)"
+  >
+    <!-- Basic Information -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2"></i>Basic Informations
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-label">
+            Branch Name (<span class="text-danger">*</span>)
           </div>
-          <div class="card-body">
-            <div class="form-group">
-              <div class="form-label">
-                Branch Name (<span class="text-danger">*</span>)
-              </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().name"
-                name="name"
-                required
-                minlength="3"
-                maxlength="50"
-              />
-              <div class="invalid-feedback">
-                Please Enter a valid Branch Name.
-              </div>
-            </div>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="data().name"
+            name="name"
+            required
+            minlength="3"
+            maxlength="50"
+          />
+          <div class="invalid-feedback">Please Enter a valid Branch Name.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Information -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2"></i>Contact
+          Informations
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-label">
+            Primary phone number (<span class="text-danger">*</span>)
+          </div>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="data().phoneNumber1"
+            name="phoneNumber1"
+            prefix="+90"
+            mask="(999) 999 9999"
+            required
+          />
+          <div class="invalid-feedback">
+            Please Enter a valid primary phone number value.
           </div>
         </div>
-
-        <!-- Address Information -->
-        <div class="admin-card">
-          <div class="card-header">
-            <h6>
-              <i class="bi bi-info-circle text-primary me-2"></i>Address
-              Informations
-            </h6>
+        <div class="form-group">
+          <div class="form-label">Second phone number</div>
+          <input
+            class="form-control"
+            type="text"
+            name="phoneNumber2"
+            prefix="+90"
+            mask="(999) 999 9999"
+            [(ngModel)]="data().phoneNumber2"
+          />
+        </div>
+        <div class="form-group">
+          <div class="form-label">Contact Mail address</div>
+          <input
+            class="form-control"
+            type="email"
+            [(ngModel)]="data().email"
+            name="email"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Address Information -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2"></i>Address
+          Informations
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-label">
+            City (<span class="text-danger">*</span>)
           </div>
-          <div class="card-body">
-            <div class="form-group">
-              <div class="form-label">
-                City (<span class="text-danger">*</span>)
-              </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().city"
-                name="city"
-                required
-              />
-              <div class="invalid-feedback">
-                Please Enter a valid City value.
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-label">
-                District (<span class="text-danger">*</span>)
-              </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().district"
-                name="district"
-                required
-              />
-              <div class="invalid-feedback">
-                Please Enter a valid District value.
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-label">
-                Full Address (<span class="text-danger">*</span>)
-              </div>
-              <textarea
-                class="form-control"
-                type="text"
-                rows="4"
-                [(ngModel)]="data().fullAddress"
-                name="fullAddress"
-                required
-                minlength="10"
-              ></textarea>
-              <div class="invalid-feedback">
-                Please Enter a valid Full address value.
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-label">
-                Primary phone number (<span class="text-danger">*</span>)
-              </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().phoneNumber1"
-                name="phoneNumber1"
-                prefix="+90"
-                mask="(999) 999 9999"
-                required
-              />
-              <div class="invalid-feedback">
-                Please Enter a valid primary phone number value.
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-label">Second phone number</div>
-              <input
-                class="form-control"
-                type="text"
-                name="phoneNumber2"
-                prefix="+90"
-                mask="(999) 999 9999"
-                [(ngModel)]="data().phoneNumber2"
-              />
-            </div>
-            <div class="form-group">
-              <div class="form-label">Contact Mail address</div>
-              <input
-                class="form-control"
-                type="email"
-                [(ngModel)]="data().email"
-                name="email"
-              />
-            </div>
+          <flexi-select
+            [data]="cities()"
+            label="il_adi"
+            value="il_adi"
+            [(ngModel)]="data().city"
+            name="city"
+            required="true"
+            (ngModelChange)="loadDistricts()"
+          />
+          <div class="invalid-feedback">Please Enter a valid City value.</div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">
+            District (<span class="text-danger">*</span>)
+          </div>
+          <flexi-select
+            [data]="districts()"
+            label="ilce_adi"
+            value="ilce_adi"
+            [(ngModel)]="data().district"
+            name="district"
+            required="true"
+          />
+          <div class="invalid-feedback">
+            Please Enter a valid District value.
           </div>
         </div>
-        <div class="form-group d-flex justify-content-end">
-          <button type="submit" class="btn btn-outline-primary">Save</button>
+        <div class="form-group">
+          <div class="form-label">
+            Full Address (<span class="text-danger">*</span>)
+          </div>
+          <textarea
+            class="form-control"
+            type="text"
+            rows="4"
+            [(ngModel)]="data().fullAddress"
+            name="fullAddress"
+            required
+            minlength="10"
+          ></textarea>
+          <div class="invalid-feedback">
+            Please Enter a valid Full address value.
+          </div>
         </div>
-      </form>
-    </app-blank>
+      </div>
+    </div>
+    <div class="form-group d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
+  </form>
+</app-blank>

@@ -26,9 +26,9 @@ public static class BranchExtensions
                 City = s.Entity.Address.City,
                 District = s.Entity.Address.District,
                 FullAddress = s.Entity.Address.FullAddress,
-                PhoneNumber1 = s.Entity.Address.PhoneNumber1,
-                PhoneNumber2 = s.Entity.Address.PhoneNumber2,
-                Email = s.Entity.Address.Email,
+                PhoneNumber1 = s.Entity.Contact.PhoneNumber1,
+                PhoneNumber2 = s.Entity.Contact.PhoneNumber2,
+                Email = s.Entity.Contact.Email,
                 CreatedAt = s.Entity.CreatedAt,
                 CreatedBy = s.Entity.CreatedBy,
 

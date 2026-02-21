@@ -1,7 +1,9 @@
+import { httpResource } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   linkedSignal,
   resource,
@@ -11,24 +13,29 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import Loading from 'apps/admin/src/components/loading/loading';
 import {
   BranchModel,
   INITIAL_BRANCH_MODEL,
 } from 'apps/admin/src/models/branch.model';
-import { Result } from 'apps/admin/src/models/result.model';
 import {
   BreadCrumbModel,
   BreadcrumbService,
 } from 'apps/admin/src/services/breadcrumb';
 import { HttpService } from 'apps/admin/src/services/http';
+import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
-  imports: [Blank, FormsModule, FormValidateDirective, NgxMaskDirective],
+  imports: [
+    Blank,
+    FormsModule,
+    FormValidateDirective,
+    NgxMaskDirective,
+    FlexiSelectModule,
+  ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,8 +64,12 @@ export default class Create {
         this.#breadcrumb.reset(this.breadcrumbs());
       }
     });
+    effect(() => {
+      if (this.data().city) this.loadDistricts();
+    });
   }
 
+  readonly cityDistrictResult = httpResource<any[]>(() => '/il-ilce.json');
   readonly result = resource({
     params: () => this.id(),
     loader: async () => {
@@ -79,16 +90,21 @@ export default class Create {
       return res.data;
     },
   });
+
   readonly loading = linkedSignal(() => this.result.isLoading());
+  readonly cityLoading = computed(() => this.cityDistrictResult.isLoading());
+
   readonly data = linkedSignal(
-    () => this.result.value() ?? {...INITIAL_BRANCH_MODEL}
+    () => this.result.value() ?? { ...INITIAL_BRANCH_MODEL }
   );
+  readonly cities = computed(() => this.cityDistrictResult.value() ?? []);
 
   readonly pageTitle = computed(() =>
     this.id() ? 'Edit Branch' : 'Add Branch'
   );
   readonly pageIcon = computed(() => (this.id() ? ' bi-pen' : ' bi-plus '));
   readonly id = signal<string | undefined>(undefined);
+  readonly districts = signal<any[]>([]);
 
   readonly breadcrumbs = signal<BreadCrumbModel[]>([
     {
@@ -131,5 +147,11 @@ export default class Create {
       ...prev,
       isActive: status,
     }));
+  }
+
+  loadDistricts() {
+    debugger;
+    const city = this.cities().find((i) => i.il_adi === this.data().city);
+    this.districts.set(city.ilceler);
   }
 }

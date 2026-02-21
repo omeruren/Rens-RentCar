@@ -14,6 +14,8 @@ export interface AddressValueObject {
   city: string;
   district: string;
   fullAddress: string;
+}
+export interface ContactValueObject {
   phoneNumber1: string;
   phoneNumber2?: string;
   email?: string;

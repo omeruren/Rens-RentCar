@@ -13,6 +13,7 @@ internal sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>
 
         builder.OwnsOne(b => b.Name);
         builder.OwnsOne(b => b.Address);
+        builder.OwnsOne(b => b.Contact);
 
     }
 }
