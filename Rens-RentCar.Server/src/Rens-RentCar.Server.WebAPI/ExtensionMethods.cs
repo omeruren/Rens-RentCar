@@ -1,6 +1,7 @@
 ﻿using GenericRepository;
 using Rens_RentCar.Domain.Users;
 using Rens_RentCar.Domain.Users.ValueObjects;
+using Rens_RentCar.Server.Application.Services;
 using Rens_RentCar.Server.WebAPI.Modules;
 
 namespace Rens_RentCar.Server.WebAPI;
@@ -35,5 +36,14 @@ public static class ExtensionMethods
         app.MapBranchEndpoint();
         app.MapRoleEndPoint();
         app.MapPermissionEndpoint();
+    }
+
+    public static async Task CleanRemovedPermissionsFromRoleAsync(this WebApplication app)
+    {
+        using var scoped = app.Services.CreateScope();
+
+        var srv = scoped.ServiceProvider.GetRequiredService<PermissionCleanerService>();
+
+        await srv.CleanRemovedPermissionFromRoleAsync();
     }
 }

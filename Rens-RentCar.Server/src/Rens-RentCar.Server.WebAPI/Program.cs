@@ -135,4 +135,5 @@ app.MapGet("/", () => "Hello World").RequireAuthorization();
 //await app.AddSeedUser();
 app.MapEndPoints();
 
+await app.CleanRemovedPermissionsFromRoleAsync();
 app.Run();
