@@ -20,7 +20,7 @@ internal sealed class RoleGetQueryHandler(IRoleRepository _roleRepository) : IRe
             .FirstOrDefaultAsync(cancellationToken);
 
         if (res is null)
-            return Result<RoleDto>.Failure("Role nor found.");
+            return Result<RoleDto>.Failure("Role not found.");
 
         return res;
     }

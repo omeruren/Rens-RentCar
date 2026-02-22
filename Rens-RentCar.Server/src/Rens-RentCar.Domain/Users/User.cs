@@ -16,7 +16,9 @@ public sealed class User : BaseEntity
         LastName lastName,
         Email email,
         UserName userName,
-        Password password)
+        Password password,
+        IdentityId BranchId,
+        IdentityId RoleId)
     {
         SetFirstName(firstName);
         SetLastName(lastName);
@@ -26,6 +28,8 @@ public sealed class User : BaseEntity
         SetPassword(password);
         SetIsForgotPasswordCompleted(new(true));
         SetTFAStatus(new(false));
+        SetBranchId(BranchId);
+        SetRoleId(RoleId);
     }
 
     public FirstName FirstName { get; private set; } = default!;
@@ -44,6 +48,8 @@ public sealed class User : BaseEntity
     public TFAConfirmCode? TFAConfirmCode { get; private set; } = default!;
     public TFAExpiresDate? TFAExpiresDate { get; private set; } = default!;
     public TFAIscompleted? TFAIscompleted { get; private set; } = default!;
+    public IdentityId BranchId { get; set; } = default!;
+    public IdentityId RoleId { get; set; } = default!;
 
 
     #region Behaviors
@@ -68,9 +74,10 @@ public sealed class User : BaseEntity
     public void SetUserName(UserName userName) => UserName = userName;
     public void SetPassword(Password password) => Password = password;
     public void SetIsForgotPasswordCompleted(IsForgotPasswordCompleted isForgotPasswordCompleted) => IsForgotPasswordCompleted = isForgotPasswordCompleted;
-    #endregion
 
     public void SetTFAStatus(TFAStatus tfaStatus) => TFAStatus = tfaStatus;
+    public void SetBranchId(IdentityId branchId) => BranchId = branchId;
+    public void SetRoleId(IdentityId roleId) => RoleId = roleId;
 
     public void CreateTFACode()
     {
@@ -84,5 +91,6 @@ public sealed class User : BaseEntity
     }
 
     public void SetTFACompleted() => TFAIscompleted = new(true);
+    #endregion
 }
 

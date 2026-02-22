@@ -13,7 +13,7 @@ internal sealed class RoleGetAllQueryHandler(IRoleRepository _roleRepository) : 
     {
         var res = _roleRepository
             .GetAllWithAuditInfos()
-            .MapTo();
+            .MapTo().AsQueryable();
 
         return Task.FromResult(res);
 
