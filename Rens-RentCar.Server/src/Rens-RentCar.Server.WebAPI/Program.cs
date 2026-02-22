@@ -132,7 +132,7 @@ app.MapControllers()
 
 app.MapGet("/", () => "Hello World").RequireAuthorization();
 
-await app.AddSeedUser();
+//await app.AddSeedUser();
 app.MapEndPoints();
 
 await app.CleanRemovedPermissionsFromRoleAsync();

@@ -33,18 +33,14 @@ public sealed class PermissionCleanerService(IRoleRepository _roleRepository, Pe
     public async Task CleanRemovedPermissionFromRoleAsync(CancellationToken cancellationToken = default)
     {
         var currentPermissions = _permissionService.GetPermissions();
-
         var roles = await _roleRepository.GetAllWithTracking().ToListAsync(cancellationToken);
-
         foreach (var role in roles)
         {
             var currentPermissionsForRole = role.Permissions.Select(s => s.Value).ToList();
-
-            var filteredPermissions = currentPermissions.Where(p => currentPermissions.Contains(p)).ToList();
+            var filteredPermissions = currentPermissionsForRole.Where(p => currentPermissions.Contains(p)).ToList();
             var permissions = filteredPermissions.Select(s => new Permission(s)).ToList();
             role.SetPermissions(permissions);
         }
-
         _roleRepository.UpdateRange(roles);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

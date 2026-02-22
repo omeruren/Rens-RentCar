@@ -4,25 +4,31 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Rens_RentCar.Domain.LoginTokens;
 using Rens_RentCar.Domain.LoginTokens.ValueObjects;
+using Rens_RentCar.Domain.Roles;
 using Rens_RentCar.Domain.Users;
 using Rens_RentCar.Server.Application.Services;
 using Rens_RentCar.Server.Infrastructure.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace Rens_RentCar.Server.Infrastructure.Services;
 
-internal sealed class JwtProvider(IOptions<JwtOptions> _jwtOptions, ILoginTokenRepository _loginTokenRepository, IUnitOfWork _unitOfWork) : IJwtProvider
+internal sealed class JwtProvider(IOptions<JwtOptions> _jwtOptions, ILoginTokenRepository _loginTokenRepository, IRoleRepository _roleRepository, IUnitOfWork _unitOfWork) : IJwtProvider
 {
     public async Task<string> CreateJwtTokenAsync(User user, CancellationToken cancellationToken = default)
     {
+
+        var role = await _roleRepository.FirstOrDefaultAsync(r => r.Id == user.RoleId, cancellationToken);
 
         List<Claim> claims = new()
         {
             new Claim(ClaimTypes.NameIdentifier,user.Id),
             new Claim("fullName",user.FullName.Value),
-            new Claim("email",user.Email.Value)
+            new Claim("email",user.Email.Value),
+            new Claim("role", role.Name.Value),
+            new Claim("permissions", JsonSerializer.Serialize(role.Permissions))
         };
 
         SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_jwtOptions.Value.SecretKey));
