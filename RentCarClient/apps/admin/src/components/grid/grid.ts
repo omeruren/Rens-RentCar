@@ -53,18 +53,29 @@ export default class Grid implements AfterViewInit {
     this.#breadcrumb.reset(this.breadcrumbs());
   }
   readonly pageTitle = input.required<string>();
-  readonly endpoint = input.required<string>();
   readonly showAuditInfos = input<boolean>(true);
-  readonly addOptions = input.required<btnOptions>();
-  readonly editOptions = input.required<btnOptions>();
-  readonly detailOptions = input.required<btnOptions>();
-  readonly deleteOptions = input.required<btnOptions>();
   readonly breadcrumbs = input.required<BreadCrumbModel[]>();
   readonly commandColumnWidth = input<string>('150px');
   readonly showIndex = input<boolean>(true);
   readonly captionTitle = input.required<string>();
+  readonly endpointEntityName = input.required<string>();
+  readonly permissionEntityName = input.required<string>();
 
+  permissionView = signal<string>('');
+  permissionCreate = signal<string>('');
+  permissionEdit = signal<string>('');
+  permissionDetails = signal<string>('');
+  permissionDelete = signal<string>('');
 
+  ngOnInit() {
+    const base = this.permissionEntityName(); // sadece bir kere oku
+
+    this.permissionView.set(base + ':view');
+    this.permissionCreate.set(base + ':create');
+    this.permissionEdit.set(base + ':edit');
+    this.permissionDetails.set(base + ':view');
+    this.permissionDelete.set(base + ':delete');
+  }
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
@@ -77,7 +88,7 @@ export default class Grid implements AfterViewInit {
   readonly state = signal<StateModel>(new StateModel());
 
   readonly result = httpResource<ODataModel<any>>(() => {
-    let endpoint = `${this.endpoint()}?$count=true`;
+    let endpoint = `rent/odata/${this.endpointEntityName()}?$count=true`;
     const part = this.#grid.getODataEndpoint(this.state());
     endpoint += `&${part}`;
     return endpoint;
@@ -100,7 +111,7 @@ export default class Grid implements AfterViewInit {
       'Remove',
       () => {
         this.#http.delete<string>(
-          `${this.deleteOptions().url}/${id}`,
+          `rent/${this.endpointEntityName()}/${id}`,
           (res) => {
             this.#toast.showToast('Success', res, 'info');
             this.result.reload();
