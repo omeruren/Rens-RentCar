@@ -1,17 +1,31 @@
 <app-grid
   pageTitle="Roles"
-  endpointEntityName="roles"
+  endpoint="
+ rent/odata/roles"
+ permissionEntityName="role"
+  [addOptions]="{url: '/roles/add', permission: 'role:create' }"
+  [editOptions]="{url: '/roles/edit', permission: 'role:edit'}"
+  [detailOptions]="{url: '/roles/details', permission: 'role:view'}"
+  [deleteOptions]="{url: '/rent/roles', permission: 'role:delete'}"
   [breadcrumbs]="breadcrumbs()"
+  captionTitle="Role List"
 >
   <flexi-grid-column field="name" title="Role name" />
-  <flexi-grid-column field="permissionCount" title="Permissions"  textAlign="center" />
+  <flexi-grid-column
+    field="permissionCount"
+    title="Permissions"
+    textAlign="center"
+  />
   <ng-template #columnCommandTemplate let-item>
+    @if(checkPermission("role:update_permissions")){
+
     <flexi-button
-    btnSize="x-small"
+      btnSize="x-small"
       btnColor="black"
       btnIcon="key"
       title="Permissions"
       [routerLink]="['/roles/permissions',item.id]"
     />
+    }
   </ng-template>
 </app-grid>

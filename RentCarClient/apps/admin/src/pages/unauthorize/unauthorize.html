@@ -1,0 +1,54 @@
+<title>Unauthorized</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(255, 255, 255);
+  }
+
+  .container {
+    text-align: center;
+    padding: 40px;
+    border-radius: 12px;
+  }
+
+  h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 18px;
+    margin-bottom: 25px;
+    opacity: 0.9;
+  }
+
+  a {
+    display: inline-block;
+    padding: 12px 25px;
+    text-decoration: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s ease;
+  }
+
+  a:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }
+</style>
+
+<body>
+  <div class="container">
+    <h1>401</h1>
+    <p>Unauthorized Access</p>
+    <a routerLink="/">Home</a>
+  </div>
+</body>

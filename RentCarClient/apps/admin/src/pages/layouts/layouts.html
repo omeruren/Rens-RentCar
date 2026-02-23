@@ -13,21 +13,8 @@
 
   <div class="sidebar-content">
     <ul class="sidebar-menu">
-      @for(nav of navigations();track nav.title){ @if(nav.hasSubNav){
-      <li class="menu-item">
-        <a class="menu-link">
-          <i class="bi" [ngClass]="nav.icon"></i>
-          <span class="menu-text">{{nav.title}}</span>
-          <i class="bi bi-chevron-right menu-arrow"></i>
-        </a>
-        <ul class="submenu">
-          @for(subNav of nav.subNavs;track subNav.title){
-
-          <li><a [routerLink]="subNav.url">{{subNav.title}}</a></li>
-          }
-        </ul>
-      </li>
-      }@else {
+      @for(nav of navigations(); track nav.title){ @if(!nav.hasSubNav &&
+      checkPermission(nav.permission)){
       <li
         [routerLink]="nav.url"
         routerLinkActive="active"
@@ -38,6 +25,20 @@
           <i class="bi" [ngClass]="nav.icon"></i>
           <span class="menu-text">{{nav.title}}</span>
         </a>
+      </li>
+      }@else if(checkPermission(nav.permission)){
+      <li class="menu-item">
+        <a class="menu-link">
+          <i class="bi" [ngClass]="nav.icon"></i>
+          <span class="menu-text">{{nav.title}}</span>
+          <i class="bi bi-chevron-right menu-arrow"></i>
+        </a>
+        <ul class="submenu">
+          @for(subNav of nav.subNavs; track subNav.title){
+          @if(checkPermission(subNav.permission)){
+          <li><a [routerLink]="subNav.url">{{subNav.title}}</a></li>
+          } }
+        </ul>
       </li>
       } }
     </ul>
@@ -52,8 +53,8 @@
         />
       </div>
       <div class="user-details">
-        <span class="user-name">Admin User</span>
-        <span class="user-role">Süper Admin</span>
+        <span class="user-name">{{decodedToken().fullName}}</span>
+        <span class="user-role">{{decodedToken().role}}</span>
       </div>
     </div>
   </div>
@@ -137,7 +138,7 @@
               alt="Profile"
               class="profile-avatar"
             />
-            <span class="layout-profile-name">Admin User</span>
+            <span class="layout-profile-name">{{decodedToken().fullName}}</span>
             <i class="bi bi-chevron-down"></i>
           </button>
           <ul class="dropdown-menu profile-menu">
@@ -148,9 +149,9 @@
                   alt="Profile"
                 />
                 <div>
-                  <h6>Admin User</h6>
-                  <p>{{'admin@rentcar.com'}}</p>
-                  <span class="role-badge">Süper Admin</span>
+                  <h6>{{decodedToken().fullName}}</h6>
+                  <p>{{decodedToken().email}}</p>
+                  <span class="role-badge">{{decodedToken().role}}</span>
                 </div>
               </div>
             </li>

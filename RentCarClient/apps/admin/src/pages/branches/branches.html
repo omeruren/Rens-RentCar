@@ -1,11 +1,16 @@
 
-  <app-grid
-  endpointEntityName="branches"
-    pageTitle="Branches"
-    [breadcrumbs]="breadcrumbs()"
-    commandColumnWidth="150px"
-    [showIndex]="true"
-  >
+ <app-grid
+ pageTitle="Branches"
+ endpoint="rent/odata/branches"
+ endpointEntityName="branches"
+ permissionEntityName="branch"
+ [addOptions]="{url: '/branches/add', permission: 'branch:create' }"
+ [editOptions]="{url: '/branches/edit', permission: 'branch:edit'}"
+ [detailOptions]="{url: '/branches/details', permission: 'branch:view'}"
+ [deleteOptions]="{url: '/rent/branches', permission: 'branch:delete'}"
+ [breadcrumbs]="breadcrumbs()"
+ captionTitle="Branch List"
+>
     <ng-template flexiGridCaptionCommandTemplate>
     </ng-template>
     <flexi-grid-column field="name" title="Branch Name" />

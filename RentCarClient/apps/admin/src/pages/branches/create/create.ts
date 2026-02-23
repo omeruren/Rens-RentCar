@@ -150,7 +150,6 @@ export default class Create {
   }
 
   loadDistricts() {
-    debugger;
     const city = this.cities().find((i) => i.il_adi === this.data().city);
     this.districts.set(city.ilceler);
   }

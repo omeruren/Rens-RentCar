@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   HostListener,
   inject,
@@ -12,11 +13,17 @@ import {
 } from '@angular/core';
 import { NavigationModel, navigations } from '../../navigation';
 import { NgClass } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import Breadcrumb from './breadcrumb/breadcrumb';
+import { Common } from '../../services/common';
 
 @Component({
-  imports: [NgClass, RouterLink, RouterOutlet,RouterLinkActive, Breadcrumb],
+  imports: [NgClass, RouterLink, RouterOutlet, RouterLinkActive, Breadcrumb],
   templateUrl: './layouts.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +33,9 @@ export default class Layouts implements OnInit, OnDestroy {
   readonly #elementRef = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
   readonly #router = inject(Router);
+  readonly #common = inject(Common);
+
+  readonly decodedToken = computed(() => this.#common.token());
   readonly navigations = signal<NavigationModel[]>(navigations);
 
   private resizeTimer: any;
@@ -33,6 +43,10 @@ export default class Layouts implements OnInit, OnDestroy {
   signOut() {
     localStorage.removeItem('response');
     this.#router.navigateByUrl('/login');
+  }
+
+  checkPermission(permission: string) {
+  return  this.#common.checkPermission(permission);
   }
 
   ngOnInit(): void {

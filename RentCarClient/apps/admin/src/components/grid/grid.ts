@@ -24,6 +24,12 @@ import { FlexiToastService } from 'flexi-toast';
 import { HttpService } from '../../services/http';
 import { BreadCrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import { NgTemplateOutlet } from '@angular/common';
+import { Common } from '../../services/common';
+
+export interface btnOptions {
+  url: string;
+  permission: string;
+}
 
 @Component({
   selector: 'app-grid',
@@ -38,22 +44,27 @@ export default class Grid implements AfterViewInit {
   readonly #toast = inject(FlexiToastService);
   readonly #http = inject(HttpService);
   readonly #breadcrumb = inject(BreadcrumbService);
+  readonly #common = inject(Common);
 
   /**
    *
    */
   ngAfterViewInit(): void {
     this.#breadcrumb.reset(this.breadcrumbs());
-    console.log(this.endpointEntityName());
   }
-  readonly endpointEntityName = input.required<string>();
+  readonly pageTitle = input.required<string>();
+  readonly endpoint = input.required<string>();
+  readonly showAuditInfos = input<boolean>(true);
+  readonly addOptions = input.required<btnOptions>();
+  readonly editOptions = input.required<btnOptions>();
+  readonly detailOptions = input.required<btnOptions>();
+  readonly deleteOptions = input.required<btnOptions>();
   readonly breadcrumbs = input.required<BreadCrumbModel[]>();
   readonly commandColumnWidth = input<string>('150px');
-
-  readonly pageTitle = input.required<string>();
-
-  readonly showAuditInfos = input<boolean>(true);
   readonly showIndex = input<boolean>(true);
+  readonly captionTitle = input.required<string>();
+
+
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
@@ -66,7 +77,7 @@ export default class Grid implements AfterViewInit {
   readonly state = signal<StateModel>(new StateModel());
 
   readonly result = httpResource<ODataModel<any>>(() => {
-       let endpoint =`rent/odata/${this.endpointEntityName()}?$count=true`;
+    let endpoint = `${this.endpoint()}?$count=true`;
     const part = this.#grid.getODataEndpoint(this.state());
     endpoint += `&${part}`;
     return endpoint;
@@ -88,9 +99,8 @@ export default class Grid implements AfterViewInit {
       'Are you sure ? (you can not undo this)',
       'Remove',
       () => {
-        debugger;
         this.#http.delete<string>(
-          `rent/${this.endpointEntityName()}/${id}`,
+          `${this.deleteOptions().url}/${id}`,
           (res) => {
             this.#toast.showToast('Success', res, 'info');
             this.result.reload();
@@ -99,5 +109,9 @@ export default class Grid implements AfterViewInit {
       },
       'Cancel'
     );
+  }
+
+  checkPermission(permission: string) {
+    return this.#common.checkPermission(permission);
   }
 }

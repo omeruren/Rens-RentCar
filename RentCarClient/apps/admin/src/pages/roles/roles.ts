@@ -8,7 +8,8 @@ import {
 import { BreadCrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';
-import { RouterLink} from "@angular/router";
+import { RouterLink } from '@angular/router';
+import { Common } from '../../services/common';
 
 @Component({
   imports: [Grid, FlexiGridModule, RouterLink],
@@ -18,8 +19,7 @@ import { RouterLink} from "@angular/router";
 })
 export default class Roles {
   // <-- Services -->
-  readonly #breadcrumb = inject(BreadcrumbService);
-
+  readonly #common = inject(Common);
   readonly breadcrumbs = signal<BreadCrumbModel[]>([
     {
       title: 'Roles',
@@ -29,5 +29,7 @@ export default class Roles {
     },
   ]);
 
-
+  checkPermission(permission: string) {
+    return this.#common.checkPermission(permission);
+  }
 }

@@ -5,6 +5,7 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Roles;
 
+[Permission("role:update_permissions")]
 public sealed record RoleUpdatePermissionCommand(
     Guid RoleId,
     List<string> Permissions) : IRequest<Result<string>>;
