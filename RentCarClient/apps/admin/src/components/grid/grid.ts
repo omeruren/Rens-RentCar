@@ -68,7 +68,7 @@ export default class Grid implements AfterViewInit {
   permissionDelete = signal<string>('');
 
   ngOnInit() {
-    const base = this.permissionEntityName(); // sadece bir kere oku
+    const base = this.permissionEntityName();
 
     this.permissionView.set(base + ':view');
     this.permissionCreate.set(base + ':create');
