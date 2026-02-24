@@ -40,12 +40,12 @@ internal sealed class UserCreateCommandHandler(
         var isEmailExists = await _userRepository.AnyAsync(u => u.Email.Value == request.Email, cancellationToken);
 
         if (isEmailExists)
-            return Result<string>.Failure("Email address is already taken before");
+            return Result<string>.Failure("Email address is already taken before by someone else");
 
         var isUserNameExists = await _userRepository.AnyAsync(u => u.UserName.Value == request.UserName, cancellationToken);
 
         if (isUserNameExists)
-            return Result<string>.Failure("User name is already taken before");
+            return Result<string>.Failure("User name is already taken before by someone else");
 
         FirstName firstName = new(request.FirstName);
         LastName lastName = new(request.LastName);
