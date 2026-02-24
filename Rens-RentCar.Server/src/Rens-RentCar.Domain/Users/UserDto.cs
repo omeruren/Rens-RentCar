@@ -6,7 +6,7 @@ namespace Rens_RentCar.Domain.Users;
 
 public sealed class UserDto : BaseEntityDto
 {
-    public string FisrtName { get; set; } = default!;
+    public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
     public string FullName { get; set; } = default!;
     public string Email { get; set; } = default!;
@@ -29,7 +29,7 @@ public static class UserExtensions
             .Select(s => new UserDto
             {
                 Id = s.Entity.Id,
-                FisrtName = s.Entity.FirstName.Value,
+                FirstName = s.Entity.FirstName.Value,
                 LastName = s.Entity.LastName.Value,
                 FullName = s.Entity.FullName.Value,
                 Email = s.Entity.Email.Value,

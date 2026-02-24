@@ -9,13 +9,15 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Users;
 
+[Permission("user:create")]
 public sealed record UserCreateCommand(
     string FirstName,
     string LastName,
     string Email,
     string UserName,
     Guid? BranchId,
-    Guid RoleId) : IRequest<Result<string>>;
+    Guid RoleId,
+    bool IsActive) : IRequest<Result<string>>;
 
 
 public sealed class UserCreateCommandValidator : AbstractValidator<UserCreateCommand>
@@ -59,7 +61,7 @@ internal sealed class UserCreateCommandHandler(
 
         IdentityId roleId = new(request.RoleId);
 
-        User user = new(firstName, lastName, email, userName, password, branchId, roleId);
+        User user = new(firstName, lastName, email, userName, password, branchId, roleId, request.IsActive);
 
         _userRepository.Add(user);
 

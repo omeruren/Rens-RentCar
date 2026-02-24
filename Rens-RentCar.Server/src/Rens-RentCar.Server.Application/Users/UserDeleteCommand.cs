@@ -5,6 +5,8 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Users;
 
+[Permission("user:delete")]
+
 public sealed record UserDeleteCommand(Guid Id) : IRequest<Result<string>>;
 
 
@@ -16,6 +18,9 @@ internal sealed class UserDeleteCommandHandler(IUserRepository _userRepository, 
 
         if (user is null)
             return Result<string>.Failure("User not found.");
+
+        if (user.UserName.Value == "admin")
+            return Result<string>.Failure("Do not cross the line!!!");
 
         user.Delete();
         _userRepository.Update(user);

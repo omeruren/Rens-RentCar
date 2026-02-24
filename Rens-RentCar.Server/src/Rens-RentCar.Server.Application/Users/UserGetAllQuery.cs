@@ -5,6 +5,8 @@ using TS.MediatR;
 
 namespace Rens_RentCar.Server.Application.Users;
 
+[Permission("user:view")]
+
 public sealed record UserGetAllQuery : IRequest<IQueryable<UserDto>>;
 
 internal sealed class UserGetAllQueryHandler(

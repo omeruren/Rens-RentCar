@@ -26,4 +26,10 @@ export const navigations: NavigationModel[] = [
     icon: 'bi-person-lock',
     permission: 'role:view',
   },
+  {
+    title: 'Users',
+    url: '/users',
+    icon: 'bi-people',
+    permission: 'user:view',
+  },
 ];

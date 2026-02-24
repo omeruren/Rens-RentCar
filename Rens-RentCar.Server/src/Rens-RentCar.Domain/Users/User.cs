@@ -17,8 +17,9 @@ public sealed class User : BaseEntity
         Email email,
         UserName userName,
         Password password,
-        IdentityId BranchId,
-        IdentityId RoleId)
+        IdentityId branchId,
+        IdentityId roleId,
+        bool isActive)
     {
         SetFirstName(firstName);
         SetLastName(lastName);
@@ -28,8 +29,9 @@ public sealed class User : BaseEntity
         SetPassword(password);
         SetIsForgotPasswordCompleted(new(true));
         SetTFAStatus(new(false));
-        SetBranchId(BranchId);
-        SetRoleId(RoleId);
+        SetBranchId(branchId);
+        SetRoleId(roleId);
+        SetStatus(isActive);
     }
 
     public FirstName FirstName { get; private set; } = default!;

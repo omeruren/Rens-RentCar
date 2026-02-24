@@ -4,7 +4,7 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Permissions;
 
-[Permission("permission:view")]
+//[Permission("permission:view")]
 public sealed record PermissionGetAllQuery : IRequest<Result<List<string>>>;
 
 internal sealed class PermissionGetAllQueryHandler(PermissionService _permissionService) : IRequestHandler<PermissionGetAllQuery, Result<List<string>>>
