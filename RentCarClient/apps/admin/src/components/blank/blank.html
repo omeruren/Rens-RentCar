@@ -21,7 +21,7 @@
             @if(status()){
             <span class="badge bg-success" style="font-size: 15px">ACTIVE</span>
             }@else {
-            <span class="badge bg-danger" style="font-size: 15px">PASIVE</span>
+            <span class="badge bg-danger" style="font-size: 15px">PASSIVE</span>
             }
           </div>
           } @if(showStatusCheckbox()){
@@ -61,7 +61,26 @@
       <!-- Kayıt Bilgileri Footer -->
       <div class="record-info-footer">
         <div class="row g-3">
-          @if(audit()?.updatedAt){
+
+          <div class="col-md-6">
+            <div class="record-info-card">
+              <div class="record-info-icon">
+                <i class="bi bi-plus-circle text-success"></i>
+              </div>
+              <div class="record-info-content">
+                <label class="record-info-label">Create</label>
+                <div class="record-info-details">
+                  <span class="record-info-user"
+                    >{{audit()!.createdFullName}}</span
+                  >
+                  <span class="record-info-date">
+                    {{audit()!.createdAt | date:'dd MMM yyyy HH:mm:ss'}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+ @if(audit()?.updatedAt){
           <div class="col-md-6">
             <div class="record-info-card">
               <div class="record-info-icon">
@@ -81,24 +100,6 @@
             </div>
           </div>
           }
-          <div class="col-md-6">
-            <div class="record-info-card">
-              <div class="record-info-icon">
-                <i class="bi bi-plus-circle text-success"></i>
-              </div>
-              <div class="record-info-content">
-                <label class="record-info-label">Create</label>
-                <div class="record-info-details">
-                  <span class="record-info-user"
-                    >{{audit()!.createdFullName}}</span
-                  >
-                  <span class="record-info-date">
-                    {{audit()!.createdAt | date:'dd MMM yyyy HH:mm:ss'}}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       }

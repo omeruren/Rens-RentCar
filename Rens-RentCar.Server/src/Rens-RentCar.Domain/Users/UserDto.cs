@@ -14,6 +14,7 @@ public sealed class UserDto : BaseEntityDto
     public Guid BranchId { get; set; }
     public string BranchName { get; set; } = default!;
     public string RoleName { get; set; } = default!;
+    public Guid RoleId { get; set; }
 
 }
 
@@ -35,9 +36,10 @@ public static class UserExtensions
                 FullName = s.Entity.FullName.Value,
                 Email = s.Entity.Email.Value,
                 UserName = s.Entity.UserName.Value,
-                RoleName = s.Role.Name.Value,
                 BranchId = s.Entity.BranchId,
                 BranchName = s.Branch.Name.Value,
+                RoleId = s.Entity.RoleId,
+                RoleName = s.Role.Name.Value,
 
 
                 CreatedAt = s.Entity.CreatedAt,

@@ -70,6 +70,7 @@ internal sealed class UserUpdateCommandHandler(
 
         user.SetFirstName(firstName);
         user.SetLastName(lastName);
+        user.SetFullName();
         user.SetEmail(email);
         user.SetUserName(userName);
         user.SetBranchId(branchId);
