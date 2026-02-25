@@ -51,19 +51,30 @@
                 <div class="detail-item">
                     <label class="detail-label">Primary Phone number</label>
                     <span class="detail-value">
-                        {{data().phoneNumber1}}
+                        +90 {{data().phoneNumber1 |mask:'999 999 9999'}}
                     </span>
                 </div>
                 <div class="detail-item">
                     <label class="detail-label">Second Phone number</label>
                     <span class="detail-value">
-                        {{data().phoneNumber1}}
+                      @if(data().phoneNumber2){
+
+                        +90  {{data().phoneNumber2! |mask:'999 999 9999'}}
+                      }@else {
+                        <i style="opacity: 50%">No Second Phone yet</i>
+                      }
+
                     </span>
                 </div>
                 <div class="detail-item">
                     <label class="detail-label">Contact Mail</label>
                     <span class="detail-value">
+                      @if(data().email){
+
                         {{data().email}}
+                      }@else {
+                        <i style="opacity: 50%;">No Contact Email yet</i>
+                      }
                     </span>
                 </div>
             </div>

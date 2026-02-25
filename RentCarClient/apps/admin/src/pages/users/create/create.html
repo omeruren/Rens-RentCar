@@ -1,0 +1,123 @@
+<app-blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event) "
+  [status]="data().isActive"
+  [showStatusCheckbox]="true"
+  [loading]="loading()"
+  size="col-md-6"
+>
+  <form
+    autocomplete="off"
+    #form="ngForm"
+    formValidate
+    class="admin-form"
+    (ngSubmit)="save(form)"
+  >
+    <div class="admin-card" >
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2"> User Informations </i>
+        </h6>
+      </div>
+
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">
+            First Name (<span class="text-danger">*</span>)
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="data().firstName"
+            name="firstName"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid first name</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">
+            Last Name (<span class="text-danger">*</span>)
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="data().lastName"
+            name="lastName"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid last name</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">
+            User Name (<span class="text-danger">*</span>)
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="data().userName"
+            name="userName"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid user name</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">
+            Email (<span class="text-danger">*</span>)
+          </label>
+          <input
+            type="email"
+            class="form-control"
+            [(ngModel)]="data().email"
+            name="email"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid email</div>
+        </div>
+      </div>
+    </div>
+    <div class="admin-card"style="min-height: 450px;">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2">
+            Other Informations
+          </i>
+        </h6>
+      </div>
+      <div class="card-body">
+        @if(isAdmin()){
+
+        <div class="form-group">
+          <label class="form-label">
+            Branch Name (<span class="text-danger">*</span>)
+          </label>
+          <flexi-select
+            [data]="branches()"
+            label="name"
+            name="branchId"
+            value="id"
+            [(ngModel)]="data().branchId"
+            [required]="true"
+          />
+        </div>
+        }
+        <div class="form-group">
+          <label class="form-label">
+            Role name (<span class="text-danger">*</span>)
+          </label>
+          <flexi-select
+            [data]="roles()"
+            label="name"
+            name="roleId"
+            value="id"
+            [(ngModel)]="data().roleId"
+            [required]="true"
+          />
+        </div>
+      </div>
+    </div>
+      <div class="form-group d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
+  </form>
+</app-blank>

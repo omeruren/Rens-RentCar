@@ -20,12 +20,12 @@
     </flexi-grid-column>
     <flexi-grid-column field="phoneNumber2" title="Second Phone number">
       <ng-template flexiGridCellTemplate let-item>
-        @if (item.phoneNumber2!==null) {
+        @if (item.phoneNumber2) {
 
         <span>+90 {{item.phoneNumber2 |mask:'(999) 999 99 99'}} </span>
         }@else {
-        <span style="font-style: italic; font-weight: bold"
-          >No Second Phone</span
+        <i style="opacity: 50%;"
+          >No Second Phone</i
         >
         }
       </ng-template>

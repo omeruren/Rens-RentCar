@@ -11,12 +11,12 @@ export const routes: Routes = [
   {
     path: 'add',
     loadComponent: () => import('./create/create'),
-    canActivate:[()=>inject(Common).checkPermissionForRouting('role:add')]
+    canActivate:[()=>inject(Common).checkPermissionForRouting('role:create')]
   },
   {
     path: 'edit/:id',
     loadComponent: () => import('./create/create'),
-    canActivate:[()=>inject(Common).checkPermissionForRouting('role:create')]
+    canActivate:[()=>inject(Common).checkPermissionForRouting('role:edit')]
   },
   {
     path: 'details/:id',

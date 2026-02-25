@@ -8,5 +8,19 @@ const router: Routes = [
     loadComponent: () => import('./users'),
     canActivate: [() => inject(Common).checkPermissionForRouting('user:view')],
   },
+  {
+    path: 'add',
+    loadComponent: () => import('./create/create'),
+    canActivate: [
+      () => inject(Common).checkPermissionForRouting('user:create'),
+    ],
+  },
+  {
+    path: 'edit/:id',
+    loadComponent: () => import('./create/create'),
+    canActivate: [
+      () => inject(Common).checkPermissionForRouting('user:edit'),
+    ],
+  },
 ];
 export default router;

@@ -22,7 +22,7 @@ import {
 import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
-  imports: [Blank],
+  imports: [Blank,NgxMaskPipe],
   templateUrl: './detail.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

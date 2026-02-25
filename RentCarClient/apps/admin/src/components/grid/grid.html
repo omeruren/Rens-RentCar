@@ -44,8 +44,8 @@
   />
   <flexi-grid-column field="updatedFullName" title="Updated By">
     <ng-template flexiGridCellTemplate let-item>
-      @if(item.updatedFullName!==null){ {{item.updatedFullName}} }@else {
-      <span style="font-style: italic; font-weight: bold">No Update yet</span>
+      @if(item.updatedFullName){ {{item.updatedFullName}} }@else {
+      <i style="opacity: 50%;">No Update yet</i>
       }
     </ng-template>
   </flexi-grid-column>
@@ -57,7 +57,7 @@
   >
     <ng-template flexiGridCellTemplate let-item>
       @if(item.updatedAt!==null){ {{item.updatedAt}} }@else {
-      <span style="font-style: italic; font-weight: bold">No Update yet</span>
+      <i style="opacity: 50%;">No Update yet</i>
       }
     </ng-template>
   </flexi-grid-column>
