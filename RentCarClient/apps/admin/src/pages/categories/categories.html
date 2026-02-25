@@ -1,0 +1,11 @@
+<app-grid
+  pageTitle="Categories"
+  endpointEntityName="categories"
+  permissionEntityName="category"
+  [breadcrumbs]="breadcrumbs()"
+  captionTitle="Category List"
+>
+  <ng-template flexiGridCaptionCommandTemplate>
+  </ng-template>
+  <flexi-grid-column field="name" title="Category Name" />
+</app-grid>

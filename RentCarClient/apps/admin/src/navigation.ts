@@ -21,6 +21,12 @@ export const navigations: NavigationModel[] = [
     permission: 'branch:view',
   },
   {
+    title: 'Categories',
+    url: '/categories',
+    icon: 'bi-tag',
+    permission: 'category:view',
+  },
+  {
     title: 'Roles',
     url: '/roles',
     icon: 'bi-person-lock',

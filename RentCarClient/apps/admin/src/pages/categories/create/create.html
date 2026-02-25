@@ -1,0 +1,46 @@
+<app-blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event) "
+  [status]="data().isActive"
+  [showStatusCheckbox]="true"
+  [loading]="loading()"
+  size="col-md-6"
+>
+  <form
+    autocomplete="off"
+    #form="ngForm"
+    formValidate
+    class="admin-form"
+    (ngSubmit)="save(form)"
+  >
+    <!-- Basic Information -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2"></i>Basic Informations
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-label">
+            Category Name (<span class="text-danger">*</span>)
+          </div>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="data().name"
+            name="name"
+            required
+            minlength="3"
+            maxlength="50"
+          />
+          <div class="invalid-feedback">Please Enter a valid Category Name.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
+  </form>
+</app-blank>
