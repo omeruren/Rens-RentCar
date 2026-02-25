@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
+using Rens_RentCar.Domain.Categories;
 using Rens_RentCar.Domain.Roles;
 using Rens_RentCar.Domain.Users;
 using Rens_RentCar.Server.Application.Branches;
+using Rens_RentCar.Server.Application.Categories;
 using Rens_RentCar.Server.Application.Roles;
 using Rens_RentCar.Server.Application.Users;
 using TS.MediatR;
@@ -24,6 +26,7 @@ public class BaseODataController : ODataController
         builder.EntitySet<BranchDto>("branches");
         builder.EntitySet<RoleDto>("roles");
         builder.EntitySet<UserDto>("users");
+        builder.EntitySet<CategoryDto>("categories");
 
         return builder.GetEdmModel();
     }
@@ -35,5 +38,8 @@ public class BaseODataController : ODataController
 
     [HttpGet("users")]
     public IQueryable<UserDto> Users(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new UserGetAllQuery(), cancellationToken).Result;
+
+    [HttpGet("categories")]
+    public IQueryable<CategoryDto> Categories(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new CategoryGetAllQuery(), cancellationToken).Result;
 
 }
