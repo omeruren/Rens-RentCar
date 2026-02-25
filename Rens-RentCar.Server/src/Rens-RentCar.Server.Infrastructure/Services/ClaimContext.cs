@@ -49,4 +49,15 @@ internal sealed class ClaimContext(IHttpContextAccessor _httpContextAccessor) : 
             throw new ArgumentException("An error occurred while attempting branch Id parse to Guid");
         }
     }
+    public string GetRoleName()
+    {
+        var http = _httpContextAccessor.HttpContext;
+
+        if (http is null)
+            throw new ArgumentNullException(nameof(http));
+
+        var claims = http.User.Claims;
+        string? roleName = (claims.FirstOrDefault(u => u.Type == ClaimTypes.Role)?.Value) ?? throw new ArgumentException("Role info not found");
+        return roleName;
+    }
 }

@@ -3,7 +3,6 @@
 public interface IClaimContext
 {
     Guid GetUserId(); // Will be received from token
-
     Guid GetBranchId();
-
+    string GetRoleName();
 }
