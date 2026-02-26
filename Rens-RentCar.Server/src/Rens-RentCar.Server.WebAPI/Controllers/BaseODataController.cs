@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Rens_RentCar.Domain.Categories;
+using Rens_RentCar.Domain.Extras;
 using Rens_RentCar.Domain.ProtectionPackages;
 using Rens_RentCar.Domain.Roles;
 using Rens_RentCar.Domain.Users;
@@ -30,6 +31,7 @@ public class BaseODataController : ODataController
         builder.EntitySet<UserDto>("users");
         builder.EntitySet<CategoryDto>("categories");
         builder.EntitySet<ProtectionDto>("protection-packages");
+        builder.EntitySet<ExtraDto>("extras");
 
         return builder.GetEdmModel();
     }
@@ -47,5 +49,8 @@ public class BaseODataController : ODataController
 
     [HttpGet("protection-packages")]
     public IQueryable<ProtectionDto> Protections(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new ProtectionGetAllQuery(), cancellationToken).Result;
+
+    [HttpGet("extras")]
+    public IQueryable<ProtectionDto> Extras(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new ProtectionGetAllQuery(), cancellationToken).Result;
 
 }

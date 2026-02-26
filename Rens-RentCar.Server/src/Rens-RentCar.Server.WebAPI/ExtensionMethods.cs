@@ -71,6 +71,7 @@ public static class ExtensionMethods
         app.MapUserEndpoint();
         app.MapCategoryEndpoint();
         app.MapProtectionEndpoint();
+        app.MapExtraEndpoint();
     }
 
     public static async Task CleanRemovedPermissionsFromRoleAsync(this WebApplication app)
