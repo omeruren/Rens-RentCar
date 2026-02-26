@@ -9,11 +9,12 @@ public sealed class ProtectionPackage : BaseEntity
     private readonly List<ProtectionCoverage> _coverages = new();
     private ProtectionPackage() { }
 
-    public ProtectionPackage(Name name, Price price, IsRecommended isRecommended)
+    public ProtectionPackage(Name name, Price price, IsRecommended isRecommended, IEnumerable<ProtectionCoverage> coverages)
     {
         SetName(name);
         SetPrice(price);
         SetIsRecommended(isRecommended);
+        SetCoverages(coverages);
     }
 
     public Name Name { get; private set; } = default!;
