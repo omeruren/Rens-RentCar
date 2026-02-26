@@ -39,7 +39,7 @@ internal sealed class ProtectionCreateCommandHandler(IProtectionPackageRepositor
         IsRecommended isRecommended = new(request.IsRecommended);
         var coverages = request.Coverages.Select(c => new ProtectionCoverage(c));
 
-        var protection = new ProtectionPackage(name, price, isRecommended, coverages);
+        var protection = new ProtectionPackage(name, price, isRecommended, request.IsActive, coverages);
 
         _protectionRepository.Add(protection);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
