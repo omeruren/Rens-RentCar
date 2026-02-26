@@ -1,0 +1,14 @@
+<app-grid
+  pageTitle="Protection Packages"
+  endpointEntityName="protection-packages"
+  permissionEntityName="protection"
+  [breadcrumbs]="breadcrumbs()"
+  captionTitle="Protection Package List"
+>
+  <ng-template flexiGridCaptionCommandTemplate>
+  </ng-template>
+  <flexi-grid-column field="name" title="Package Name" />
+  <flexi-grid-column field="price" title="Price"filterType="number" format="c" textAlign="center" symbol="₺" />
+  <flexi-grid-column field="isRecommended" filterType="boolean" textAlign="center" [booleanData]="['Yes', 'No']" title="Recommended" />
+
+</app-grid>

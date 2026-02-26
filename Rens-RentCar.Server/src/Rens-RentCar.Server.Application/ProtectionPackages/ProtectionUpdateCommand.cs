@@ -9,7 +9,13 @@ using TS.Result;
 namespace Rens_RentCar.Server.Application.ProtectionPackages;
 
 [Permission("protection:edit")]
-public sealed record ProtectionUpdateCommand(Guid Id, string Name, decimal Price, bool IsRecommended, IEnumerable<string> Coverages) : IRequest<Result<string>>;
+public sealed record ProtectionUpdateCommand(
+    Guid Id,
+    string Name,
+    decimal Price,
+    bool IsRecommended,
+    IEnumerable<string> Coverages,
+    bool IsActive) : IRequest<Result<string>>;
 
 public sealed class ProtectionUpdateCommandValidator : AbstractValidator<ProtectionUpdateCommand>
 {
@@ -43,7 +49,7 @@ internal sealed class ProtectionUpdateCommandHandler(IProtectionPackageRepositor
         protection.SetPrice(price);
         protection.SetIsRecommended(isRecommended);
         protection.SetCoverages(coverages);
-
+        protection.SetStatus(request.IsActive);
         _protectionRepository.Update(protection);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

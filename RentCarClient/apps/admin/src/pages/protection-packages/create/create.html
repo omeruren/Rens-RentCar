@@ -1,0 +1,107 @@
+<app-blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event) "
+  [status]="data().isActive"
+  [showStatusCheckbox]="true"
+  [loading]="loading()"
+  size="col-md-6"
+>
+  <form
+    autocomplete="off"
+    #form="ngForm"
+    formValidate
+    class="admin-form"
+    (ngSubmit)="save(form)"
+  >
+    <!-- Basic Information -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2"></i>Basic Informations
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-label">
+            Package Name (<span class="text-danger">*</span>)
+          </div>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="data().name"
+            name="name"
+            required
+            minlength="3"
+            maxlength="100"
+          />
+          <div class="invalid-feedback">Please Enter a valid Package Name.</div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            Price (<span class="text-danger">*</span>)
+          </div>
+           <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="data().price"
+            name="price"
+            mask="separator.2"
+            thousandSeparator="."
+            decimalMarker=","
+            required>
+          <div class="invalid-feedback">Please Enter a valid Price.</div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            Recommended
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [(ngModel)]="data().isRecommended"
+              name="isRecommended"
+              id="isRecommended"
+            />
+            <label class="form-check-label" for="isRecommended">
+              Mark as Recommended
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coverages -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-shield-check text-primary me-2"></i>Coverages
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-label">
+            Coverages (<span class="text-danger">*</span>)
+          </div>
+          <textarea
+            class="form-control"
+            [(ngModel)]="coveragesText"
+            name="coverages"
+            placeholder="Enter coverages separated by comma"
+            rows="4"
+          ></textarea>
+          <small class="form-text text-muted">
+            Enter each coverage separated by comma (e.g., Collision, Theft, Third Party)
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
+  </form>
+</app-blank>

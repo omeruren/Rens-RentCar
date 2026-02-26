@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Rens_RentCar.Domain.Categories;
+using Rens_RentCar.Domain.ProtectionPackages;
 using Rens_RentCar.Domain.Roles;
 using Rens_RentCar.Domain.Users;
-using Rens_RentCar.Domain.ProtectionPackages;
 using Rens_RentCar.Server.Application.Branches;
 using Rens_RentCar.Server.Application.Categories;
+using Rens_RentCar.Server.Application.ProtectionPackages;
 using Rens_RentCar.Server.Application.Roles;
 using Rens_RentCar.Server.Application.Users;
-using Rens_RentCar.Server.Application.ProtectionPackages;
 using TS.MediatR;
 
 namespace Rens_RentCar.Server.WebAPI.Controllers;
@@ -29,7 +29,7 @@ public class BaseODataController : ODataController
         builder.EntitySet<RoleDto>("roles");
         builder.EntitySet<UserDto>("users");
         builder.EntitySet<CategoryDto>("categories");
-        builder.EntitySet<ProtectionDto>("protections");
+        builder.EntitySet<ProtectionDto>("protection-packages");
 
         return builder.GetEdmModel();
     }
@@ -45,7 +45,7 @@ public class BaseODataController : ODataController
     [HttpGet("categories")]
     public IQueryable<CategoryDto> Categories(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new CategoryGetAllQuery(), cancellationToken).Result;
 
-    [HttpGet("protections")]
+    [HttpGet("protection-packages")]
     public IQueryable<ProtectionDto> Protections(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new ProtectionGetAllQuery(), cancellationToken).Result;
 
 }

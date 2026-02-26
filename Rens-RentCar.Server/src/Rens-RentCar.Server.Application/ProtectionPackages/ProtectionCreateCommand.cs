@@ -13,7 +13,8 @@ public sealed record ProtectionCreateCommand(
     string Name,
     decimal Price,
     bool IsRecommended,
-    IEnumerable<string> Coverages) : IRequest<Result<string>>;
+    IEnumerable<string> Coverages,
+    bool IsActive) : IRequest<Result<string>>;
 
 public sealed class ProtectionCreateCommandValidator : AbstractValidator<ProtectionCreateCommand>
 {

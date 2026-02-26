@@ -24,7 +24,9 @@ export const appRoutes: Route[] = [
       {
         path: '',
         loadComponent: () => import('./pages/dashboard/dashboard'),
-        canActivate: [() => inject(Common).checkPermissionForRouting('dashboard:view')],
+        canActivate: [
+          () => inject(Common).checkPermissionForRouting('dashboard:view'),
+        ],
       },
       {
         path: 'branches',
@@ -33,6 +35,10 @@ export const appRoutes: Route[] = [
       {
         path: 'categories',
         loadChildren: () => import('./pages/categories/route'),
+      },
+      {
+        path: 'protection-packages',
+        loadChildren: () => import('./pages/protection-packages/route'),
       },
       {
         path: 'roles',

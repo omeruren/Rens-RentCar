@@ -38,4 +38,10 @@ export const navigations: NavigationModel[] = [
     icon: 'bi-people',
     permission: 'user:view',
   },
+  {
+    title: 'Protection Packages',
+    url: '/protection-packages',
+    icon: 'bi-shield',
+    permission: 'protection:view',
+  },
 ];

@@ -25,6 +25,7 @@ import { HttpService } from '../../services/http';
 import { BreadCrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import { NgTemplateOutlet } from '@angular/common';
 import { Common } from '../../services/common';
+import { ProtectionPackageModel } from '../../models/protection.package.model';
 
 export interface btnOptions {
   url: string;
@@ -75,6 +76,7 @@ export default class Grid implements AfterViewInit {
     this.permissionEdit.set(base + ':edit');
     this.permissionDetails.set(base + ':view');
     this.permissionDelete.set(base + ':delete');
+    console.log(this.result.value()?.value)
   }
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {
@@ -92,6 +94,7 @@ export default class Grid implements AfterViewInit {
     const part = this.#grid.getODataEndpoint(this.state());
     endpoint += `&${part}`;
     return endpoint;
+
   });
 
   readonly data = computed(() => this.result.value()?.value ?? []);

@@ -1,5 +1,5 @@
-using Rens_RentCar.Server.Application.ProtectionPackages;
 using Rens_RentCar.Domain.ProtectionPackages;
+using Rens_RentCar.Server.Application.ProtectionPackages;
 using TS.MediatR;
 using TS.Result;
 
@@ -9,7 +9,7 @@ public static class ProtectionModule
 {
     public static void MapProtectionEndpoint(this IEndpointRouteBuilder builder)
     {
-        var app = builder.MapGroup("/protections")
+        var app = builder.MapGroup("/protection-packages")
             .WithTags("ProtectionPackages")
             .RequireRateLimiting("fixed")
             .RequireAuthorization();
