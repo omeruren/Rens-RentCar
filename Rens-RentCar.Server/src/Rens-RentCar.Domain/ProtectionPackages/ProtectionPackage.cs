@@ -19,12 +19,12 @@ public sealed class ProtectionPackage : BaseEntity
     public Name Name { get; private set; } = default!;
     public Price Price { get; private set; } = default!;
     public IsRecommended IsRecommended { get; private set; } = default!;
-    public IReadOnlyCollection<ValueObjects.ProtectionCoverage> Coverages => _coverages;
+    public IReadOnlyCollection<ProtectionCoverage> Coverages => _coverages;
 
     public void SetName(Name name) => Name = name;
     public void SetPrice(Price price) => Price = price;
     public void SetIsRecommended(IsRecommended isRecommended) => IsRecommended = isRecommended;
-    public void SetCoverages(IEnumerable<ValueObjects.ProtectionCoverage> coverages)
+    public void SetCoverages(IEnumerable<ProtectionCoverage> coverages)
     {
         _coverages.Clear();
         _coverages.AddRange(coverages);
