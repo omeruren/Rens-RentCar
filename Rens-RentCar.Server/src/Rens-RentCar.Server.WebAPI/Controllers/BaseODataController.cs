@@ -10,6 +10,7 @@ using Rens_RentCar.Domain.Roles;
 using Rens_RentCar.Domain.Users;
 using Rens_RentCar.Server.Application.Branches;
 using Rens_RentCar.Server.Application.Categories;
+using Rens_RentCar.Server.Application.Extras;
 using Rens_RentCar.Server.Application.ProtectionPackages;
 using Rens_RentCar.Server.Application.Roles;
 using Rens_RentCar.Server.Application.Users;
@@ -51,6 +52,6 @@ public class BaseODataController : ODataController
     public IQueryable<ProtectionDto> Protections(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new ProtectionGetAllQuery(), cancellationToken).Result;
 
     [HttpGet("extras")]
-    public IQueryable<ProtectionDto> Extras(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new ProtectionGetAllQuery(), cancellationToken).Result;
+    public IQueryable<ExtraDto> Extras(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new ExtraGetAllQuery(), cancellationToken).Result;
 
 }

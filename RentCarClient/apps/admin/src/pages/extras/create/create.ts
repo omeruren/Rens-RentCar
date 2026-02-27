@@ -22,10 +22,11 @@ import {
 import { HttpService } from 'apps/admin/src/services/http';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
+import { NgxMaskDirective } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
-  imports: [Blank, FormsModule, FormValidateDirective],
+  imports: [Blank, FormsModule, FormValidateDirective,NgxMaskDirective],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

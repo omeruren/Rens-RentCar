@@ -15,5 +15,19 @@ const rotes: Routes = [
       () => inject(Common).checkPermissionForRouting('extra:create'),
     ],
   },
+  {
+    path: 'edit/:id',
+    loadComponent: () => import('./create/create'),
+    canActivate: [
+      () => inject(Common).checkPermissionForRouting('extra:edit'),
+    ],
+  },
+  {
+    path: 'details/:id',
+    loadComponent: () => import('./detail/detail'),
+    canActivate: [
+      () => inject(Common).checkPermissionForRouting('extra:view'),
+    ],
+  },
 ];
 export default rotes;
