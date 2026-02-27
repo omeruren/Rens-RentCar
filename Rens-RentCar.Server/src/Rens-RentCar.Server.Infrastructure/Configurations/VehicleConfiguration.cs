@@ -22,15 +22,27 @@ internal sealed class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
         builder.OwnsOne(x => x.ImageUrl);
         builder.OwnsOne(x => x.FuelType);
         builder.OwnsOne(x => x.Transmission);
-        builder.OwnsOne(x => x.EngineVolume);
+        builder.OwnsOne(x => x.EngineVolume, y =>
+        {
+            y.Property(p => p.Value).HasColumnType("decimal(18,2)");
+        });
         builder.OwnsOne(x => x.EnginePower);
         builder.OwnsOne(x => x.TractionType);
-        builder.OwnsOne(x => x.FuelConsumption);
+        builder.OwnsOne(x => x.FuelConsumption, y =>
+         {
+             y.Property(p => p.Value).HasColumnType("decimal(18,2)");
+         });
         builder.OwnsOne(x => x.SeatCount);
         builder.OwnsOne(x => x.Kilometer);
         builder.OwnsOne(x => x.DailyPrice);
-        builder.OwnsOne(x => x.WeeklyDiscountRate);
-        builder.OwnsOne(x => x.MonthlyDiscountRate);
+        builder.OwnsOne(x => x.WeeklyDiscountRate, y =>
+        {
+            y.Property(p => p.Value).HasColumnType("decimal(18,2)");
+        });
+        builder.OwnsOne(x => x.MonthlyDiscountRate, y =>
+        {
+            y.Property(p => p.Value).HasColumnType("decimal(18,2)");
+        });
         builder.OwnsOne(x => x.InsuranceType);
         builder.OwnsOne(x => x.LastMaintenanceDate);
         builder.OwnsOne(x => x.LastMaintenanceKm);
