@@ -8,12 +8,14 @@ using Rens_RentCar.Domain.Extras;
 using Rens_RentCar.Domain.ProtectionPackages;
 using Rens_RentCar.Domain.Roles;
 using Rens_RentCar.Domain.Users;
+using Rens_RentCar.Domain.Vehicles;
 using Rens_RentCar.Server.Application.Branches;
 using Rens_RentCar.Server.Application.Categories;
 using Rens_RentCar.Server.Application.Extras;
 using Rens_RentCar.Server.Application.ProtectionPackages;
 using Rens_RentCar.Server.Application.Roles;
 using Rens_RentCar.Server.Application.Users;
+using Rens_RentCar.Server.Application.Vehicles;
 using TS.MediatR;
 
 namespace Rens_RentCar.Server.WebAPI.Controllers;
@@ -33,6 +35,7 @@ public class BaseODataController : ODataController
         builder.EntitySet<CategoryDto>("categories");
         builder.EntitySet<ProtectionDto>("protection-packages");
         builder.EntitySet<ExtraDto>("extras");
+        builder.EntitySet<VehicleDto>("vehicles");
 
         return builder.GetEdmModel();
     }
@@ -53,5 +56,8 @@ public class BaseODataController : ODataController
 
     [HttpGet("extras")]
     public IQueryable<ExtraDto> Extras(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new ExtraGetAllQuery(), cancellationToken).Result;
+
+    [HttpGet("vehicles")]
+    public IQueryable<VehicleDto> Vehicles(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new VehicleGetAllQuery(), cancellationToken).Result;
 
 }
