@@ -1,0 +1,35 @@
+<app-grid
+  pageTitle="Vehicles"
+  endpointEntityName="vehicles"
+  permissionEntityName="vehicle"
+  [breadcrumbs]="breadcrumbs()"
+  captionTitle="Vehicle List"
+>
+  <flexi-grid-column field="brand" title="Brand" />
+  <flexi-grid-column field="model" title="Model" />
+  <flexi-grid-column
+    field="modelYear"
+    title="Year"
+    filterType="number"
+    textAlign="center"
+  />
+  <flexi-grid-column field="color" title="Color" />
+  <flexi-grid-column field="plate" title="Plate" />
+  <flexi-grid-column field="fuelType" title="Fuel" />
+  <flexi-grid-column field="transmission" title="Transmission" />
+  <flexi-grid-column
+    field="kilometer"
+    title="Kilometer"
+    filterType="number"
+    textAlign="center"
+  />
+  <flexi-grid-column
+    field="dailyPrice"
+    title="Daily Price"
+    filterType="number"
+    format="c"
+    symbol="₺"
+    textAlign="center"
+  />
+  <flexi-grid-column field="generalStatus" title="Status" />
+</app-grid>

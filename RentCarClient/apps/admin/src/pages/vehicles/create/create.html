@@ -1,0 +1,540 @@
+<app-blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event)"
+  [status]="data().isActive"
+  [showStatusCheckbox]="true"
+  [loading]="loading()"
+  size="col-md-8"
+>
+  <form
+    autocomplete="off"
+    #form="ngForm"
+    formValidate
+    class="admin-form"
+    (ngSubmit)="save(form)"
+  >
+    <!-- Basic Information -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-car-front text-primary me-2"></i>Basic Informations
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Brand (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().brand"
+                name="brand"
+                required
+              />
+              <div class="invalid-feedback">Please enter a valid Brand.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Model (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().model"
+                name="model"
+                required
+              />
+              <div class="invalid-feedback">Please enter a valid Model.</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">
+                Model Year (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                mask="0000"
+                [(ngModel)]="data().modelYear"
+                name="modelYear"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter a valid Model Year.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">
+                Color (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().color"
+                name="color"
+                required
+              />
+              <div class="invalid-feedback">Please enter a valid Color.</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">
+                Plate (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().plate"
+                name="plate"
+                required
+              />
+              <div class="invalid-feedback">Please enter a valid Plate.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Identification -->
+    <div class="admin-card" style="height: 400px">
+      <div class="card-header">
+        <h6><i class="bi bi-card-text text-primary me-2"></i>Identification</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                VIN Number (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().vinNumber"
+                name="vinNumber"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter a valid VIN Number.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Engine Number (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().engineNumber"
+                name="engineNumber"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter a valid Engine Number.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Category (<span class="text-danger">*</span>)
+              </div>
+              <flexi-select
+                [data]="categories()"
+                label="name"
+                name="categoryId"
+                value="id"
+                [(ngModel)]="data().categoryId"
+                [required]="true"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Branch (<span class="text-danger">*</span>)
+              </div>
+              <flexi-select
+                [data]="branches()"
+                label="name"
+                name="branchId"
+                value="id"
+                [(ngModel)]="data().branchId"
+                [required]="true"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Engine & Performance -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-gear text-primary me-2"></i>Engine & Performance
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Fuel Type</div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().fuelType"
+                name="fuelType"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Transmission</div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().transmission"
+                name="transmission"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Traction Type</div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().tractionType"
+                name="tractionType"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Engine Volume</div>
+              <input
+                type="text"
+                class="form-control"
+                mask="separator.1"
+                thousandSeparator="."
+                decimalMarker=","
+                [(ngModel)]="data().engineVolume"
+                name="engineVolume"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Engine Power (HP)</div>
+              <input
+                class="form-control"
+                type="text"
+                mask="separator.0"
+                [(ngModel)]="data().enginePower"
+                name="enginePower"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Fuel Consumption (L/100km)</div>
+              <input
+                type="text"
+                class="form-control"
+                mask="separator.1"
+                thousandSeparator="."
+                decimalMarker=","
+                [(ngModel)]="data().fuelConsumption"
+                name="fuelConsumption"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">
+                Seat Count (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                mask="separator.0"
+                [(ngModel)]="data().seatCount"
+                name="seatCount"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter a valid Seat Count.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Kilometer</div>
+              <input
+                class="form-control"
+                type="text"
+                mask="separator.0"
+                thousandSeparator="."
+                [(ngModel)]="data().kilometer"
+                name="kilometer"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-currency-exchange text-primary me-2"></i>Pricing
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">
+                Daily Price (<span class="text-danger">*</span>)
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                mask="separator.2"
+                thousandSeparator="."
+                decimalMarker=","
+                [(ngModel)]="data().dailyPrice"
+                name="dailyPrice"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter a valid Daily Price.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Weekly Discount Rate (%)</div>
+              <input
+                type="text"
+                class="form-control"
+                mask="separator.2"
+                thousandSeparator="."
+                decimalMarker=","
+                [(ngModel)]="data().weeklyDiscountRate"
+                name="weeklyDiscountRate"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Monthly Discount Rate (%)</div>
+              <input
+                type="text"
+                class="form-control"
+                mask="separator.2"
+                thousandSeparator="."
+                decimalMarker=","
+                [(ngModel)]="data().monthlyDiscountRate"
+                name="monthlyDiscountRate"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insurance & Maintenance -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-shield-check text-primary me-2"></i>Insurance &
+          Maintenance
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Insurance Type</div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().insuranceType"
+                name="insuranceType"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Insurance End Date</div>
+              <input
+                class="form-control"
+                type="date"
+                [(ngModel)]="data().insuranceEndDate"
+                name="insuranceEndDate"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Casco End Date</div>
+              <input
+                class="form-control"
+                type="date"
+                [(ngModel)]="data().cascoEndDate"
+                name="cascoEndDate"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Inspection Date</div>
+              <input
+                class="form-control"
+                type="date"
+                [(ngModel)]="data().inspectionDate"
+                name="inspectionDate"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Last Maintenance Date</div>
+              <input
+                class="form-control"
+                type="date"
+                [(ngModel)]="data().lastMaintenanceDate"
+                name="lastMaintenanceDate"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Last Maintenance Km</div>
+              <input
+                class="form-control"
+                type="text"
+                mask="separator.0"
+                thousandSeparator="."
+                [(ngModel)]="data().lastMaintenanceKm"
+                name="lastMaintenanceKm"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Next Maintenance Km</div>
+              <input
+                class="form-control"
+                type="text"
+                mask="separator.0"
+                thousandSeparator="."
+                [(ngModel)]="data().nextMaintenanceKm"
+                name="nextMaintenanceKm"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status & Details -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2"></i>Status & Details
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Tire Status</div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().tireStatus"
+                name="tireStatus"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">General Status</div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().generalStatus"
+                name="generalStatus"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-label">Image URL</div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().imageUrl"
+                name="imageUrl"
+              />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="form-label">Description</div>
+              <textarea
+                class="form-control"
+                [(ngModel)]="data().description"
+                name="description"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6><i class="bi bi-star text-primary me-2"></i>Features</h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-label">Features</div>
+          <textarea
+            class="form-control"
+            [(ngModel)]="featuresText"
+            name="features"
+            placeholder="Enter features separated by comma"
+            rows="3"
+          ></textarea>
+          <small class="form-text text-muted">
+            Enter each feature separated by comma (e.g., ABS, GPS, Bluetooth,
+            Sunroof)
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
+  </form>
+</app-blank>

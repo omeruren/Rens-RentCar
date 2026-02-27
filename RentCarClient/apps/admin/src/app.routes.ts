@@ -52,6 +52,10 @@ export const appRoutes: Route[] = [
         path: 'users',
         loadChildren: () => import('./pages/users/route'),
       },
+      {
+        path: 'vehicles',
+        loadChildren: () => import('./pages/vehicles/route'),
+      },
     ],
   },
 ];

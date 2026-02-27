@@ -1,0 +1,230 @@
+<app-blank
+  [pageTitle]="pageTitle()"
+  pageIcon="bi-zoom-in"
+  [showStatusCheckbox]="false"
+  [showStatus]="true"
+  [status]="data().isActive"
+  [showAudit]="true"
+  [audit]="data()"
+  [loading]="loading()"
+  size="col-md-8"
+>
+  <!-- Basic Information -->
+  <div class="admin-card">
+    <div class="card-header">
+      <h6>
+        <i class="bi bi-car-front text-primary me-2"></i>Basic Informations
+      </h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">Brand</label>
+          <span class="detail-value">{{data().brand}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Model</label>
+          <span class="detail-value">{{data().model}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Model Year</label>
+          <span class="detail-value">{{data().modelYear}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Color</label>
+          <span class="detail-value">{{data().color}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Plate</label>
+          <span class="detail-value">{{data().plate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Identification -->
+  <div class="admin-card">
+    <div class="card-header">
+      <h6><i class="bi bi-card-text text-primary me-2"></i>Identification</h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">VIN Number</label>
+          <span class="detail-value">{{data().vinNumber}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Engine Number</label>
+          <span class="detail-value">{{data().engineNumber}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Category ID</label>
+          <span class="detail-value">{{data().categoryId}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Branch ID</label>
+          <span class="detail-value">{{data().branchId}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Engine & Performance -->
+  <div class="admin-card">
+    <div class="card-header">
+      <h6><i class="bi bi-gear text-primary me-2"></i>Engine & Performance</h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">Fuel Type</label>
+          <span class="detail-value">{{data().fuelType}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Transmission</label>
+          <span class="detail-value">{{data().transmission}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Traction Type</label>
+          <span class="detail-value">{{data().tractionType}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Engine Volume</label>
+          <span class="detail-value">{{data().engineVolume}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Engine Power (HP)</label>
+          <span class="detail-value">{{data().enginePower}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Fuel Consumption</label>
+          <span class="detail-value">{{data().fuelConsumption}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Seat Count</label>
+          <span class="detail-value">{{data().seatCount}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Kilometer</label>
+          <span class="detail-value">{{data().kilometer}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="admin-card">
+    <div class="card-header">
+      <h6><i class="bi bi-currency-exchange text-primary me-2"></i>Pricing</h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">Daily Price</label>
+          <span class="detail-value">{{data().dailyPrice}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Weekly Discount Rate</label>
+          <span class="detail-value">{{data().weeklyDiscountRate}}%</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Monthly Discount Rate</label>
+          <span class="detail-value">{{data().monthlyDiscountRate}}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Insurance & Maintenance -->
+  <div class="admin-card">
+    <div class="card-header">
+      <h6>
+        <i class="bi bi-shield-check text-primary me-2"></i>Insurance &
+        Maintenance
+      </h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">Insurance Type</label>
+          <span class="detail-value">{{data().insuranceType}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Insurance End Date</label>
+          <span class="detail-value">{{data().insuranceEndDate}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Casco End Date</label>
+          <span class="detail-value">{{data().cascoEndDate}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Inspection Date</label>
+          <span class="detail-value">{{data().inspectionDate}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Last Maintenance Date</label>
+          <span class="detail-value">{{data().lastMaintenanceDate}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Last Maintenance Km</label>
+          <span class="detail-value">{{data().lastMaintenanceKm}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Next Maintenance Km</label>
+          <span class="detail-value">{{data().nextMaintenanceKm}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status & Details -->
+  <div class="admin-card">
+    <div class="card-header">
+      <h6>
+        <i class="bi bi-info-circle text-primary me-2"></i>Status & Details
+      </h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">Tire Status</label>
+          <span class="detail-value">{{data().tireStatus}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">General Status</label>
+          <span class="detail-value">{{data().generalStatus}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Image URL</label>
+          <span class="detail-value">{{data().imageUrl}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Description</label>
+          <span class="detail-value">{{data().description}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="admin-card">
+    <div class="card-header">
+      <h6><i class="bi bi-star text-primary me-2"></i>Features</h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">Features</label>
+          <span class="detail-value">
+            <span
+              *ngFor="let feature of data().features"
+              class="badge bg-info me-2"
+            >
+              {{feature}}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-blank>
