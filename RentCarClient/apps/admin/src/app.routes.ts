@@ -37,6 +37,10 @@ export const appRoutes: Route[] = [
         loadChildren: () => import('./pages/categories/route'),
       },
       {
+        path: 'extras',
+        loadChildren: () => import('./pages/extras/route'),
+      },
+      {
         path: 'protection-packages',
         loadChildren: () => import('./pages/protection-packages/route'),
       },

@@ -1,0 +1,18 @@
+<app-grid
+  pageTitle="Extras"
+  endpointEntityName="extras"
+  permissionEntityName="extra"
+  [breadcrumbs]="breadcrumbs()"
+  captionTitle="Extra List"
+>
+  <flexi-grid-column field="name" title="Ekstra Name" />
+  <flexi-grid-column field="description" title="Description" />
+  <flexi-grid-column
+    field="price"
+    title="Price"
+    filterType="number"
+    format="c"
+    symbol="₺"
+    textAlign="center"
+  />
+</app-grid>

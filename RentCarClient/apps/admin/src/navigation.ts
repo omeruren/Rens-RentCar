@@ -44,4 +44,10 @@ export const navigations: NavigationModel[] = [
     icon: 'bi-shield',
     permission: 'protection:view',
   },
+  {
+    title: 'Extras',
+    url: '/extras',
+    icon: 'bi-plus-square',
+    permission: 'extra:view',
+  },
 ];
