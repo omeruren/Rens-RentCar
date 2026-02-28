@@ -93,6 +93,7 @@ builder.Services.AddTransient<CheckTokenMiddleware>();
 builder.Services.AddHostedService<CheckLoginBackgroundService>();
 
 
+
 builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();

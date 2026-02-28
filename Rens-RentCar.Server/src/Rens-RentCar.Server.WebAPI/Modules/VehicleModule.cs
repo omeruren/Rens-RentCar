@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Rens_RentCar.Domain.Vehicles;
 using Rens_RentCar.Server.Application.Vehicles;
 using TS.MediatR;
@@ -16,7 +17,7 @@ public static class VehicleModule
 
         // GET BY ID
         app.MapGet("{id}", async (
-          Guid id,
+            Guid id,
             ISender _sender,
             CancellationToken cancellationToken) =>
         {
@@ -28,27 +29,29 @@ public static class VehicleModule
 
         // POST
         app.MapPost(string.Empty, async (
-            VehicleCreateCommand request,
-            ISender _sender,
+            [FromForm] VehicleCreateCommand request,
+            ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var result = await _sender.Send(request, cancellationToken);
+            var result = await sender.Send(request, cancellationToken);
             return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
-
         })
-            .Produces<Result<string>>();
+            .Accepts<VehicleCreateCommand>("multipart/form-data")
+            .Produces<Result<string>>()
+            .DisableAntiforgery();
 
         // PUT
         app.MapPut(string.Empty, async (
-            VehicleUpdateCommand request,
-            ISender _sender,
+            [FromForm] VehicleUpdateCommand request,
+            ISender sender,
             CancellationToken cancellationToken) =>
         {
-            var result = await _sender.Send(request, cancellationToken);
+            var result = await sender.Send(request, cancellationToken);
             return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
-
         })
-            .Produces<Result<string>>();
+            .Accepts<VehicleUpdateCommand>("multipart/form-data")
+            .Produces<Result<string>>()
+            .DisableAntiforgery();
 
         // DELETE
         app.MapDelete("{id}", async (
