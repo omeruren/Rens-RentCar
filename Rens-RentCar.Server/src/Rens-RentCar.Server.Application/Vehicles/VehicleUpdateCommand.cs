@@ -1,5 +1,7 @@
 using FluentValidation;
+using GenericFileService.Files;
 using GenericRepository;
+using Microsoft.AspNetCore.Http;
 using Rens_RentCar.Domain.Abstraction;
 using Rens_RentCar.Domain.Vehicles;
 using Rens_RentCar.Domain.Vehicles.ValueObjects;
@@ -21,7 +23,7 @@ public sealed record VehicleUpdateCommand(
     string VinNumber,
     string EngineNumber,
     string Description,
-    string ImageUrl,
+    IFormFile? File,
     string FuelType,
     string Transmission,
     decimal EngineVolume,
@@ -77,6 +79,10 @@ internal sealed class VehicleUpdateCommandHandler(IVehicleRepository _vehicleRep
         if (isPlateExists)
             return Result<string>.Failure("A vehicle with this plate already exists.");
 
+        string imageUrl = vehicle.ImageUrl.Value;
+        if (request.File is not null && request.File.Length > 0)
+            imageUrl = FileService.FileSaveToServer(request.File, "wwwroot/images/");
+
         vehicle.SetBrand(new Brand(request.Brand));
         vehicle.SetModel(new Model(request.Model));
         vehicle.SetModelYear(new ModelYear(request.ModelYear));
@@ -87,7 +93,7 @@ internal sealed class VehicleUpdateCommandHandler(IVehicleRepository _vehicleRep
         vehicle.SetVinNumber(new VinNumber(request.VinNumber));
         vehicle.SetEngineNumber(new EngineNumber(request.EngineNumber));
         vehicle.SetDescription(new Description(request.Description));
-        vehicle.SetImageUrl(new ImageUrl(request.ImageUrl));
+        vehicle.SetImageUrl(new ImageUrl(imageUrl));
         vehicle.SetFuelType(new FuelType(request.FuelType));
         vehicle.SetTransmission(new Transmission(request.Transmission));
         vehicle.SetEngineVolume(new EngineVolume(request.EngineVolume));
