@@ -116,7 +116,7 @@ app.UseCors(x => x
 );
 
 app.UseResponseCompression();
-
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 

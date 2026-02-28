@@ -1,5 +1,7 @@
 using FluentValidation;
+using GenericFileService.Files;
 using GenericRepository;
+using Microsoft.AspNetCore.Http;
 using Rens_RentCar.Domain.Abstraction;
 using Rens_RentCar.Domain.Vehicles;
 using Rens_RentCar.Domain.Vehicles.ValueObjects;
@@ -20,7 +22,7 @@ public sealed record VehicleCreateCommand(
     string VinNumber,
     string EngineNumber,
     string Description,
-    string ImageUrl,
+    IFormFile File,
     string FuelType,
     string Transmission,
     decimal EngineVolume,
@@ -71,6 +73,8 @@ internal sealed class VehicleCreateCommandHandler(IVehicleRepository _vehicleRep
         if (isExists)
             return Result<string>.Failure("A vehicle with this plate already exists.");
 
+        string fileName = FileService.FileSaveToServer(request.File, "wwwroot/images/");
+
         Brand brand = new(request.Brand);
         Model model = new(request.Model);
         ModelYear modelYear = new(request.ModelYear);
@@ -81,7 +85,7 @@ internal sealed class VehicleCreateCommandHandler(IVehicleRepository _vehicleRep
         VinNumber vinNumber = new(request.VinNumber);
         EngineNumber engineNumber = new(request.EngineNumber);
         Description description = new(request.Description);
-        ImageUrl imageUrl = new(request.ImageUrl);
+        ImageUrl imageUrl = new(fileName);
         FuelType fuelType = new(request.FuelType);
         Transmission transmission = new(request.Transmission);
         EngineVolume engineVolume = new(request.EngineVolume);
