@@ -3,538 +3,517 @@
   [pageIcon]="pageIcon()"
   (changeStatusEvent)="changeStatus($event)"
   [status]="data().isActive"
-  [showStatusCheckbox]="true"
   [loading]="loading()"
-  size="col-md-8"
+  size="col-md-12"
 >
-  <form
-    autocomplete="off"
-    #form="ngForm"
-    formValidate
-    class="admin-form"
-    (ngSubmit)="save(form)"
-  >
-    <!-- Basic Information -->
-    <div class="admin-card">
-      <div class="card-header">
-        <h6>
-          <i class="bi bi-car-front text-primary me-2"></i>Basic Informations
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <div class="form-label">
-                Brand (<span class="text-danger">*</span>)
+  <form #form="ngForm" formValidate class="admin-form" (ngSubmit)="save(form)">
+    <div class="row g-4">
+      <div class="col-md-8">
+        <!-- Basic Information -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6>
+              <i class="bi bi-info-circle text-primary me-2"></i>Basic
+              Information
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Brand *</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().brand"
+                  name="brand"
+                  required
+                >
+                  <option value="">Select brand</option>
+                  @for (brand of brandList; track $index) {
+                  <option [value]="brand">{{brand}}</option>
+                  }
+                </select>
               </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().brand"
-                name="brand"
-                required
-              />
-              <div class="invalid-feedback">Please enter a valid Brand.</div>
+              <div class="col-md-6">
+                <label class="form-label">Model *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="data().model"
+                  name="model"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Model Year *</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().modelYear"
+                  name="modelYear"
+                  required
+                >
+                  <option value="">Select model year</option>
+                  @for (year of modelYearList; track $index) {
+                  <option [value]="year">{{year}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Color</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().color"
+                  name="color"
+                >
+                  <option value="">Select color</option>
+                  @for (color of colorList; track $index) {
+                  <option [value]="color">{{color}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Plate *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="data().plate"
+                  name="plate"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Category *</label>
+                <flexi-select
+                  [data]="categories()"
+                  label="name"
+                  value="id"
+                  [(ngModel)]="data().categoryId"
+                  name="categoryId"
+                  language="en"
+                  [required]="true"
+                  placeholder="Select category"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Branch *</label>
+                <flexi-select
+                  [data]="branches()"
+                  label="name"
+                  value="id"
+                  [(ngModel)]="data().branchId"
+                  name="branchId"
+                  language="en"
+                  [required]="true"
+                  placeholder="Select branch"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">VIN Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="data().vinNumber"
+                  name="vinNumber"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Engine Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="data().engineNumber"
+                  name="engineNumber"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  [(ngModel)]="data().description"
+                  name="description"
+                ></textarea>
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <div class="form-label">
-                Model (<span class="text-danger">*</span>)
+        </div>
+
+        <!-- Technical Specifications -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6>
+              <i class="bi bi-gear text-primary me-2"></i>Technical
+              Specifications
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Fuel Type *</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().fuelType"
+                  name="fuelType"
+                  required
+                >
+                  <option value="">Select fuel type</option>
+                  @for (item of fuelTypeList; track $index) {
+                  <option [value]="item">{{item}}</option>
+                  }
+                </select>
               </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().model"
-                name="model"
-                required
-              />
-              <div class="invalid-feedback">Please enter a valid Model.</div>
+              <div class="col-md-4">
+                <label class="form-label">Transmission *</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().transmission"
+                  name="transmission"
+                  required
+                >
+                  <option value="">Select transmission</option>
+                  @for (item of transmissionList; track $index) {
+                  <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Seat Capacity *</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().seatCount"
+                  name="seatCount"
+                  required
+                >
+                  <option [value]="0">Select capacity</option>
+                  @for (item of seatCountList; track $index) {
+                  <option [value]="item.value">{{item.label}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Engine Volume (cc)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="data().engineVolume"
+                  name="engineVolume"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Engine Power (HP)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="data().enginePower"
+                  name="enginePower"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Mileage</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="data().kilometer"
+                  name="kilometer"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Traction Type</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().tractionType"
+                  name="tractionType"
+                >
+                  <option value="">Select traction type</option>
+                  @for (item of tractionTypeList; track $index) {
+                  <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Fuel Consumption</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="data().fuelConsumption"
+                  name="fuelConsumption"
+                />
+              </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">
-                Model Year (<span class="text-danger">*</span>)
+        </div>
+
+        <!-- Features -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6>
+              <i class="bi bi-stars text-primary me-2"></i>Features & Equipment
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              @for (group of featureGroups; track group.group) {
+              <div class="col-md-6 mb-3">
+                <div class="fw-bold mb-2">{{ group.group }}</div>
+                @for (f of group.features; track f.key) {
+                <div
+                  class="form-check form-switch d-flex align-items-center mb-2"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="isFeatureSelected(f.key)"
+                    (change)="toggleFeature(f.key)"
+                    id="feature-{{f.key}}"
+                  />
+                  <label
+                    class="form-check-label ms-2"
+                    [for]="'feature-' + f.key"
+                  >
+                    <i class="bi {{f.icon}} me-1"></i> {{f.label}}
+                  </label>
+                </div>
+                }
               </div>
-              <input
-                class="form-control"
-                type="text"
-                mask="0000"
-                [(ngModel)]="data().modelYear"
-                name="modelYear"
-                required
-              />
-              <div class="invalid-feedback">
-                Please enter a valid Model Year.
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing & Location -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6>
+              <i class="bi bi-currency-dollar text-primary me-2"></i>Pricing &
+              Location
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Daily Price (TL) *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  mask="separator.2"
+                  thousandSeparator="."
+                  decimalMarker=","
+                  [(ngModel)]="data().dailyPrice"
+                  name="dailyPrice"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Weekly Discount (%)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="data().weeklyDiscountRate"
+                  name="weeklyDiscountRate"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Monthly Discount (%)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="data().monthlyDiscountRate"
+                  name="monthlyDiscountRate"
+                  required
+                />
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">
-                Color (<span class="text-danger">*</span>)
+        </div>
+
+        <!-- Maintenance -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-wrench text-primary me-2"></i>Maintenance</h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Last Maintenance Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="data().lastMaintenanceDate"
+                  name="lastMaintenanceDate"
+                  required
+                />
               </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().color"
-                name="color"
-                required
-              />
-              <div class="invalid-feedback">Please enter a valid Color.</div>
+              <div class="col-md-4">
+                <label class="form-label">Last Maintenance Km</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="data().lastMaintenanceKm"
+                  name="lastMaintenanceKm"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Next Maintenance Km</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="data().nextMaintenanceKm"
+                  name="nextMaintenanceKm"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Tire Status</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().tireStatus"
+                  name="tireStatus"
+                  required
+                >
+                  <option value="">Select tire status</option>
+                  @for (item of tireStatusList; track $index) {
+                  <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">General Status</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().generalStatus"
+                  name="generalStatus"
+                  required
+                >
+                  <option value="">Select general status</option>
+                  @for (item of generalStatusList; track $index) {
+                  <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">
-                Plate (<span class="text-danger">*</span>)
+        </div>
+
+        <!-- Insurance & Casco -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6>
+              <i class="bi bi-wrench text-primary me-2"></i>Insurance & Casco
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">Insurance Type</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="data().insuranceType"
+                  name="insuranceType"
+                  required
+                >
+                  <option [value]="''">Select insurance type</option>
+                  @for (item of insuranceTypeList(); track $index) {
+                  <option [value]="item">{{item}}</option>
+                  }
+                </select>
               </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().plate"
-                name="plate"
-                required
-              />
-              <div class="invalid-feedback">Please enter a valid Plate.</div>
+              <div class="col-md-3">
+                <label class="form-label">Inspection Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="data().inspectionDate"
+                  name="inspectionDate"
+                  required
+                />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Insurance End</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="data().insuranceEndDate"
+                  name="insuranceEndDate"
+                  required
+                />
+              </div>
+              @if(data().insuranceType === 'Kasko & Sigorta'){
+              <div class="col-md-3">
+                <label class="form-label">Casco End</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="data().cascoEndDate"
+                  name="cascoEndDate"
+                  required
+                />
+              </div>
+              }
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Identification -->
-    <div class="admin-card" style="height: 400px">
-      <div class="card-header">
-        <h6><i class="bi bi-card-text text-primary me-2"></i>Identification</h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <div class="form-label">
-                VIN Number (<span class="text-danger">*</span>)
+      <!-- Right Panel: Image Upload and Form Actions -->
+      <div class="col-md-4">
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-image text-primary me-2"></i>Vehicle Photo</h6>
+          </div>
+          <div class="card-body text-center">
+            <div
+              class="image-upload-dropzone"
+              (drop)="onImageDrop($event)"
+              (dragover)="onImageDragOver($event)"
+              (dragleave)="onImageDragLeave($event)"
+              [ngClass]="{'drag-over': dragOver}"
+              style="
+                border: 2px dashed #ccc;
+                border-radius: 8px;
+                padding: 16px;
+                cursor: pointer;
+                position: relative;
+              "
+              (click)="triggerFileInput()"
+            >
+              <img
+                [src]="showImageUrl()"
+                alt="Vehicle Photo"
+                class="img-fluid mb-2"
+                style="
+                  max-width: 100%;
+                  max-height: 400px;
+                  object-fit: cover;
+                  display: block;
+                  margin: auto;
+                "
+              />
+              <div style="color: #888">
+                Drag file here<br />or<br /><button
+                  type="button"
+                  class="btn btn-link p-0"
+                >
+                  Choose File
+                </button>
               </div>
               <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().vinNumber"
-                name="vinNumber"
-                required
-              />
-              <div class="invalid-feedback">
-                Please enter a valid VIN Number.
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <div class="form-label">
-                Engine Number (<span class="text-danger">*</span>)
-              </div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().engineNumber"
-                name="engineNumber"
-                required
-              />
-              <div class="invalid-feedback">
-                Please enter a valid Engine Number.
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <div class="form-label">
-                Category (<span class="text-danger">*</span>)
-              </div>
-              <flexi-select
-                [data]="categories()"
-                label="name"
-                name="categoryId"
-                value="id"
-                [(ngModel)]="data().categoryId"
-                [required]="true"
-              />
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <div class="form-label">
-                Branch (<span class="text-danger">*</span>)
-              </div>
-              <flexi-select
-                [data]="branches()"
-                label="name"
-                name="branchId"
-                value="id"
-                [(ngModel)]="data().branchId"
-                [required]="true"
+                type="file"
+                accept="image/*"
+                style="display: none"
+                #fileInput
+                (change)="onImageChange($event)"
               />
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Engine & Performance -->
-    <div class="admin-card">
-      <div class="card-header">
-        <h6>
-          <i class="bi bi-gear text-primary me-2"></i>Engine & Performance
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Fuel Type</div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().fuelType"
-                name="fuelType"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Transmission</div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().transmission"
-                name="transmission"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Traction Type</div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().tractionType"
-                name="tractionType"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Engine Volume</div>
-              <input
-                type="text"
-                class="form-control"
-                mask="separator.1"
-                thousandSeparator="."
-                decimalMarker=","
-                [(ngModel)]="data().engineVolume"
-                name="engineVolume"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Engine Power (HP)</div>
-              <input
-                class="form-control"
-                type="text"
-                mask="separator.0"
-                [(ngModel)]="data().enginePower"
-                name="enginePower"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Fuel Consumption (L/100km)</div>
-              <input
-                type="text"
-                class="form-control"
-                mask="separator.1"
-                thousandSeparator="."
-                decimalMarker=","
-                [(ngModel)]="data().fuelConsumption"
-                name="fuelConsumption"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">
-                Seat Count (<span class="text-danger">*</span>)
-              </div>
-              <input
-                class="form-control"
-                type="text"
-                mask="separator.0"
-                [(ngModel)]="data().seatCount"
-                name="seatCount"
-                required
-              />
-              <div class="invalid-feedback">
-                Please enter a valid Seat Count.
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Kilometer</div>
-              <input
-                class="form-control"
-                type="text"
-                mask="separator.0"
-                thousandSeparator="."
-                [(ngModel)]="data().kilometer"
-                name="kilometer"
-              />
-            </div>
+        <div class="admin-card mt-3">
+          <div class="card-body">
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-check-circle me-2"></i>Save
+            </button>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Pricing -->
-    <div class="admin-card">
-      <div class="card-header">
-        <h6>
-          <i class="bi bi-currency-exchange text-primary me-2"></i>Pricing
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">
-                Daily Price (<span class="text-danger">*</span>)
-              </div>
-              <input
-                type="text"
-                class="form-control"
-                mask="separator.2"
-                thousandSeparator="."
-                decimalMarker=","
-                [(ngModel)]="data().dailyPrice"
-                name="dailyPrice"
-                required
-              />
-              <div class="invalid-feedback">
-                Please enter a valid Daily Price.
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Weekly Discount Rate (%)</div>
-              <input
-                type="text"
-                class="form-control"
-                mask="separator.2"
-                thousandSeparator="."
-                decimalMarker=","
-                [(ngModel)]="data().weeklyDiscountRate"
-                name="weeklyDiscountRate"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Monthly Discount Rate (%)</div>
-              <input
-                type="text"
-                class="form-control"
-                mask="separator.2"
-                thousandSeparator="."
-                decimalMarker=","
-                [(ngModel)]="data().monthlyDiscountRate"
-                name="monthlyDiscountRate"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Insurance & Maintenance -->
-    <div class="admin-card">
-      <div class="card-header">
-        <h6>
-          <i class="bi bi-shield-check text-primary me-2"></i>Insurance &
-          Maintenance
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Insurance Type</div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().insuranceType"
-                name="insuranceType"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Insurance End Date</div>
-              <input
-                class="form-control"
-                type="date"
-                [(ngModel)]="data().insuranceEndDate"
-                name="insuranceEndDate"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Casco End Date</div>
-              <input
-                class="form-control"
-                type="date"
-                [(ngModel)]="data().cascoEndDate"
-                name="cascoEndDate"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Inspection Date</div>
-              <input
-                class="form-control"
-                type="date"
-                [(ngModel)]="data().inspectionDate"
-                name="inspectionDate"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Last Maintenance Date</div>
-              <input
-                class="form-control"
-                type="date"
-                [(ngModel)]="data().lastMaintenanceDate"
-                name="lastMaintenanceDate"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Last Maintenance Km</div>
-              <input
-                class="form-control"
-                type="text"
-                mask="separator.0"
-                thousandSeparator="."
-                [(ngModel)]="data().lastMaintenanceKm"
-                name="lastMaintenanceKm"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Next Maintenance Km</div>
-              <input
-                class="form-control"
-                type="text"
-                mask="separator.0"
-                thousandSeparator="."
-                [(ngModel)]="data().nextMaintenanceKm"
-                name="nextMaintenanceKm"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Status & Details -->
-    <div class="admin-card">
-      <div class="card-header">
-        <h6>
-          <i class="bi bi-info-circle text-primary me-2"></i>Status & Details
-        </h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Tire Status</div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().tireStatus"
-                name="tireStatus"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">General Status</div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().generalStatus"
-                name="generalStatus"
-              />
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="form-label">Image URL</div>
-              <input
-                class="form-control"
-                type="text"
-                [(ngModel)]="data().imageUrl"
-                name="imageUrl"
-              />
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="form-group">
-              <div class="form-label">Description</div>
-              <textarea
-                class="form-control"
-                [(ngModel)]="data().description"
-                name="description"
-                rows="3"
-              ></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Features -->
-    <div class="admin-card">
-      <div class="card-header">
-        <h6><i class="bi bi-star text-primary me-2"></i>Features</h6>
-      </div>
-      <div class="card-body">
-        <div class="form-group">
-          <div class="form-label">Features</div>
-          <textarea
-            class="form-control"
-            [(ngModel)]="featuresText"
-            name="features"
-            placeholder="Enter features separated by comma"
-            rows="3"
-          ></textarea>
-          <small class="form-text text-muted">
-            Enter each feature separated by comma (e.g., ABS, GPS, Bluetooth,
-            Sunroof)
-          </small>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group d-flex justify-content-end">
-      <button type="submit" class="btn btn-outline-primary">Save</button>
     </div>
   </form>
 </app-blank>

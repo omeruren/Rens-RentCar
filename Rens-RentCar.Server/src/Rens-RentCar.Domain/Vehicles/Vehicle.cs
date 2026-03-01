@@ -37,7 +37,7 @@ public sealed class Vehicle : BaseEntity
         NextMaintenanceKm nextMaintenanceKm,
         InspectionDate inspectionDate,
         InsuranceEndDate insuranceEndDate,
-        CascoEndDate cascoEndDate,
+        CascoEndDate? cascoEndDate,
         TireStatus tireStatus,
         GeneralStatus generalStatus,
         bool isActive,
@@ -71,7 +71,10 @@ public sealed class Vehicle : BaseEntity
         SetNextMaintenanceKm(nextMaintenanceKm);
         SetInspectionDate(inspectionDate);
         SetInsuranceEndDate(insuranceEndDate);
-        SetCascoEndDate(cascoEndDate);
+
+        if (cascoEndDate is not null)
+            SetCascoEndDate(cascoEndDate);
+
         SetTireStatus(tireStatus);
         SetGeneralStatus(generalStatus);
         SetStatus(isActive);

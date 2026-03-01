@@ -28,6 +28,8 @@ export class ErrorService {
       );
       localStorage.removeItem('response');
       this.#router.navigateByUrl('/login');
+    } else if (status === 0 || status === 500) {
+      this.#router.navigateByUrl('/unavailable');
     } else if (status !== 200) {
       this.#toast.showToast(
         'Error!',

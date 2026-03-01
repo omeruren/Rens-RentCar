@@ -1,54 +1,186 @@
-<title>Unauthorized</title>
+<div class="unauth-wrapper">
+  <div class="blob lock-blob"></div>
+  <div class="glass-card">
+    <div class="icon-container error-shake">
+      <i class="bi bi-shield-lock-fill"></i>
+    </div>
+    <h1 class="gradient-text-red">401</h1>
+    <h2 class="sub-title">Access Denied</h2>
+    <p class="desc-text">
+      You don't have the necessary permissions to view this secure area. Please
+      log in with appropriate credentials.
+    </p>
+    <div class="action-buttons">
+      <a routerLink="/" class="btn-premium flex-center">
+        <i class="bi bi-house-door"></i>
+        <span>Return to Dashboard</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 <style>
-  body {
+  .unauth-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0b0e14;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Helvetica, Arial, sans-serif;
+    color: #f8f9fa;
+    overflow: hidden;
+  }
+
+  .lock-blob {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+      circle,
+      rgba(239, 68, 68, 0.15) 0%,
+      rgba(0, 0, 0, 0) 70%
+    );
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s infinite alternate;
+    z-index: 0;
+  }
+
+  .glass-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(30, 34, 45, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 3rem;
+    text-align: center;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .icon-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      rgba(239, 68, 68, 0.2) 0%,
+      rgba(220, 38, 38, 0.05) 100%
+    );
+    color: #ef4444;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+  }
+
+  .error-shake {
+    animation: floating 4s ease-in-out infinite;
+  }
+
+  .gradient-text-red {
+    font-size: 4rem;
+    font-weight: 800;
     margin: 0;
-    height: 100vh;
+    line-height: 1;
+    background: linear-gradient(to right, #fca5a5, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -2px;
+  }
+
+  .sub-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0.5rem 0 1rem;
+    color: #f1f5f9;
+  }
+
+  .desc-text {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+  }
+
+  .action-buttons {
     display: flex;
     justify-content: center;
+    gap: 1rem;
+  }
+
+  .flex-center {
+    display: inline-flex;
     align-items: center;
-    background-color: rgb(0, 0, 0);
-    font-family: Arial, Helvetica, sans-serif;
-    color: rgb(255, 255, 255);
+    justify-content: center;
   }
 
-  .container {
-    text-align: center;
-    padding: 40px;
+  .btn-premium {
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    color: #fff;
+    padding: 0.875rem 1.75rem;
     border-radius: 12px;
-  }
-
-  h1 {
-    font-size: 48px;
-    margin-bottom: 10px;
-  }
-
-  p {
-    font-size: 18px;
-    margin-bottom: 25px;
-    opacity: 0.9;
-  }
-
-  a {
-    display: inline-block;
-    padding: 12px 25px;
+    font-weight: 600;
+    font-size: 1rem;
     text-decoration: none;
-    background-color: #4caf50;
-    color: white;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 20px -10px rgba(239, 68, 68, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  a:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px -10px rgba(239, 68, 68, 0.7);
+    color: #fff;
+  }
+
+  @keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes floating {
+    0% {
+      transform: translateY(0px);
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+    }
+    50% {
+      transform: translateY(-8px);
+      box-shadow: 0 0 50px rgba(239, 68, 68, 0.4);
+    }
+    100% {
+      transform: translateY(0px);
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+    }
   }
 </style>
-
-<body>
-  <div class="container">
-    <h1>401</h1>
-    <p>Unauthorized Access</p>
-    <a routerLink="/">Home</a>
-  </div>
-</body>

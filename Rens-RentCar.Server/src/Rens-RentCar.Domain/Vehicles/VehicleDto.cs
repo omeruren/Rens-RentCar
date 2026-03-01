@@ -27,12 +27,12 @@ public sealed class VehicleDto : BaseEntityDto
     public decimal WeeklyDiscountRate { get; set; }
     public decimal MonthlyDiscountRate { get; set; }
     public string InsuranceType { get; set; } = default!;
-    public DateTimeOffset LastMaintenanceDate { get; set; }
+    public DateOnly LastMaintenanceDate { get; set; }
     public int LastMaintenanceKm { get; set; }
     public int NextMaintenanceKm { get; set; }
-    public DateTimeOffset InspectionDate { get; set; }
-    public DateTimeOffset InsuranceEndDate { get; set; }
-    public DateTimeOffset CascoEndDate { get; set; }
+    public DateOnly InspectionDate { get; set; }
+    public DateOnly InsuranceEndDate { get; set; }
+    public DateOnly CascoEndDate { get; set; }
     public string TireStatus { get; set; } = default!;
     public string GeneralStatus { get; set; } = default!;
     public List<string> Features { get; set; } = new();

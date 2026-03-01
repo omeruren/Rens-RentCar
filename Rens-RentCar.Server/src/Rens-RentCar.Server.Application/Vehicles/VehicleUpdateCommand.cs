@@ -2,6 +2,7 @@ using FluentValidation;
 using GenericFileService.Files;
 using GenericRepository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Rens_RentCar.Domain.Abstraction;
 using Rens_RentCar.Domain.Vehicles;
 using Rens_RentCar.Domain.Vehicles.ValueObjects;
@@ -23,7 +24,6 @@ public sealed record VehicleUpdateCommand(
     string VinNumber,
     string EngineNumber,
     string Description,
-    IFormFile? File,
     string FuelType,
     string Transmission,
     decimal EngineVolume,
@@ -36,16 +36,20 @@ public sealed record VehicleUpdateCommand(
     decimal WeeklyDiscountRate,
     decimal MonthlyDiscountRate,
     string InsuranceType,
-    DateTimeOffset LastMaintenanceDate,
+    DateOnly LastMaintenanceDate,
     int LastMaintenanceKm,
     int NextMaintenanceKm,
-    DateTimeOffset InspectionDate,
-    DateTimeOffset InsuranceEndDate,
-    DateTimeOffset CascoEndDate,
+    DateOnly InspectionDate,
+    DateOnly InsuranceEndDate,
+    DateOnly? CascoEndDate,
     string TireStatus,
     string GeneralStatus,
     bool IsActive,
-    IEnumerable<string> Features) : IRequest<Result<string>>;
+    IEnumerable<string> Features) : IRequest<Result<string>>
+{
+    [FromForm]
+    public IFormFile? File { get; set; }
+}
 
 public sealed class VehicleUpdateCommandValidator : AbstractValidator<VehicleUpdateCommand>
 {
@@ -111,7 +115,7 @@ internal sealed class VehicleUpdateCommandHandler(IVehicleRepository _vehicleRep
         NextMaintenanceKm nextMaintenanceKm = new(request.NextMaintenanceKm);
         InspectionDate inspectionDate = new(request.InspectionDate);
         InsuranceEndDate insuranceEndDate = new(request.InsuranceEndDate);
-        CascoEndDate cascoEndDate = new(request.CascoEndDate);
+        CascoEndDate? cascoEndDate = request.CascoEndDate is not null ? new(request.CascoEndDate.Value) : null;
         TireStatus tireStatus = new(request.TireStatus);
         GeneralStatus generalStatus = new(request.GeneralStatus);
         IEnumerable<Feature> features = request.Features.Select(f => new Feature(f));
@@ -144,7 +148,9 @@ internal sealed class VehicleUpdateCommandHandler(IVehicleRepository _vehicleRep
         vehicle.SetNextMaintenanceKm(nextMaintenanceKm);
         vehicle.SetInspectionDate(inspectionDate);
         vehicle.SetInsuranceEndDate(insuranceEndDate);
-        vehicle.SetCascoEndDate(cascoEndDate);
+
+        if (cascoEndDate is not null)
+            vehicle.SetCascoEndDate(cascoEndDate);
         vehicle.SetTireStatus(tireStatus);
         vehicle.SetGeneralStatus(generalStatus);
         vehicle.SetFeatures(features);

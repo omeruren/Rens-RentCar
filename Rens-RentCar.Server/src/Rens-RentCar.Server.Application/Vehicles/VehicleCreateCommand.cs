@@ -35,12 +35,12 @@ public sealed record VehicleCreateCommand(
     decimal WeeklyDiscountRate,
     decimal MonthlyDiscountRate,
     string InsuranceType,
-    DateTimeOffset LastMaintenanceDate,
+    DateOnly LastMaintenanceDate,
     int LastMaintenanceKm,
     int NextMaintenanceKm,
-    DateTimeOffset InspectionDate,
-    DateTimeOffset InsuranceEndDate,
-    DateTimeOffset CascoEndDate,
+    DateOnly InspectionDate,
+    DateOnly InsuranceEndDate,
+    DateOnly? CascoEndDate,
     string TireStatus,
     string GeneralStatus,
     bool IsActive,
@@ -103,7 +103,7 @@ internal sealed class VehicleCreateCommandHandler(IVehicleRepository _vehicleRep
         NextMaintenanceKm nextMaintenanceKm = new(request.NextMaintenanceKm);
         InspectionDate inspectionDate = new(request.InspectionDate);
         InsuranceEndDate insuranceEndDate = new(request.InsuranceEndDate);
-        CascoEndDate cascoEndDate = new(request.CascoEndDate);
+        CascoEndDate? cascoEndDate = request.CascoEndDate is not null ? new(request.CascoEndDate.Value) : null;
         TireStatus tireStatus = new(request.TireStatus);
         GeneralStatus generalStatus = new(request.GeneralStatus);
         var features = request.Features.Select(f => new Feature(f));
