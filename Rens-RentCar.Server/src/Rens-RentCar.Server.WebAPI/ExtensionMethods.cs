@@ -73,6 +73,7 @@ public static class ExtensionMethods
         app.MapProtectionEndpoint();
         app.MapExtraEndpoint();
         app.MapVehicleEndpoint();
+        app.MapCustomerEndpoint();
         app.MapSeedData();
     }
 

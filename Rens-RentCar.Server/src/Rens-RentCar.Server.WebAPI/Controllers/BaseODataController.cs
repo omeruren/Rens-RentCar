@@ -16,6 +16,7 @@ using Rens_RentCar.Server.Application.ProtectionPackages;
 using Rens_RentCar.Server.Application.Roles;
 using Rens_RentCar.Server.Application.Users;
 using Rens_RentCar.Server.Application.Vehicles;
+using Rens_RentCar.Server.Application.Customers;
 using TS.MediatR;
 
 namespace Rens_RentCar.Server.WebAPI.Controllers;
@@ -36,6 +37,7 @@ public class BaseODataController : ODataController
         builder.EntitySet<ProtectionDto>("protection-packages");
         builder.EntitySet<ExtraDto>("extras");
         builder.EntitySet<VehicleDto>("vehicles");
+        builder.EntitySet<CustomerDto>("customers");
 
         return builder.GetEdmModel();
     }
@@ -59,5 +61,8 @@ public class BaseODataController : ODataController
 
     [HttpGet("vehicles")]
     public IQueryable<VehicleDto> Vehicles(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new VehicleGetAllQuery(), cancellationToken).Result;
+
+    [HttpGet("customers")]
+    public IQueryable<CustomerDto> Customers(ISender _sender, CancellationToken cancellationToken = default) => _sender.Send(new CustomerGetAllQuery(), cancellationToken).Result;
 
 }
