@@ -13,7 +13,7 @@ public sealed class Customer : BaseEntity
     public BirthDate BirthDate { get; set; } = default!;
     public PhoneNumber PhoneNumber { get; set; } = default!;
     public Email Email { get; set; } = default!;
-    public DrivingLicenceIssuanceDate DrivingLicenceIssuanceDate { get; set; } = default!;
+    public DrivingLicenseIssueDate DrivingLicenseIssueDate { get; set; } = default!;
     public FullAddress FullAddress { get; set; } = default!;
 
 
@@ -23,6 +23,6 @@ public sealed class Customer : BaseEntity
     public void SetFullName() => FullName = new(string.Join(" ", FirstName.Value, LastName.Value));
     public void SetPhoneNumber(PhoneNumber phoneNumber) => PhoneNumber = phoneNumber;
     public void SetEmail(Email email) => Email = email;
-    public void SetDrivingLicenceIssuanceDate(DrivingLicenceIssuanceDate drivingLicenceIssuanceDate) => DrivingLicenceIssuanceDate = drivingLicenceIssuanceDate;
+    public void SetDrivingLicenceIssuanceDate(DrivingLicenseIssueDate drivingLicenseIssuanceDate) => DrivingLicenseIssueDate = drivingLicenseIssuanceDate;
     public void SetFullAddress(FullAddress fullAddress) => FullAddress = fullAddress;
 }
