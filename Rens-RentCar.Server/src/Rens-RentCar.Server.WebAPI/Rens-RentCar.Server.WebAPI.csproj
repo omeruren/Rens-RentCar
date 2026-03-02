@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Rens-RentCar.Server.Infrastructure\Rens-RentCar.Server.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
-  </ItemGroup>
-
 </Project>
