@@ -281,7 +281,6 @@ export default class CreateVehicle {
 
   save(form: NgForm) {
     if (!form.valid) return;
-
     this.loading.set(true);
 
     // Create FormData

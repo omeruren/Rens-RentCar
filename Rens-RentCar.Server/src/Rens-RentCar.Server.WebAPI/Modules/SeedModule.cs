@@ -1,6 +1,7 @@
 ﻿using GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using Rens_RentCar.Domain.Abstraction;
+using Rens_RentCar.Domain.Branches;
 using Rens_RentCar.Domain.Categories;
 using Rens_RentCar.Domain.Extras;
 using Rens_RentCar.Domain.ProtectionPackages;
@@ -130,10 +131,15 @@ public static class SeedModule
             async (
                 IVehicleRepository vehicleRepository,
                 ICategoryRepository categoryRepository,
+                IBranchRepository branchRepository,
                 IUnitOfWork unitOfWork,
                 CancellationToken cancellationToken) =>
             {
-                var branchId = Guid.Parse("0197de0b-7613-7846-af49-b5a2cc121576");
+                var branch = await branchRepository.GetAll().FirstOrDefaultAsync(cancellationToken);
+                if (branch is null)
+                    return Results.BadRequest(Result<string>.Failure("No branch found. Please create a branch first."));
+
+                var branchId = branch.Id.Value;
                 var existingPlates = await vehicleRepository.GetAll().Select(v => v.Plate.Value).ToListAsync(cancellationToken);
                 var categories = await categoryRepository.GetAll().ToListAsync(cancellationToken);
 
