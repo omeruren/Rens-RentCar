@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using GenericRepository;
 using Rens_RentCar.Domain.Abstraction;
+using Rens_RentCar.Domain.Shared;
 using Rens_RentCar.Domain.Users;
 using Rens_RentCar.Domain.Users.ValueObjects;
 using Rens_RentCar.Server.Application.Services;

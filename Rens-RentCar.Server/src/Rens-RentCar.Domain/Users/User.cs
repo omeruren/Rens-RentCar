@@ -1,4 +1,5 @@
 ﻿using Rens_RentCar.Domain.Abstraction;
+using Rens_RentCar.Domain.Shared;
 using Rens_RentCar.Domain.Users.ValueObjects;
 
 namespace Rens_RentCar.Domain.Users;
