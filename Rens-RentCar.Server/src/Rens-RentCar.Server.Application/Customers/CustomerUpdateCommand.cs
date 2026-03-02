@@ -8,8 +8,9 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Customers;
 
-[Permission("customer:create")]
-public sealed record CustomerCreateCommand(
+[Permission("customer:edit")]
+public sealed record CustomerUpdateCommand(
+    Guid Id,
     string NationalId,
     string FirstName,
     string LastName,
@@ -20,9 +21,9 @@ public sealed record CustomerCreateCommand(
     string FullAddress,
     bool IsActive) : IRequest<Result<string>>;
 
-public sealed class CustomerCreateCommandValidator : AbstractValidator<CustomerCreateCommand>
+public sealed class CustomerUpdateCommandValidator : AbstractValidator<CustomerUpdateCommand>
 {
-    public CustomerCreateCommandValidator()
+    public CustomerUpdateCommandValidator()
     {
         RuleFor(r => r.NationalId)
             .NotEmpty().WithMessage("National ID is required.");
@@ -55,16 +56,15 @@ public sealed class CustomerCreateCommandValidator : AbstractValidator<CustomerC
     }
 }
 
-internal sealed class CustomerCreateCommandHandler(ICustomerRepository _customerRepository, IUnitOfWork _unitOfWork) : IRequestHandler<CustomerCreateCommand, Result<string>>
+internal sealed class CustomerUpdateCommandHandler(ICustomerRepository _customerRepository, IUnitOfWork _unitOfWork) : IRequestHandler<CustomerUpdateCommand, Result<string>>
 {
-    public async Task<Result<string>> Handle(CustomerCreateCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CustomerUpdateCommand request, CancellationToken cancellationToken)
     {
-        var isExists = await _customerRepository.AnyAsync(c => c.NationalId.Value == request.NationalId, cancellationToken);
+        var customer = await _customerRepository.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-        if (isExists)
-            return Result<string>.Failure("A customer with this national ID already exists.");
+        if (customer is null)
+            return Result<string>.Failure("Customer not found.");
 
-        Customer customer = new();
         customer.SetNationalId(new NationalId(request.NationalId));
         customer.SetFirstName(new FirstName(request.FirstName));
         customer.SetLastName(new LastName(request.LastName));
@@ -76,9 +76,9 @@ internal sealed class CustomerCreateCommandHandler(ICustomerRepository _customer
         customer.SetFullAddress(new FullAddress(request.FullAddress));
         customer.SetStatus(request.IsActive);
 
-        _customerRepository.Add(customer);
+        _customerRepository.Update(customer);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return "Customer created successfully.";
+        return "Customer updated successfully.";
     }
 }

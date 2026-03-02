@@ -20,6 +20,7 @@ public sealed class Customer : BaseEntity
     public void SetNationalId(NationalId nationalId) => NationalId = nationalId;
     public void SetFirstName(FirstName firstName) => FirstName = firstName;
     public void SetLastName(LastName lastName) => LastName = lastName;
+    public void SetBirthDate(BirthDate birthDate) => BirthDate = birthDate;
     public void SetFullName() => FullName = new(string.Join(" ", FirstName.Value, LastName.Value));
     public void SetPhoneNumber(PhoneNumber phoneNumber) => PhoneNumber = phoneNumber;
     public void SetEmail(Email email) => Email = email;
