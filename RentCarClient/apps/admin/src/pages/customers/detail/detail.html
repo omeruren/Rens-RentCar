@@ -1,0 +1,51 @@
+<app-blank
+  [pageTitle]="pageTitle()"
+  pageIcon="bi-zoom-in"
+  [showStatusCheckbox]="false"
+  [showStatus]="true"
+  [status]="data().isActive"
+  [showAudit]="true"
+  [audit]="data()"
+  [loading]="loading()"
+  size="col-md-8"
+>
+  <div class="admin-card">
+    <div class="card-header">
+      <h6>
+        <i class="bi bi-info-circle text-primary me-2"></i>Basic Informations
+      </h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">National ID</label>
+          <span class="detail-value"> {{data().nationalId}} </span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Full Name</label>
+          <span class="detail-value"> {{data().fullName}} </span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Phone Number</label>
+          <span class="detail-value"> {{data().phoneNumber}} </span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Email</label>
+          <span class="detail-value"> {{data().email}} </span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Birth Date</label>
+          <span class="detail-value"> {{data().birthDate}} </span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Driving License Issue Date</label>
+          <span class="detail-value"> {{data().drivingLicenseIssueDate}} </span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Full Address</label>
+          <span class="detail-value"> {{data().fullAddress}} </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-blank>

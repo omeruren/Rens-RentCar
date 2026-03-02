@@ -27,6 +27,12 @@ export const navigations: NavigationModel[] = [
     permission: 'category:view',
   },
   {
+    title: 'Customers',
+    url: '/customers',
+    icon: 'bi-people',
+    permission: 'customer:view',
+  },
+  {
     title: 'Roles',
     url: '/roles',
     icon: 'bi-person-lock',

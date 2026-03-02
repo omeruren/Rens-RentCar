@@ -1,0 +1,18 @@
+<app-grid
+  pageTitle="Customers"
+  endpointEntityName="customers"
+  permissionEntityName="customer"
+  [breadcrumbs]="breadcrumbs()"
+  captionTitle="Customer List"
+>
+  <ng-template flexiGridCaptionCommandTemplate> </ng-template>
+  <flexi-grid-column field="nationalId" title="National ID" />
+  <flexi-grid-column field="fullName" title="Full Name" />
+  <flexi-grid-column field="phoneNumber" title="Phone Number" />
+  <flexi-grid-column field="email" title="Email" />
+  <flexi-grid-column field="birthDate" title="Birth Date" />
+  <flexi-grid-column
+    field="drivingLicenseIssueDate"
+    title="Driving License Issue Date"
+  />
+</app-grid>

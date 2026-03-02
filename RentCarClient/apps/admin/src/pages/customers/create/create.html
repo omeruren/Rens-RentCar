@@ -1,0 +1,173 @@
+<app-blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event) "
+  [status]="data().isActive"
+  [showStatusCheckbox]="true"
+  [loading]="loading()"
+  size="col-md-8"
+>
+  <form
+    autocomplete="off"
+    #form="ngForm"
+    formValidate
+    class="admin-form"
+    (ngSubmit)="save(form)"
+  >
+    <!-- Basic Information -->
+    <div class="admin-card">
+      <div class="card-header">
+        <h6>
+          <i class="bi bi-info-circle text-primary me-2"></i>Basic Informations
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                National ID (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().nationalId"
+                name="nationalId"
+                required
+                minlength="3"
+                maxlength="20"
+              />
+              <div class="invalid-feedback">
+                Please enter a valid National ID.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                First Name (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().firstName"
+                name="firstName"
+                required
+                minlength="2"
+                maxlength="50"
+              />
+              <div class="invalid-feedback">
+                Please enter a valid First Name.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Last Name (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().lastName"
+                name="lastName"
+                required
+                minlength="2"
+                maxlength="50"
+              />
+              <div class="invalid-feedback">
+                Please enter a valid Last Name.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Phone Number (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="data().phoneNumber"
+                name="phoneNumber"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter a valid Phone Number.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Email (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="email"
+                [(ngModel)]="data().email"
+                name="email"
+                required
+              />
+              <div class="invalid-feedback">Please enter a valid Email.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Birth Date (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="date"
+                [(ngModel)]="data().birthDate"
+                name="birthDate"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter a valid Birth Date.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="form-label">
+                Driving License Issue Date (<span class="text-danger">*</span>)
+              </div>
+              <input
+                class="form-control"
+                type="date"
+                [(ngModel)]="data().drivingLicenseIssueDate"
+                name="drivingLicenseIssueDate"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter a valid Driving License Issue Date.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="form-label">
+                Full Address (<span class="text-danger">*</span>)
+              </div>
+              <textarea
+                class="form-control"
+                [(ngModel)]="data().fullAddress"
+                name="fullAddress"
+                required
+                rows="3"
+              ></textarea>
+              <div class="invalid-feedback">
+                Please enter a valid Full Address.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </div>
+  </form>
+</app-blank>
