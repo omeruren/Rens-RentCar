@@ -10,6 +10,7 @@ public sealed class Customer : BaseEntity
     public FirstName FirstName { get; set; } = default!;
     public LastName LastName { get; set; } = default!;
     public FullName FullName { get; set; } = default!;
+    public BirthDate BirthDate { get; set; } = default!;
     public PhoneNumber PhoneNumber { get; set; } = default!;
     public Email Email { get; set; } = default!;
     public DrivingLicenceIssuanceDate DrivingLicenceIssuanceDate { get; set; } = default!;
