@@ -6,15 +6,15 @@ namespace Rens_RentCar.Domain.Customers;
 
 public sealed class Customer : BaseEntity
 {
-    public NationalId NationalId { get; set; } = default!;
-    public FirstName FirstName { get; set; } = default!;
-    public LastName LastName { get; set; } = default!;
-    public FullName FullName { get; set; } = default!;
-    public BirthDate BirthDate { get; set; } = default!;
-    public PhoneNumber PhoneNumber { get; set; } = default!;
-    public Email Email { get; set; } = default!;
-    public DrivingLicenseIssueDate DrivingLicenseIssueDate { get; set; } = default!;
-    public FullAddress FullAddress { get; set; } = default!;
+    public NationalId NationalId { get; private set; } = default!;
+    public FirstName FirstName { get; private set; } = default!;
+    public LastName LastName { get; private set; } = default!;
+    public FullName FullName { get; private set; } = default!;
+    public BirthDate BirthDate { get; private set; } = default!;
+    public PhoneNumber PhoneNumber { get; private set; } = default!;
+    public Email Email { get; private set; } = default!;
+    public DrivingLicenseIssueDate DrivingLicenseIssueDate { get; private set; } = default!;
+    public FullAddress FullAddress { get; private set; } = default!;
 
 
     public void SetNationalId(NationalId nationalId) => NationalId = nationalId;
