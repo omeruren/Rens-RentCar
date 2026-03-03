@@ -151,6 +151,7 @@ public sealed record Status(string Value)
 {
     public static Status Pending => new("Pending");
     public static Status Completed => new("Completed");
+    public static Status Delivered => new("Delivered");
     public static Status Cancelled => new("Cancelled");
 
 }
