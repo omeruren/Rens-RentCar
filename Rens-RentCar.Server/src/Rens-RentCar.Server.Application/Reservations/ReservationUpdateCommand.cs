@@ -7,6 +7,7 @@ using Rens_RentCar.Domain.Reservations;
 using Rens_RentCar.Domain.Reservations.ValueObjects;
 using Rens_RentCar.Domain.Shared;
 using Rens_RentCar.Domain.Vehicles;
+using Rens_RentCar.Server.Application.Services;
 using TS.MediatR;
 using TS.Result;
 
@@ -100,11 +101,11 @@ internal sealed class ReservationUpdateCommandHandler(
             || reservation.DeliveryTime.Value != request.DeliveryTime
             )
         {
-            
+
             var requestedPickUp = request.PickUpDate.ToDateTime(request.PickUpTime);
             var requestedDelivery = request.DeliveryDate.ToDateTime(request.DeliveryTime);
 
-            
+
             var overlaps = await reservationRepository.AnyAsync(r =>
                     r.VehicleId.Value == request.VehicleId &&
                     (
@@ -115,7 +116,7 @@ internal sealed class ReservationUpdateCommandHandler(
             );
 
             if (overlaps)
-            {   
+            {
                 return Result<string>.Failure("This vehicle is not available for the selected date and time range.");
             }
         }
