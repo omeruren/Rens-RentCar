@@ -4,25 +4,33 @@ using Rens_RentCar.Domain.Shared;
 
 namespace Rens_RentCar.Domain.Reservations;
 
-public sealed class Reservation : BaseEntity
+public sealed class Reservation : BaseEntity, IAggregate
 {
+    private readonly List<ReservationExtra> _reservationExtras = new();
     private Reservation() { }
     private Reservation(
         IdentityId customerId,
+
         IdentityId pickUpLocationId,
         PickUpDate pickUpDate,
         PickUpTime pickUpTime,
+
         DeliveryDate deliveryUpDate,
         DeliveryTime deliveryUpTime,
+
         Note note,
         PaymentInformation paymetnInformation,
         Status status,
+
         IdentityId vehicleId,
         Price vehicleDailyPrice,
+
         IdentityId protectionPackageId,
         Price protectionPackagePrice,
-        IdentityId extraId,
-        Price extraPrice)
+
+
+        Total total,
+        IEnumerable<ReservationExtra> reservationExtras)
     {
         SetCustomerId(customerId);
         SetPickUpLocationId(pickUpLocationId);
@@ -33,6 +41,7 @@ public sealed class Reservation : BaseEntity
 
         SetTotalDay();
         SetNote(note);
+
         SetPaymetnInformation(paymetnInformation);
         SetStatus(status);
 
@@ -42,8 +51,8 @@ public sealed class Reservation : BaseEntity
         SetProtectionPackageId(protectionPackageId);
         SetProtectionPackagePrice(protectionPackagePrice);
 
-        SetExtraId(extraId);
-        SetExtraPrice(extraPrice);
+        SetTotal(total);
+        SetReservationExtras(reservationExtras);
     }
 
     public IdentityId CustomerId { get; private set; } = default!;
@@ -64,9 +73,8 @@ public sealed class Reservation : BaseEntity
     public IdentityId ProtectionPackageId { get; private set; } = default!;
     public Price ProtectionPackagePrice { get; private set; } = default!;
 
-    public IdentityId ExtraId { get; private set; } = default!;
-    public Price ExtraPrice { get; private set; } = default!;
-
+    public Total Total { get; private set; } = default!;
+    public IReadOnlyCollection<ReservationExtra> ReservationExtras => _reservationExtras;
 
     public static Reservation Create(
       IdentityId customerId,
@@ -82,8 +90,9 @@ public sealed class Reservation : BaseEntity
       Price vehicleDailyPrice,
       IdentityId protectionPackageId,
       Price protectionPackagePrice,
-      IdentityId extraId,
-      Price extraPrice
+      Total total,
+      IEnumerable<ReservationExtra> reservationExtras
+
         )
     {
         var reservation = new Reservation(
@@ -100,8 +109,8 @@ public sealed class Reservation : BaseEntity
             vehicleDailyPrice,
             protectionPackageId,
             protectionPackagePrice,
-            extraId,
-            extraPrice
+            total,
+            reservationExtras
         );
 
         return reservation;
@@ -142,8 +151,17 @@ public sealed class Reservation : BaseEntity
     public void SetVehicleDailyPrice(Price vehicleDailyPrice) => VehicleDailyPrice = vehicleDailyPrice;
     public void SetProtectionPackageId(IdentityId protectionPackageId) => ProtectionPackageId = protectionPackageId;
     public void SetProtectionPackagePrice(Price protectionPackagePrice) => ProtectionPackagePrice = protectionPackagePrice;
-    public void SetExtraId(IdentityId extraId) => ExtraId = extraId;
-    public void SetExtraPrice(Price extraPrice) => ExtraPrice = extraPrice;
+    public void SetReservationExtras(IEnumerable<ReservationExtra> reservationExtras)
+    {
+        _reservationExtras.Clear();
+        _reservationExtras.AddRange(reservationExtras);
+
+    }
+    public void SetTotal(Total total)
+    {
+        Total = total;
+    }
+
 
 }
 
