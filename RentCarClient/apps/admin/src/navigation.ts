@@ -15,40 +15,16 @@ export const navigations: NavigationModel[] = [
     permission: 'dashboard:view',
   },
   {
-    title: 'Branches',
-    url: '/branches',
-    icon: 'bi-buildings',
-    permission: 'branch:view',
-  },
-  {
     title: 'Categories',
     url: '/categories',
     icon: 'bi-tag',
     permission: 'category:view',
   },
   {
-    title: 'Customers',
-    url: '/customers',
-    icon: 'bi-people',
-    permission: 'customer:view',
-  },
-  {
-    title: 'Roles',
-    url: '/roles',
-    icon: 'bi-person-lock',
-    permission: 'role:view',
-  },
-  {
-    title: 'Users',
-    url: '/users',
-    icon: 'bi-people',
-    permission: 'user:view',
-  },
-  {
-    title: 'Protection Packages',
-    url: '/protection-packages',
-    icon: 'bi-shield',
-    permission: 'protection:view',
+    title: 'Branches',
+    url: '/branches',
+    icon: 'bi-buildings',
+    permission: 'branch:view',
   },
   {
     title: 'Extras',
@@ -57,9 +33,40 @@ export const navigations: NavigationModel[] = [
     permission: 'extra:view',
   },
   {
+    title: 'Protection Packages',
+    url: '/protection-packages',
+    icon: 'bi-shield',
+    permission: 'protection:view',
+  },
+  {
     title: 'Vehicles',
     url: '/vehicles',
     icon: 'bi-car-front',
     permission: 'vehicle:view',
+  },
+  {
+    title: 'Reservations',
+    url: '/reservations',
+    icon: 'bi-calendar-check',
+    permission: 'reservation:view',
+  },
+  {
+    title: 'Customers',
+    url: '/customers',
+    icon: 'bi-people',
+    permission: 'customer:view',
+  },
+
+  {
+    title: 'Users',
+    url: '/users',
+    icon: 'bi-people',
+    permission: 'user:view',
+  },
+  {
+    title: 'Roles',
+    url: '/roles',
+    icon: 'bi-person-lock',
+    permission: 'role:view',
   },
 ];

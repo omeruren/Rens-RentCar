@@ -13,7 +13,7 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Reservations;
 
-
+[Permission("reservations:edit")]
 public sealed record ReservationUpdateCommand(
     Guid Id,
     Guid CustomerId,

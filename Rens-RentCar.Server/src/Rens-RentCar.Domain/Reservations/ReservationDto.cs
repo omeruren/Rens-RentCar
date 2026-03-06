@@ -34,6 +34,7 @@ public sealed class VehicleDto
     public int SeatCount { get; set; } = default!;
     public string TractionType { get; set; } = default!;
     public int Kilometer { get; set; } = default!;
+    public string ImageUrl { get; set; } = default!;
 }
 public sealed class ReservationExtraDto
 {
@@ -49,8 +50,10 @@ public sealed class ReservationDto : BaseEntityDto
     public PickUpDto PickUp { get; set; } = default!;
     public DateOnly PickUpDate { get; set; } = default!;
     public TimeOnly PickUpTime { get; set; } = default!;
+    public DateTime PickUpDateTime { get; set; } = default!;
     public DateOnly DeliveryDate { get; set; } = default!;
     public TimeOnly DeliveryTime { get; set; } = default!;
+    public DateTime DeliveryDateTime { get; set; } = default!;
     public Guid VehicleId { get; set; } = default!;
     public decimal VehicleDailyPrice { get; set; } = default!;
     public VehicleDto Vehicle { get; set; } = default!;
@@ -105,6 +108,7 @@ public static class ReservationExtensions
                     SeatCount = v.SeatCount.Value,
                     TractionType = v.TractionType.Value,
                     Kilometer = v.Kilometer.Value,
+                    ImageUrl = v.ImageUrl.Value
                 }).AsQueryable(), m => m.Entity.VehicleId, m => m.Id, (r, vehicle) => new
                 {
                     r.Entity,
@@ -143,16 +147,23 @@ public static class ReservationExtensions
                     FullAddress = s.Branch.Address.FullAddress,
                     PhoneNumber = s.Branch.Contact.PhoneNumber1
                 },
+
                 PickUpDate = s.Entity.PickUpDate.Value,
                 PickUpTime = s.Entity.PickUpTime.Value,
+                PickUpDateTime = new DateTime(s.Entity.PickUpDate.Value, s.Entity.PickUpTime.Value),
+
                 DeliveryDate = s.Entity.DeliveryDate.Value,
                 DeliveryTime = s.Entity.DeliveryTime.Value,
+                DeliveryDateTime = new DateTime(s.Entity.DeliveryDate.Value, s.Entity.DeliveryTime.Value),
+
                 VehicleId = s.Entity.VehicleId.Value,
                 VehicleDailyPrice = s.Entity.VehicleDailyPrice.Value,
                 Vehicle = s.Vehicle,
+
                 ProtectionPackageId = s.Entity.ProtectionPackageId.Value,
                 ProtectionPackagePrice = s.Entity.ProtectionPackagePrice.Value,
                 ProtectionPackageName = s.ProtectionPackage.Name.Value,
+
                 ReservationExtras = s.Entity.ReservationExtras.Join(extras, m => m.ExtraId, m => m.Id, (re, extra) => new ReservationExtraDto
                 {
                     ExtraId = re.ExtraId,

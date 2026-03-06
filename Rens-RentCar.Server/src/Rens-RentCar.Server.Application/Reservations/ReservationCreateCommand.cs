@@ -13,6 +13,8 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Reservations;
 
+[Permission("reservations:create")]
+
 public sealed record CreditCartInformation(
     string CartNumber,
     string Owner,
