@@ -1,16 +1,16 @@
-using Rens_RentCar.Domain.Customers;
-using Rens_RentCar.Server.Application.Customers;
+using Rens_RentCar.Domain.Reservations;
+using Rens_RentCar.Server.Application.Reservations;
 using TS.MediatR;
 using TS.Result;
 
 namespace Rens_RentCar.Server.WebAPI.Modules;
 
-public static class CustomerModule
+public static class ReservationModule
 {
-    public static void MapCustomerEndpoint(this IEndpointRouteBuilder builder)
+    public static void MapReservationEndpoint(this IEndpointRouteBuilder builder)
     {
-        var app = builder.MapGroup("/customers")
-            .WithTags("Customers")
+        var app = builder.MapGroup("/reservations")
+            .WithTags("Reservations")
             .RequireRateLimiting("fixed")
             .RequireAuthorization();
 
@@ -20,15 +20,15 @@ public static class CustomerModule
             ISender _sender,
             CancellationToken cancellationToken) =>
         {
-            var result = await _sender.Send(new CustomerGetQuery(id), cancellationToken);
+            var result = await _sender.Send(new ReservationGetQuery(id), cancellationToken);
             return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
 
         })
-            .Produces<Result<CustomerDto>>();
+            .Produces<Result<ReservationDto>>();
 
         // POST
         app.MapPost(string.Empty, async (
-            CustomerCreateCommand request,
+            ReservationCreateCommand request,
             ISender _sender,
             CancellationToken cancellationToken) =>
         {
@@ -40,7 +40,7 @@ public static class CustomerModule
 
         // PUT
         app.MapPut(string.Empty, async (
-            CustomerUpdateCommand request,
+            ReservationUpdateCommand request,
             ISender _sender,
             CancellationToken cancellationToken) =>
         {
@@ -56,7 +56,7 @@ public static class CustomerModule
             ISender _sender,
             CancellationToken cancellationToken) =>
         {
-            var result = await _sender.Send(new CustomerDeleteCommand(id), cancellationToken);
+            var result = await _sender.Send(new ReservationDeleteCommand(id), cancellationToken);
             return result.IsSuccessful ? Results.Ok(result) : Results.InternalServerError(result);
 
         })

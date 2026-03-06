@@ -1,7 +1,6 @@
 using Rens_RentCar.Domain.Abstraction;
-using Rens_RentCar.Domain.Customers;
 
-namespace Rens_RentCar.Server.Application.Customers;
+namespace Rens_RentCar.Domain.Customers;
 
 public sealed class CustomerDto : BaseEntityDto
 {

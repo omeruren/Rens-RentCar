@@ -76,6 +76,7 @@ public sealed class Reservation : BaseEntity, IAggregate
     public Total Total { get; private set; } = default!;
     public IReadOnlyCollection<ReservationExtra> ReservationExtras => _reservationExtras;
 
+    // factory pattern
     public static Reservation Create(
       IdentityId customerId,
       IdentityId pickUpLocationId,
@@ -115,6 +116,8 @@ public sealed class Reservation : BaseEntity, IAggregate
 
         return reservation;
     }
+
+    #region Behaviors
     public void SetCustomerId(IdentityId customerId) => CustomerId = customerId;
     public void SetPickUpLocationId(IdentityId pickUpLocationId) => PickUpLocationId = pickUpLocationId;
     public void SetPickUpDate(PickUpDate pickUpDate) => PickUpDate = pickUpDate;
@@ -144,6 +147,7 @@ public sealed class Reservation : BaseEntity, IAggregate
         }
     }
 
+
     public void SetNote(Note note) => Note = note;
     public void SetPaymetnInformation(PaymentInformation paymetnInformation) => PaymentInformation = paymetnInformation;
     public void SetStatus(Status status) => Status = status;
@@ -162,6 +166,7 @@ public sealed class Reservation : BaseEntity, IAggregate
         Total = total;
     }
 
+    #endregion
 
 }
 

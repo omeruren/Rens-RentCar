@@ -63,6 +63,11 @@ internal sealed class ReservationUpdateCommandHandler(
             return Result<string>.Failure("Reservation not found.");
         }
 
+        if (reservation.Status == Status.Completed || reservation.Status == Status.Cancelled)
+        {
+            return Result<string>.Failure("This Reservation can not update now.(Reservation is completed or cancelled.)");
+        }
+
         var locationId = request.PickUpLocationId ?? claimContext.GetBranchId();
 
         #region Branch, Customer and Vehicle controls

@@ -68,31 +68,31 @@ public sealed class ReservationCreateCommandValidator : AbstractValidator<Reserv
 
 
 internal sealed class ReservationCreateCommandHandler(
-    IBranchRepository branchRepository,
-    ICustomerRepository customerRepository,
-    IReservationRepository reservationRepository,
-    IVehicleRepository vehicleRepository,
-    IClaimContext claimContext,
-    IUnitOfWork unitOfWork) : IRequestHandler<ReservationCreateCommand, Result<string>>
+    IBranchRepository _branchRepository,
+    ICustomerRepository _customerRepository,
+    IReservationRepository _reservationRepository,
+    IVehicleRepository _vehicleRepository,
+    IClaimContext _claimContext,
+    IUnitOfWork _unitOfWork) : IRequestHandler<ReservationCreateCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(ReservationCreateCommand request, CancellationToken cancellationToken)
     {
-        var locationId = request.PickUpLocationId ?? claimContext.GetBranchId();
+        var locationId = request.PickUpLocationId ?? _claimContext.GetBranchId();
 
         #region Branch, Customer and Vehicle controls
-        var isBranchExists = await branchRepository.AnyAsync(i => i.Id == locationId, cancellationToken);
+        var isBranchExists = await _branchRepository.AnyAsync(i => i.Id == locationId, cancellationToken);
         if (!isBranchExists)
         {
             return Result<string>.Failure("Branch not found.");
         }
 
-        var isCustomerExists = await customerRepository.AnyAsync(i => i.Id == request.CustomerId, cancellationToken);
+        var isCustomerExists = await _customerRepository.AnyAsync(i => i.Id == request.CustomerId, cancellationToken);
         if (!isCustomerExists)
         {
             return Result<string>.Failure("Customer not found.");
         }
 
-        var isVehicleExists = await vehicleRepository.AnyAsync(i => i.Id == request.VehicleId, cancellationToken);
+        var isVehicleExists = await _vehicleRepository.AnyAsync(i => i.Id == request.VehicleId, cancellationToken);
         if (!isVehicleExists)
         {
             return Result<string>.Failure("Vehicle not found.");
@@ -104,7 +104,7 @@ internal sealed class ReservationCreateCommandHandler(
         var requestedPickUp = request.PickUpDate.ToDateTime(request.PickUpTime);
         var requestedDelivery = request.DeliveryDate.ToDateTime(request.DeliveryTime);
 
-        var overlaps = await reservationRepository.AnyAsync(r =>
+        var overlaps = await _reservationRepository.AnyAsync(r =>
                 r.VehicleId.Value == request.VehicleId &&
                 (
                     requestedPickUp < r.DeliveryDate.Value.ToDateTime(r.DeliveryTime.Value).AddHours(1) &&
@@ -161,8 +161,8 @@ internal sealed class ReservationCreateCommandHandler(
         );
         #endregion
 
-        reservationRepository.Add(reservation);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        _reservationRepository.Add(reservation);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return "Reservation created successfully.";
     }

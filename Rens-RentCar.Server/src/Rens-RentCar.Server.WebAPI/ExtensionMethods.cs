@@ -74,6 +74,7 @@ public static class ExtensionMethods
         app.MapExtraEndpoint();
         app.MapVehicleEndpoint();
         app.MapCustomerEndpoint();
+        app.MapReservationEndpoint();
         app.MapSeedData();
     }
 
