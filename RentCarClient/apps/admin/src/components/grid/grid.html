@@ -26,7 +26,7 @@
     }
   </ng-template>
   <ng-content />
-  @if(showAuditInfos()){
+  @if(showAuditInfos()){ @if(showIsActive()){
 
   <flexi-grid-column
     textAlign="center"
@@ -35,6 +35,7 @@
     filterType="boolean"
     [booleanData]="['Active','Inactive'] "
   />
+  }
   <flexi-grid-column field="createdFullName" title="Created By" />
   <flexi-grid-column
     field="createdAt"
@@ -45,7 +46,7 @@
   <flexi-grid-column field="updatedFullName" title="Updated By">
     <ng-template flexiGridCellTemplate let-item>
       @if(item.updatedFullName){ {{item.updatedFullName}} }@else {
-      <i style="opacity: 50%;">No Update yet</i>
+      <i style="opacity: 50%">No Update yet</i>
       }
     </ng-template>
   </flexi-grid-column>
@@ -57,7 +58,7 @@
   >
     <ng-template flexiGridCellTemplate let-item>
       @if(item.updatedAt!==null){ {{item.updatedAt}} }@else {
-      <i style="opacity: 50%;">No Update yet</i>
+      <i style="opacity: 50%">No Update yet</i>
       }
     </ng-template>
   </flexi-grid-column>

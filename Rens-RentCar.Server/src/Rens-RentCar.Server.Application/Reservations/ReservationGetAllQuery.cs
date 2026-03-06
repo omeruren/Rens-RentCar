@@ -9,7 +9,7 @@ using TS.MediatR;
 
 namespace Rens_RentCar.Server.Application.Reservations;
 
-[Permission("reservations:view")]
+[Permission("reservation:view")]
 public sealed record ReservationGetAllQuery : IRequest<IQueryable<ReservationDto>>;
 
 internal sealed class ReservationGetAllQueryHandler(

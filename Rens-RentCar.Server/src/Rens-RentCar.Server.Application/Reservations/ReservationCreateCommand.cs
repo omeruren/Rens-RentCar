@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using Microsoft.EntityFrameworkCore;
 using Rens_RentCar.Domain.Abstraction;
 using Rens_RentCar.Domain.Branches;
 using Rens_RentCar.Domain.Customers;
@@ -13,7 +14,7 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Reservations;
 
-[Permission("reservations:create")]
+[Permission("reservation:create")]
 
 public sealed record CreditCartInformation(
     string CartNumber,
@@ -106,13 +107,23 @@ internal sealed class ReservationCreateCommandHandler(
         var requestedPickUp = request.PickUpDate.ToDateTime(request.PickUpTime);
         var requestedDelivery = request.DeliveryDate.ToDateTime(request.DeliveryTime);
 
-        var overlaps = await _reservationRepository.AnyAsync(r =>
-                r.VehicleId.Value == request.VehicleId &&
-                (
-                    requestedPickUp < r.DeliveryDate.Value.ToDateTime(r.DeliveryTime.Value).AddHours(1) &&
-                    requestedDelivery > r.PickUpDate.Value.ToDateTime(r.PickUpTime.Value)
-                ),
-            cancellationToken: cancellationToken
+        var possibleOverlaps = await _reservationRepository
+             .Where(r => r.VehicleId == request.VehicleId && (
+             r.Status.Value == Status.Pending.Value || r.Status.Value == Status.Delivered.Value))
+             .Select(s => new
+             {
+                 Id = s.Id,
+                 VehicleId = s.VehicleId,
+                 DeliveryDate = s.DeliveryDate.Value,
+                 DeliveryTime = s.DeliveryTime.Value,
+                 PickUpDate = s.PickUpDate.Value,
+                 PickUpTime = s.PickUpTime.Value,
+             })
+             .ToListAsync(cancellationToken);
+
+        var overlaps = possibleOverlaps.Any(r =>
+            requestedPickUp < r.DeliveryDate.ToDateTime(r.DeliveryTime).AddHours(1) &&
+            requestedDelivery > r.PickUpDate.ToDateTime(r.PickUpTime)
         );
 
         if (overlaps)

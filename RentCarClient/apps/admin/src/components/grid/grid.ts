@@ -25,7 +25,6 @@ import { HttpService } from '../../services/http';
 import { BreadCrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import { NgTemplateOutlet } from '@angular/common';
 import { Common } from '../../services/common';
-import { ProtectionPackageModel } from '../../models/protection.package.model';
 
 export interface btnOptions {
   url: string;
@@ -61,6 +60,8 @@ export default class Grid implements AfterViewInit {
   readonly captionTitle = input.required<string>();
   readonly endpointEntityName = input.required<string>();
   readonly permissionEntityName = input.required<string>();
+  readonly endpoint = input<string>('');
+  readonly showIsActive = input<boolean>(true);
 
   permissionView = signal<string>('');
   permissionCreate = signal<string>('');
@@ -76,7 +77,7 @@ export default class Grid implements AfterViewInit {
     this.permissionEdit.set(base + ':edit');
     this.permissionDetails.set(base + ':view');
     this.permissionDelete.set(base + ':delete');
-    console.log(this.result.value()?.value)
+    console.log(this.result.value()?.value);
   }
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {
@@ -90,11 +91,15 @@ export default class Grid implements AfterViewInit {
   readonly state = signal<StateModel>(new StateModel());
 
   readonly result = httpResource<ODataModel<any>>(() => {
-    let endpoint = `rent/odata/${this.endpointEntityName()}?$count=true`;
+    let endpoint = '';
+    if (this.endpoint().includes('?')) {
+      endpoint += `${this.endpoint()}&$count=true`;
+    } else {
+      endpoint = `rent/odata/${this.endpointEntityName()}?$count=true`;
+    }
     const part = this.#grid.getODataEndpoint(this.state());
     endpoint += `&${part}`;
     return endpoint;
-
   });
 
   readonly data = computed(() => this.result.value()?.value ?? []);

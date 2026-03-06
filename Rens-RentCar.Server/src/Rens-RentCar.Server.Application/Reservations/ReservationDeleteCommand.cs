@@ -5,7 +5,7 @@ using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Reservations;
 
-[Permission("reservations:delete")]
+[Permission("reservation:delete")]
 public sealed record ReservationDeleteCommand(
     Guid Id) : IRequest<Result<string>>;
 

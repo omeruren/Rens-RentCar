@@ -5,29 +5,55 @@
   endpoint="rent/odata/reservations"
   [breadcrumbs]="breadcrumbs()"
   captionTitle="Reservation List"
+  [showIsActive]="false"
 >
-  <flexi-grid-column field="pickUp.name" title="Pickup Location" />
-  <flexi-grid-column field="pickUpDate" title="Pickup Date" />
-  <flexi-grid-column field="pickUpTime" title="Pickup Time" />
-  <flexi-grid-column field="deliveryDate" title="Delivery Date" />
-  <flexi-grid-column field="deliveryTime" title="Delivery Time" />
-  <flexi-grid-column field="customer.fullName" title="Customer" />
-  <flexi-grid-column field="customer.phoneNumber" title="Phone" />
+  <flexi-grid-column
+    field="status"
+    title="Status"
+    filterType="select"
+    [filterData]="statusFilterData()"
+    textAlign="center"
+  >
+    <ng-template flexiGridCellTemplate let-item>
+      <span class="flexi-grid-card" [ngClass]="getStatusClass(item.status)"
+        >{{item.status}}</span
+      >
+    </ng-template>
+  </flexi-grid-column>
+  <flexi-grid-column field="pickUpName" title="Pickup Location" />
+  <flexi-grid-column
+    field="pickUpDateTime"
+    title="Pickup Date"
+    filterType="date"
+    format="dd MMM yyyy HH:mm"
+  />
+  <flexi-grid-column
+    field="deliveryDateTime"
+    title="Delivery Date"
+    filterType="date"
+    format="dd MMM yyyy HH:mm"
+  />
+  <flexi-grid-column field="customerFullName" title="Customer" />
+  <flexi-grid-column field="customerPhoneNumber" title="Phone">
+    <ng-template flexiGridCellTemplate let-item>
+      <span>+90{{ item.customerPhoneNumber | mask: '(000) 000 00 00' }}</span>
+    </ng-template>
+  </flexi-grid-column>
+  <flexi-grid-column field="totalDay" title="Day" textAlign="center" />
   <flexi-grid-column title="Vehicle Image">
     <ng-template flexiGridCellTemplate let-item>
       <img
-        [src]="`https://localhost:7203/images/${item.imageUrl}`"
+        [src]="`https://localhost:7203/images/${item.vehicleImageUrl}`"
         alt="Vehicle"
         class="vehicle-image"
       />
     </ng-template>
   </flexi-grid-column>
-  <flexi-grid-column field="vehicle.brand" title="Brand" />
-  <flexi-grid-column field="vehicle.model" title="Model" />
-  <flexi-grid-column field="vehicle.modelYear" title="Model Year" />
-  <flexi-grid-column field="vehicle.color" title="Color" />
-  <flexi-grid-column field="vehicle.categoryName" title="Category" />
-  <flexi-grid-column field="totalDay" title="Day" />
+  <flexi-grid-column field="vehicleBrand" title="Brand" />
+  <flexi-grid-column field="vehicleModel" title="Model" />
+  <flexi-grid-column field="vehicleModelYear" title="Model Year" />
+  <flexi-grid-column field="vehicleColor" title="Color" />
+  <flexi-grid-column field="vehicleCategoryName" title="Category" />
   <flexi-grid-column
     field="total"
     title="Total Amount"
@@ -36,5 +62,4 @@
     symbol="₺"
     textAlign="right"
   />
-  <flexi-grid-column field="status" title="Status" />
 </app-grid>

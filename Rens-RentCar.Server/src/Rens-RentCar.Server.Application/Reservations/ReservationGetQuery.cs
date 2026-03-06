@@ -10,7 +10,8 @@ using TS.MediatR;
 using TS.Result;
 
 namespace Rens_RentCar.Server.Application.Reservations;
-[Permission("reservations:view")]
+
+[Permission("reservation:view")]
 public sealed record ReservationGetQuery(
     Guid Id) : IRequest<Result<ReservationDto>>;
 

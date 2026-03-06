@@ -2,19 +2,17 @@ import { BaseEntityModel } from './base.entity';
 
 export interface ReservationModel extends BaseEntityModel {
   customerId: string;
-  customer: {
-    fullName: string;
-    identityNumber: string;
-    phoneNumber: string;
-    email: string;
-    fullAddress: string;
-  };
+
+  customerFullName: string;
+  customerNationalId: string;
+  customerPhoneNumber: string;
+  customerEmail: string;
+  customerFullAddress: string;
+
   pickUpLocationId: string;
-  pickUp: {
-    name: string;
-    fullAddress: string;
-    phoneNumber: string;
-  };
+  pickUpName: string;
+  pickUpFullAddress: string;
+  pickUpPhoneNumber: string;
 
   pickUpDate: string;
   pickUpTime: string;
@@ -26,19 +24,18 @@ export interface ReservationModel extends BaseEntityModel {
 
   vehicleId: string;
   vehicleDailyPrice: number;
-  vehicle: {
-    id: string;
-    brand: string;
-    model: string;
-    modelYear: number;
-    color: string;
-    categoryName: string;
-    fuelConsumption: number;
-    seatCount: number;
-    tractionType: string;
-    kilometer: number;
-    imageUrl: string;
-  };
+
+  vehicleBrand: string;
+  vehicleModel: string;
+  vehicleModelYear: number;
+  vehicleColor: string;
+  vehicleCategoryName: string;
+  vehicleFuelConsumption: number;
+  vehicleSeatCount: number;
+  vehicleTractionType: string;
+  vehicleKilometer: number;
+  vehicleImageUrl: string;
+
   protectionPackageId: string;
   protectionPackagePrice: number;
   protectionPackageName: string;
@@ -55,19 +52,17 @@ export interface ReservationModel extends BaseEntityModel {
 
 export const INITIAL_RESERVATION_MODEL: ReservationModel = {
   customerId: '',
-  customer: {
-    fullName: '',
-    identityNumber: '',
-    phoneNumber: '',
-    email: '',
-    fullAddress: '',
-  },
+  customerFullName: '',
+  customerNationalId: '',
+  customerPhoneNumber: '',
+  customerEmail: '',
+  customerFullAddress: '',
+
   pickUpLocationId: '',
-  pickUp: {
-    name: '',
-    fullAddress: '',
-    phoneNumber: '',
-  },
+  pickUpName: '',
+  pickUpFullAddress: '',
+  pickUpPhoneNumber: '',
+
   pickUpDate: '',
   pickUpTime: '',
   pickupDateTime: '',
@@ -78,19 +73,17 @@ export const INITIAL_RESERVATION_MODEL: ReservationModel = {
 
   vehicleId: '',
   vehicleDailyPrice: 0,
-  vehicle: {
-    id: '',
-    brand: '',
-    model: '',
-    modelYear: 0,
-    color: '',
-    categoryName: '',
-    fuelConsumption: 0,
-    seatCount: 0,
-    tractionType: '',
-    kilometer: 0,
-    imageUrl: '',
-  },
+
+  vehicleBrand: '',
+  vehicleModel: '',
+  vehicleModelYear: 0,
+  vehicleColor: '',
+  vehicleCategoryName: '',
+  vehicleFuelConsumption: 0,
+  vehicleSeatCount: 0,
+  vehicleTractionType: '',
+  vehicleKilometer: 0,
+  vehicleImageUrl: '',
   protectionPackageId: '',
   protectionPackagePrice: 0,
   protectionPackageName: '',
