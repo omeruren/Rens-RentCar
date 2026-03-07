@@ -7,8 +7,13 @@ const routes: Routes = [
     path: '',
     loadComponent: () => import('./reservations'),
     canActivate: [
-      () => inject(Common).checkPermissionForRouting('vehicle:view'),
+      () => inject(Common).checkPermissionForRouting('reservation:view'),
     ],
   },
+  {
+    path:'add',
+    loadComponent:()=>import('./create/create'),
+    canActivate:[()=>inject(Common).checkPermissionForRouting('reservation:create')]
+  }
 ];
 export default routes;
