@@ -14,6 +14,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
 import Grid from 'apps/admin/src/components/grid/grid';
+import { BranchModel } from 'apps/admin/src/models/branch.model';
 import {
   CustomerModel,
   INITIAL_CUSTOMER_MODEL,
@@ -27,9 +28,11 @@ import {
   BreadcrumbService,
   BreadCrumbModel,
 } from 'apps/admin/src/services/breadcrumb';
+import { Common } from 'apps/admin/src/services/common';
 import { HttpService } from 'apps/admin/src/services/http';
 import { FlexiGridModule, FlexiGridService, StateModel } from 'flexi-grid';
 import { FlexiPopupModule } from 'flexi-popup';
+import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -45,6 +48,8 @@ import { lastValueFrom } from 'rxjs';
     NgClass,
     NgTemplateOutlet,
     NgxMaskPipe,
+    DatePipe,
+    FlexiSelectModule,
   ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
@@ -56,16 +61,11 @@ export default class Create {
   readonly #breadcrumb = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
   readonly #router = inject(Router);
-  readonly #toast = inject(FlexiToastService);
   readonly #http = inject(HttpService);
+  readonly #common = inject(Common);
   readonly #date = inject(DatePipe);
+  readonly #toast = inject(FlexiToastService);
   readonly #flexiGrid = inject(FlexiGridService);
-
-  readonly isCustomerPopUpLoading = signal<boolean>(false);
-  readonly customerPopUpData = signal<CustomerModel>({
-    ...INITIAL_CUSTOMER_MODEL,
-  });
-  isCustomerPopUpVisible = false;
 
   constructor() {
     this.#activated.params.subscribe((res) => {
@@ -87,21 +87,77 @@ export default class Create {
           birthDate: date,
           drivingLicenseIssueDate: date,
         }));
+        const today = this.#date.transform(new Date(), 'yyyy-MM-dd')!;
+        const tomorrow = this.#date.transform(
+          new Date().setDate(new Date().getDate() + 1),
+          'yyyy-MM-dd'
+        )!;
+        this.data.update((prev) => ({
+          ...prev,
+          pickUpDate: today,
+          deliveryDate: tomorrow,
+        }));
       }
     });
+    this.calculateDayDifferance();
   }
+
+  readonly timeData = signal<string[]>([
+    '09:00',
+    '09:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+    '12:30',
+    '13:00',
+    '13:30',
+    '14:00',
+    '14:30',
+    '15:00',
+    '15:30',
+    '16:00',
+    '16:30',
+    '17:00',
+    '17:30',
+    '18:00',
+    '18:30',
+    '19:00',
+    '19:30',
+    '20:00',
+    '20:30',
+    '21:00',
+    '21:30',
+    '22:00',
+    '22:30',
+    '23:00',
+    '23:30',
+    '00:00',
+  ]);
+
+  readonly branchName = linkedSignal(() => this.#common.token().branch);
+  readonly isAdmin = computed(() => this.#common.token().role === 'sys_admin');
+
+  readonly isCustomerPopUpLoading = signal<boolean>(false);
+  readonly customerPopUpData = signal<CustomerModel>({
+    ...INITIAL_CUSTOMER_MODEL,
+  });
+  isCustomerPopUpVisible = false;
 
   readonly customerState = signal<StateModel>(new StateModel());
 
-   readonly customerResult = httpResource<ODataModel<CustomerModel>>(() => {
+  readonly customerResult = httpResource<ODataModel<CustomerModel>>(() => {
     let endpoint = 'rent/odata/customers?count=true&';
     const part = this.#flexiGrid.getODataEndpoint(this.customerState());
     endpoint += part;
     return endpoint;
   });
- readonly customerData = computed(() => this.customerResult.value()?.value ?? []);
+  readonly customerData = computed(
+    () => this.customerResult.value()?.value ?? []
+  );
 
- readonly customerTotal = computed(
+  readonly customerTotal = computed(
     () => this.customerResult.value()?.['@odata.count'] ?? 0
   );
   readonly customerLoading = computed(() => this.customerResult.isLoading());
@@ -129,6 +185,13 @@ export default class Create {
       return res.data;
     },
   });
+
+  readonly branchState = signal<StateModel>(new StateModel());
+  readonly branchResult = httpResource<ODataModel<BranchModel>>(
+    () => 'rent/odata/branches'
+  );
+  readonly branchData = computed(() => this.branchResult.value()?.value ?? []);
+  readonly branchLoading = computed(() => this.branchResult.isLoading());
 
   readonly loading = linkedSignal(() => this.result.isLoading());
 
@@ -198,12 +261,43 @@ export default class Create {
   customerDataStateChange(state: StateModel) {
     this.customerState.set(state);
   }
+
   selectCustomer(item: CustomerModel) {
     this.selectedCustomer.set(item);
     this.data.update((prev) => ({ ...prev, customerId: item.id }));
   }
+
   clearCustomer() {
     this.selectedCustomer.set(undefined);
     this.data.update((prev) => ({ ...prev, customerId: '' }));
+  }
+
+  calculateDayDifferance() {
+    const pickUpDateTime = new Date(
+      `${this.data().pickUpDate}T${this.data().pickUpTime}`
+    );
+    const deliveryDateTime = new Date(
+      `${this.data().deliveryDate}T${this.data().deliveryTime}`
+    );
+
+    const diffMs = deliveryDateTime.getTime() - pickUpDateTime.getTime();
+
+    if (diffMs <= 0) {
+      this.data.update((prev) => ({ ...prev, totalDay: 0 }));
+      return;
+    }
+
+    const oneDayMs = 24 * 60 * 60 * 1000;
+
+    const fullDays = Math.floor(diffMs / oneDayMs);
+    const remainder = diffMs % oneDayMs;
+    const totalDay = remainder > 0 ? fullDays + 1 : fullDays;
+
+    this.data.update((prev) => ({ ...prev, totalDay: totalDay }));
+  }
+
+  setLocation(id: any) {
+    const branch = this.branchData().find((i) => i.id == id)!;
+    this.branchName.set(branch.name);
   }
 }
